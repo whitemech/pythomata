@@ -2,8 +2,14 @@ language: python
 python:
 - 3.6
 - 3.5
-install: pip install -U tox-travis
-script: tox
+install:
+- pip install -U tox-travis
+- pip  install -r requirements.txt
+
+script:
+- tox
+- coverage run --source pythomata setup.py test
+
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
@@ -14,3 +20,5 @@ deploy:
     tags: true
     repo: MarcoFavorito/pythomata
     python: 3.6
+after_success:
+  - codecov

@@ -6,6 +6,9 @@ Pythomata
 .. image:: https://img.shields.io/pypi/v/pythomata.svg
         :target: https://pypi.python.org/pypi/pythomata
 
+.. image:: https://img.shields.io/pypi/pyversions/pythomata.svg
+        :target: https://pypi.python.org/pypi/pythogic
+
 .. image:: https://img.shields.io/travis/MarcoFavorito/pythomata.svg
         :target: https://travis-ci.org/MarcoFavorito/pythomata
 
@@ -13,7 +16,9 @@ Pythomata
         :target: https://pythomata.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-
+.. image:: https://codecov.io/gh/MarcoFavorito/pythomata/branch/master/graph/badge.svg
+        :alt: Codecov coverage
+        :target: https://codecov.io/gh/MarcoFavorito/pythomata/branch/master/graph/badge.svg
 
 
 Python implementation of automata.
