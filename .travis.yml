@@ -5,7 +5,7 @@ python:
 install:
 - pip install -U tox-travis
 - pip  install codecov
-- pip  install -r requirements.txt
+- pip  install -r requirements_test.txt
 script:
 - tox
 - coverage run --source pythomata setup.py test
