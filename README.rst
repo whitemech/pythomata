@@ -7,7 +7,7 @@ Pythomata
         :target: https://pypi.python.org/pypi/pythomata
 
 .. image:: https://img.shields.io/pypi/pyversions/pythomata.svg
-        :target: https://pypi.python.org/pypi/pythogic
+        :target: https://pypi.python.org/pypi/pythomata
 
 .. image:: https://img.shields.io/travis/MarcoFavorito/pythomata.svg
         :target: https://travis-ci.org/MarcoFavorito/pythomata
