@@ -1,2 +1,2 @@
-pydot
+pydot==1.2.4
 graphviz
