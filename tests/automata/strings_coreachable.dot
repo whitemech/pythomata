@@ -2,12 +2,12 @@ digraph {
 	fake [style=invisible]
 	s3 [shape=doublecircle]
 	s2 [shape=doublecircle]
-	s4
 	s1 [root=true]
+	s4
 	fake -> s1 [style=bold]
 	s3 -> s1 [label=b]
 	s2 -> s1 [label=b]
-	s1 -> s2 [label=a]
-	s1 -> s3 [label=b]
 	s4 -> s1 [label=c]
+	s1 -> s3 [label=b]
+	s1 -> s2 [label=a]
 }

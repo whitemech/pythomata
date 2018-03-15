@@ -11,11 +11,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ["graphviz"]
+requirements = ["graphviz", "pydot"]
 
-setup_requirements = []
+setup_requirements = ["graphviz", "pydot"]
 
-test_requirements = []
+test_requirements = ["graphviz", "pydot"]
 
 setup(
     author="Marco Favorito",
