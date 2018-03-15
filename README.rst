@@ -6,6 +6,9 @@ Pythomata
 .. image:: https://img.shields.io/pypi/v/pythomata.svg
         :target: https://pypi.python.org/pypi/pythomata
 
+.. image:: https://img.shields.io/pypi/pyversions/pythomata.svg
+        :target: https://pypi.python.org/pypi/pythomata
+
 .. image:: https://img.shields.io/travis/MarcoFavorito/pythomata.svg
         :target: https://travis-ci.org/MarcoFavorito/pythomata
 
@@ -13,7 +16,9 @@ Pythomata
         :target: https://pythomata.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-
+.. image:: https://codecov.io/gh/MarcoFavorito/pythomata/branch/master/graph/badge.svg
+        :alt: Codecov coverage
+        :target: https://codecov.io/gh/MarcoFavorito/pythomata/branch/master/graph/badge.svg
 
 
 Python implementation of automata.
@@ -21,6 +26,15 @@ Python implementation of automata.
 
 * Free software: MIT license
 * Documentation: https://pythomata.readthedocs.io.
+
+Install
+-------
+
+.. code-block:: console
+
+    $ wget http://204.178.9.49/pub/graphviz/stable/ubuntu/ub13.10/x86_64/graphviz_2.38.0-1~saucy_amd64.deb
+    $ sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
+    $ sudo apt-get install -f
 
 
 Features
