@@ -11,11 +11,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ["graphviz", "pydot"]
+requirements = ["graphviz", "pydot", "pyparsing"]
 
-setup_requirements = ["graphviz", "pydot"]
+setup_requirements = ["graphviz", "pydot", "pyparsing"]
 
-test_requirements = ["graphviz", "pydot"]
+test_requirements = ["graphviz", "pydot", "pyparsing"]
 
 setup(
     author="Marco Favorito",
@@ -29,11 +29,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     description="Python implementation of automata.",
-    entry_points={
-        'console_scripts': [
-            'pythomata=pythomata.cli:main',
-        ],
-    },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,

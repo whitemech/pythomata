@@ -1,9 +1,9 @@
 digraph {
 	fake [style=invisible]
-	2 [root=true]
-	4 [shape=doublecircle]
-	fake -> 2 [style=bold]
-	2 -> 4 [label=b]
-	2 -> 4 [label=a]
-	4 -> 2 [label=b]
+	3 [shape=doublecircle]
+	4 [root=true]
+	fake -> 4 [style=bold]
+	3 -> 4 [label=b]
+	4 -> 3 [label=a]
+	4 -> 3 [label=b]
 }
