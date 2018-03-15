@@ -1,1 +1,1 @@
-graph
+graphviz
