@@ -6,6 +6,9 @@ install:
 - pip install -U tox-travis
 - pip  install codecov
 - pip  install -r requirements.txt
+- wget http://204.178.9.49/pub/graphviz/stable/ubuntu/ub13.10/x86_64/graphviz_2.38.0-1~saucy_amd64.deb
+- sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
+- sudo apt-get install -f
 script:
 - tox
 - coverage run --source pythomata setup.py test
