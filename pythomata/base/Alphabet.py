@@ -10,3 +10,9 @@ class Alphabet(object):
     @staticmethod
     def fromStrings(symbol_strings:Set[str]):
         return Alphabet(set(Symbol(s) for s in symbol_strings))
+
+    def __eq__(self, other):
+        if type(self)==type(other):
+            return self.symbols == other.symbols
+        else:
+            return False

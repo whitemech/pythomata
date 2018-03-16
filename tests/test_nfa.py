@@ -68,3 +68,105 @@ class TestNFA(unittest.TestCase):
         dfa = DFA.minimize(dfa)
         dfa = DFA.trim(dfa)
         dfa.to_dot("tests/automata/nfa_strings_determinized_minimized.dot")
+
+class TestNFAOnSets(unittest.TestCase):
+
+    def test_sets(self):
+        inc = Symbol("inc")
+        doub = Symbol("doub")
+        inc_ =  frozenset({inc})
+        doub_ = frozenset({doub})
+        not_ =  frozenset()
+
+        initial_states = frozenset({
+            frozenset({1}),
+            frozenset({2})
+        })
+        final_states = frozenset({
+            frozenset({5}),
+            frozenset({6})
+        })
+        states = frozenset({
+            frozenset({1}),
+            frozenset({2}),
+            frozenset({3}),
+            frozenset({4}),
+            frozenset({5}),
+            frozenset({6}),
+        })
+
+        # as list of transitions
+        transitions = frozenset({
+            (frozenset({1}),    inc_,      frozenset({2})),
+            (frozenset({2}),    doub_, frozenset({4})),
+            (frozenset({4}),    doub_, frozenset({6})),
+            (frozenset({6}),    doub_, frozenset({2})),
+        })
+
+        alphabet = Alphabet({inc_, doub_, not_})
+
+        nfa = NFA.fromTransitions(alphabet,states,initial_states,final_states,transitions)
+        nfa.to_dot("tests/automata/qui.nfa")
+
+        dfa = nfa.determinize().minimize().trim()
+        dfa.to_dot("tests/automata/qui.dfa")
+
+
+    def test_ldlf_formulas(self):
+        a = Symbol("a")
+        tt = Symbol("TT")
+        eventually_true_tt = Symbol("<true>tt")
+
+        alphabet = {frozenset(), frozenset({a})}
+
+        delta = {
+            (frozenset(), frozenset(), frozenset()),
+            (frozenset(), frozenset({a}), frozenset()),
+            (frozenset({eventually_true_tt}), frozenset(), frozenset({tt})),
+            (frozenset({eventually_true_tt}), frozenset({a}), frozenset({tt})),
+            (frozenset({tt}), frozenset(), frozenset()),
+            (frozenset({tt}), frozenset({a}), frozenset()),
+
+        }
+        final_states = {frozenset(), frozenset([tt])}
+        initial_state = {frozenset([eventually_true_tt])}
+        states = {frozenset(), frozenset([eventually_true_tt]), frozenset([tt])}
+
+        x = {}
+        x["alphabet"] = alphabet
+        x["states"] =  states
+        x["initial_states"] =  initial_state
+        x["accepting_states"] =  final_states
+        x["transitions"] =  delta
+
+        nfa = NFA.fromTransitions(Alphabet(x["alphabet"]), x["states"], x["initial_states"],
+                              x["accepting_states"], x["transitions"])
+        nfa.to_dot("tests/automata/formulas.nfa")
+
+        transition_function = {
+            frozenset(): {
+                frozenset():    {frozenset()},
+                frozenset({a}): {frozenset()}
+            },
+            frozenset({eventually_true_tt}): {
+                frozenset(): {frozenset({tt})},
+                frozenset({a}): {frozenset({tt})}
+            },
+            frozenset({tt}): {
+                frozenset(): {frozenset()},
+                frozenset({a}): {frozenset()}
+            },
+        }
+
+        self.assertEqual(nfa.alphabet, Alphabet(alphabet))
+        self.assertEqual(nfa.states, states)
+        self.assertEqual(nfa.initial_states, initial_state)
+        self.assertEqual(nfa.accepting_states, final_states)
+        self.assertEqual(nfa.accepting_states, final_states)
+        self.assertEqual(nfa.transition_function, transition_function)
+
+        dfa = nfa.determinize().minimize()
+        dfa.to_dot("tests/automata/formulas.dfa")
+
+
+
