@@ -22,7 +22,7 @@ test_requirements = ["graphviz", "pydot", "pyparsing"]
 
 setup(
     name='pythomata',
-    version='0.1.dev2',
+    version='0.1b2',
     description="Python implementation of automata.",
     long_description=readme + '\n\n' + history,
     author="Marco Favorito",
