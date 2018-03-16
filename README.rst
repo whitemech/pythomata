@@ -27,6 +27,15 @@ Python implementation of automata.
 * Free software: MIT license
 * Documentation: https://pythomata.readthedocs.io.
 
+Install
+-------
+
+.. code-block:: console
+
+    $ wget http://204.178.9.49/pub/graphviz/stable/ubuntu/ub13.10/x86_64/graphviz_2.38.0-1~saucy_amd64.deb
+    $ sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
+    $ sudo apt-get install -f
+
 
 Features
 --------
