@@ -15,5 +15,7 @@ History
 * Algorithm for NFA determinization.
 
 0.1.2 (2018-03-16)
+------------------
+
 
 * Minor bug fixes
