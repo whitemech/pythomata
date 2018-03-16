@@ -1,4 +1,4 @@
 setuptools==38.5.2
 pydot
 graphviz
-pyparsing
+pyparsing==2.2.0
