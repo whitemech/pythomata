@@ -10,6 +10,10 @@ History
 0.1.1 (2018-03-15)
 ------------------
 
-* basic DFA and NFA support;
+* Basic DFA and NFA support;
 * Algorithms for DFA minimization and trimming;
 * Algorithm for NFA determinization.
+
+0.1.2 (2018-03-16)
+
+* Minor bug fixes
