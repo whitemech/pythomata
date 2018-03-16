@@ -11,15 +11,18 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ["graphviz", "pydot", "pyparsing"]
+# requirements = ["graphviz", "pydot", "pyparsing"]
+requirements = []
 
-setup_requirements = ["graphviz", "pydot", "pyparsing"]
+# setup_requirements = ["graphviz", "pydot", "pyparsing"]
+setup_requirements = []
 
 test_requirements = ["graphviz", "pydot", "pyparsing"]
+# test_requirements = []
 
 setup(
     name='pythomata',
-    version='0.1.2',
+    version='0.1.d1',
     description="Python implementation of automata.",
     long_description=readme + '\n\n' + history,
     author="Marco Favorito",
