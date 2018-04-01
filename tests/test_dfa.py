@@ -3,7 +3,9 @@ import unittest
 
 from pythomata.base.DFA import DFA
 from pythomata.base.Alphabet import Alphabet
+from pythomata.base.Simulator import Simulator
 from pythomata.base.Symbol import Symbol
+from pythomata.base.utils import Sink
 
 
 class TestDFA(unittest.TestCase):
@@ -74,3 +76,34 @@ class TestDFA(unittest.TestCase):
         self.assertTrue(self.dfa.word_acceptance(word[:3]))
         self.assertFalse(self.dfa.word_acceptance(word[:4]))
         self.assertTrue(self.dfa.word_acceptance(word[:5]))
+
+    def test_simulator(self):
+        # not needed, but useful for testing purposes
+        complete_dfa = self.dfa.complete()
+        simulator = Simulator(complete_dfa)
+        self.assertEqual(simulator.cur_state, complete_dfa.initial_state)
+
+        simulator.make_transition(self.a)
+        self.assertEqual(simulator.cur_state, "s2")
+        self.assertTrue(simulator.is_true())
+
+        simulator.make_transition(self.b)
+        self.assertEqual(simulator.cur_state, "s1")
+        self.assertFalse(simulator.is_true())
+
+        simulator.make_transition(self.c)
+        self.assertEqual(simulator.cur_state, "s5")
+        self.assertFalse(simulator.is_true())
+
+        simulator.make_transition(self.c)
+        self.assertEqual(simulator.cur_state, "s5")
+        self.assertFalse(simulator.is_true())
+
+        simulator.make_transition(self.a)
+        self.assertEqual(simulator.cur_state, Sink())
+        self.assertFalse(simulator.is_true())
+
+        simulator.make_transition(self.b)
+        self.assertEqual(simulator.cur_state, Sink())
+        self.assertFalse(simulator.is_true())
+
