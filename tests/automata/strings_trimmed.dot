@@ -1,11 +1,11 @@
 digraph {
 	fake [style=invisible]
-	s3 [shape=doublecircle]
-	s1 [root=true]
 	s2 [shape=doublecircle]
+	s1 [root=true]
+	s3 [shape=doublecircle]
 	fake -> s1 [style=bold]
-	s3 -> s1 [label=b]
-	s1 -> s3 [label=b]
-	s1 -> s2 [label=a]
 	s2 -> s1 [label=b]
+	s3 -> s1 [label=b]
+	s1 -> s2 [label=a]
+	s1 -> s3 [label=b]
 }

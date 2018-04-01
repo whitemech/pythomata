@@ -19,6 +19,10 @@ class Simulator(object):
         return self.cur_state in self.dfa.accepting_states
 
     def word_acceptance(self, word: List[Symbol]):
+        self.reset()
         for s in word:
             self.make_transition(s)
         return self.cur_state in self.dfa.accepting_states
+
+    def reset(self):
+        self.cur_state = self.dfa.initial_state

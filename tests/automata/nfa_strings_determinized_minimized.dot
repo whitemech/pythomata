@@ -1,13 +1,13 @@
 digraph {
 	fake [style=invisible]
+	1 [shape=doublecircle]
 	3 [root=true]
-	4 [shape=doublecircle]
-	5
+	4
 	7 [shape=doublecircle]
 	fake -> 3 [style=bold]
-	3 -> 4 [label=b]
-	3 -> 5 [label=c]
-	4 -> 4 [label=b]
-	5 -> 7 [label=b]
-	7 -> 5 [label=b]
+	1 -> 4 [label=b]
+	3 -> 4 [label=c]
+	3 -> 7 [label=b]
+	4 -> 1 [label=b]
+	7 -> 7 [label=b]
 }

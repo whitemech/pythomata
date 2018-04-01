@@ -107,3 +107,6 @@ class TestDFA(unittest.TestCase):
         self.assertEqual(simulator.cur_state, Sink())
         self.assertFalse(simulator.is_true())
 
+        self.assertFalse(simulator.word_acceptance([self.a, self.b, self.c, self.c, self.a, self.b]))
+        self.assertTrue(simulator.word_acceptance([self.a, self.b, self.a]))
+
