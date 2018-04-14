@@ -1,6 +1,6 @@
 from typing import FrozenSet, Dict, Tuple, Iterable, List
 import graphviz
-from copy import deepcopy
+from copy import deepcopy, copy
 
 from pythomata.base.utils import Sink
 from pythomata.base.Alphabet import Alphabet
@@ -40,42 +40,53 @@ class DFA(object):
             for action in self.alphabet.symbols:
                 if not action in sym2state:
                     transitions[state][action]= sink
+
+        transitions[sink] = {}
+        for action in self.alphabet.symbols:
+            transitions[sink][action] = sink
         return DFA(self.alphabet, self.states.union({sink}), self.initial_state, self.accepting_states,
                    dict(transitions))
 
     def minimize(self):
         dfa = self.complete()
 
+        # index the set of states such that avoid to deepcopy every time the states
+        id2states = dict(enumerate(dfa.states))
+        state2id = {v:k for k,v in id2states.items()}
+
         # Greatest−fixpoint
         z_current = set()
         z_next = set()
-        for state_s in dfa.states:
-            for state_t in dfa.states:
-                if state_s in dfa.accepting_states and state_t in dfa.accepting_states \
-                    or state_s not in dfa.accepting_states and state_t not in dfa.accepting_states:
-                    z_next.add((state_s, state_t))
+        for ids, state_s in id2states.items():
+            for idt, state_t in id2states.items():
+                s_is_final = state_s in dfa.accepting_states
+                t_is_final = state_t in dfa.accepting_states
+                if s_is_final and t_is_final or (not s_is_final and not t_is_final):
+                    z_next.add((ids, idt))
 
         while z_current != z_next:
             z_current = z_next
-            z_next = deepcopy(z_current)
-            for (s, t) in z_current:
+            z_next = copy(z_current)
+            for (ids, idt) in z_current:
+                s, t = id2states[ids], id2states[idt]
                 for a in dfa.alphabet.symbols:
                     s_prime = dfa.transition_function[s][a] if s in dfa.transition_function and a in dfa.transition_function[s] else None
                     if s_prime and not any(
-                        dfa.transition_function[t][a]==t_prime and (s_prime, t_prime) in z_current
+                        dfa.transition_function[t][a]==t_prime and (state2id[s_prime], state2id[t_prime]) in z_current
                         for t_prime in dfa.states if t in dfa.transition_function):
-                        z_next.remove((s,t))
+                        z_next.remove((ids,idt))
                         break
 
                     t_prime = dfa.transition_function[t][a] if t in dfa.transition_function and a in dfa.transition_function[t] else None
                     if t_prime and not any(
-                        dfa.transition_function[s][a] == s_prime and (s_prime, t_prime) in z_current
+                        dfa.transition_function[s][a] == s_prime and (state2id[s_prime], state2id[t_prime]) in z_current
                         for s_prime in dfa.states if s in dfa.transition_function):
-                        z_next.remove((s, t))
+                        z_next.remove((ids, idt))
                         break
 
         state2equiv_class = dict()
-        for (s, t) in z_current:
+        for (ids, idt) in z_current:
+            s, t = id2states[ids], id2states[idt]
             state2equiv_class.setdefault(s, set()).add(t)
         state2equiv_class = {k: frozenset(v) for k,v in state2equiv_class.items()}
 
