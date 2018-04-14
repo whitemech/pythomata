@@ -62,17 +62,24 @@ class NFA(object):
 
 
     def determinize(self):
-        new_states = powerset(self.states)
-        initial_state = frozenset(self.initial_states)
-        final_states = frozenset([q for q in new_states if len(q.intersection(self.accepting_states)) != 0])
+        # index the set of states: we don't care too much about the states...
+        id2states = dict(enumerate(self.states))
+        state2id = {v: k for k, v in id2states.items()}
+
+        ids = set(id2states)
+        accepting_states_ids = {state2id[s] for s in self.accepting_states}
+
+        new_states = powerset(ids)
+        initial_state = frozenset({state2id[s] for s in self.initial_states})
+        final_states = frozenset({q for q in new_states if len(q.intersection(accepting_states_ids)) != 0})
         transition_function = {}
         for state_set in new_states:
             for action in self.alphabet.symbols:
 
                 next_states = set()
                 for s in state_set:
-                    for s_prime in self.transition_function.get(s, {}).get(action, []):
-                        next_states.add(s_prime)
+                    for s_prime in self.transition_function.get(id2states[s], {}).get(action, []):
+                        next_states.add(state2id[s_prime])
 
                 # next_states = set(s_prime for s in state_set for s_prime in nfa.transition_function.get(s, {}).get(action, []))
 
