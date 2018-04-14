@@ -5,777 +5,777 @@
  -->
 <!-- Title: %3 Pages: 1 -->
 <svg width="3958pt" height="832pt"
- viewBox="0.00 0.00 3958.34 832.15" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ viewBox="0.00 0.00 3958.24 832.15" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 828.152)">
 <title>%3</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-828.152 3954.34,-828.152 3954.34,4 -4,4"/>
+<polygon fill="white" stroke="none" points="-4,4 -4,-828.152 3954.24,-828.152 3954.24,4 -4,4"/>
 <!-- fake -->
 <g id="node1" class="node"><title>fake</title>
 </g>
-<!-- frozenset({1, 3}) -->
-<g id="node24" class="node"><title>frozenset({1, 3})</title>
-<ellipse fill="none" stroke="black" cx="1390.59" cy="-648.361" rx="71.4873" ry="18"/>
-<text text-anchor="middle" x="1390.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 3})</text>
+<!-- frozenset({2, 4}) -->
+<g id="node27" class="node"><title>frozenset({2, 4})</title>
+<ellipse fill="none" stroke="black" cx="2380.74" cy="-648.361" rx="71.4873" ry="18"/>
+<text text-anchor="middle" x="2380.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({2, 4})</text>
 </g>
-<!-- fake&#45;&gt;frozenset({1, 3}) -->
-<g id="edge1" class="edge"><title>fake&#45;&gt;frozenset({1, 3})</title>
-<path fill="none" stroke="black" stroke-width="2" d="M1390.59,-787.885C1390.59,-760.98 1390.59,-708.821 1390.59,-676.748"/>
-<polygon fill="black" stroke="black" stroke-width="2" points="1394.09,-676.706 1390.59,-666.706 1387.09,-676.706 1394.09,-676.706"/>
+<!-- fake&#45;&gt;frozenset({2, 4}) -->
+<g id="edge1" class="edge"><title>fake&#45;&gt;frozenset({2, 4})</title>
+<path fill="none" stroke="black" stroke-width="2" d="M2380.74,-787.885C2380.74,-760.98 2380.74,-708.821 2380.74,-676.748"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="2384.24,-676.706 2380.74,-666.706 2377.24,-676.706 2384.24,-676.706"/>
 </g>
 <!-- frozenset({0, 2, 3}) -->
 <g id="node2" class="node"><title>frozenset({0, 2, 3})</title>
-<ellipse fill="none" stroke="black" cx="84.5928" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="84.5928" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="84.5928" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 2, 3})</text>
+<ellipse fill="none" stroke="black" cx="1404.74" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="1404.74" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="1404.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 2, 3})</text>
 </g>
 <!-- frozenset({0}) -->
 <g id="node8" class="node"><title>frozenset({0})</title>
-<ellipse fill="none" stroke="black" cx="1391.59" cy="-18" rx="61.99" ry="18"/>
-<text text-anchor="middle" x="1391.59" y="-14.3" font-family="Times,serif" font-size="14.00">frozenset({0})</text>
+<ellipse fill="none" stroke="black" cx="2291.74" cy="-18" rx="61.99" ry="18"/>
+<text text-anchor="middle" x="2291.74" y="-14.3" font-family="Times,serif" font-size="14.00">frozenset({0})</text>
 </g>
 <!-- frozenset({0, 2, 3})&#45;&gt;frozenset({0}) -->
 <g id="edge2" class="edge"><title>frozenset({0, 2, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M94.7919,-564.222C116.123,-430.487 178.951,-170.789 353.593,-54 393.657,-27.2079 1091.04,-20.7542 1319.66,-19.3552"/>
-<polygon fill="black" stroke="black" points="1319.89,-22.854 1329.87,-19.2942 1319.85,-15.8541 1319.89,-22.854"/>
-<text text-anchor="middle" x="182.093" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
+<path fill="none" stroke="black" d="M1453.94,-579.336C1466.72,-566.089 1481.51,-553.781 1497.74,-545.57 1531.45,-528.522 1638.05,-552.121 1666.74,-527.57 1743.8,-461.655 1678.08,-396.683 1725.74,-307.186 1786.78,-192.584 1804.86,-151.15 1917.74,-87 1969.04,-57.8506 2131.12,-36.2482 2224.21,-25.8699"/>
+<polygon fill="black" stroke="black" points="2224.83,-29.3237 2234.38,-24.7502 2224.06,-22.3658 2224.83,-29.3237"/>
+<text text-anchor="middle" x="1747.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
 <!-- frozenset({0, 2, 3})&#45;&gt;frozenset({0}) -->
-<g id="edge3" class="edge"><title>frozenset({0, 2, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M122.839,-572.431C185.716,-455.486 321.038,-228.356 490.593,-87 516.703,-65.2324 526.607,-62.2148 559.593,-54 702.47,-18.418 1144.72,-17.3009 1319.48,-18.33"/>
-<polygon fill="black" stroke="black" points="1319.58,-21.8306 1329.6,-18.3938 1319.62,-14.8307 1319.58,-21.8306"/>
-<text text-anchor="middle" x="316.093" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 2, 3, 4}) -->
-<g id="node21" class="node"><title>frozenset({0, 2, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="1198.59" cy="-400.878" rx="89.8763" ry="89.8763"/>
-<ellipse fill="none" stroke="black" cx="1198.59" cy="-400.878" rx="93.8845" ry="93.8845"/>
-<text text-anchor="middle" x="1198.59" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({0, 2, 3, 4})</text>
-</g>
-<!-- frozenset({0, 2, 3})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge4" class="edge"><title>frozenset({0, 2, 3})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M133.684,-579.118C146.464,-565.881 161.286,-553.634 177.593,-545.57 218.387,-525.396 336.412,-533.033 381.593,-527.57 639.851,-496.343 942.003,-446.319 1096.4,-419.774"/>
-<polygon fill="black" stroke="black" points="1097.09,-423.206 1106.36,-418.06 1095.91,-416.308 1097.09,-423.206"/>
-<text text-anchor="middle" x="497.093" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 2, 3, 4}) -->
-<g id="node3" class="node"><title>frozenset({1, 2, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="2357.59" cy="-648.361" rx="89.8763" ry="89.8763"/>
-<ellipse fill="none" stroke="black" cx="2357.59" cy="-648.361" rx="93.8845" ry="93.8845"/>
-<text text-anchor="middle" x="2357.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 2, 3, 4})</text>
-</g>
-<!-- frozenset() -->
-<g id="node5" class="node"><title>frozenset()</title>
-<ellipse fill="none" stroke="black" cx="3218.59" cy="-18" rx="48.9926" ry="18"/>
-<text text-anchor="middle" x="3218.59" y="-14.3" font-family="Times,serif" font-size="14.00">frozenset()</text>
-</g>
-<!-- frozenset({1, 2, 3, 4})&#45;&gt;frozenset() -->
-<g id="edge9" class="edge"><title>frozenset({1, 2, 3, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M2364.88,-554.728C2375.92,-472.05 2403.7,-352.3 2473.59,-274.186 2658.59,-67.4399 3018.4,-28.1167 3159.65,-20.6981"/>
-<polygon fill="black" stroke="black" points="3160.02,-24.1842 3169.84,-20.199 3159.68,-17.1926 3160.02,-24.1842"/>
-<text text-anchor="middle" x="2477.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge10" class="edge"><title>frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M2295.21,-578.093C2282.78,-566.385 2269.31,-554.99 2255.59,-545.57 2225.91,-525.179 2216.68,-520.663 2181.59,-512.57 2066.55,-486.035 1767.84,-508.478 1650.59,-494.57 1528.37,-480.07 1390.03,-449.585 1298.96,-427.526"/>
-<polygon fill="black" stroke="black" points="1299.74,-424.114 1289.19,-425.149 1298.08,-430.915 1299.74,-424.114"/>
-<text text-anchor="middle" x="2231.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 3}) -->
-<g id="node26" class="node"><title>frozenset({0, 3})</title>
-<ellipse fill="none" stroke="black" cx="1730.59" cy="-400.878" rx="71.4873" ry="18"/>
-<text text-anchor="middle" x="1730.59" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({0, 3})</text>
-</g>
-<!-- frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge8" class="edge"><title>frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M2322.91,-560.996C2311.1,-541.894 2295.86,-523.968 2276.59,-512.57 2232.09,-486.244 1858.25,-516.857 1811.59,-494.57 1781.93,-480.401 1758.67,-449.798 1744.83,-427.623"/>
-<polygon fill="black" stroke="black" points="1747.8,-425.773 1739.65,-419.003 1741.8,-429.377 1747.8,-425.773"/>
-<text text-anchor="middle" x="2297.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({1, 2}) -->
-<g id="node4" class="node"><title>frozenset({1, 2})</title>
-<ellipse fill="none" stroke="black" cx="3576.59" cy="-648.361" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="3576.59" cy="-648.361" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="3576.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 2})</text>
-</g>
-<!-- frozenset({1, 2})&#45;&gt;frozenset() -->
-<g id="edge12" class="edge"><title>frozenset({1, 2})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3587.72,-573.222C3600.86,-457.856 3609.24,-233.438 3504.59,-87 3478.34,-50.266 3351.77,-31.8271 3276.08,-23.941"/>
-<polygon fill="black" stroke="black" points="3276.06,-20.4208 3265.75,-22.8975 3275.35,-27.3853 3276.06,-20.4208"/>
-<text text-anchor="middle" x="3585.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({3}) -->
-<g id="node7" class="node"><title>frozenset({3})</title>
-<ellipse fill="none" stroke="black" cx="3401.59" cy="-400.878" rx="61.99" ry="18"/>
-<text text-anchor="middle" x="3401.59" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({3})</text>
-</g>
-<!-- frozenset({1, 2})&#45;&gt;frozenset({3}) -->
-<g id="edge11" class="edge"><title>frozenset({1, 2})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3533.11,-586.364C3496.47,-534.964 3445.9,-464.029 3419.41,-426.874"/>
-<polygon fill="black" stroke="black" points="3422.18,-424.727 3413.53,-418.616 3416.48,-428.791 3422.18,-424.727"/>
-<text text-anchor="middle" x="3492.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({1, 2})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge13" class="edge"><title>frozenset({1, 2})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M3534.16,-585.853C3521.99,-571.272 3507.85,-556.733 3492.59,-545.57 3460.89,-522.37 3449.12,-520.256 3410.59,-512.57 3323.47,-495.187 1892.27,-531.76 1811.59,-494.57 1781.57,-480.731 1758.26,-449.773 1744.5,-427.437"/>
-<polygon fill="black" stroke="black" points="1747.48,-425.587 1739.37,-418.763 1741.45,-429.152 1747.48,-425.587"/>
-<text text-anchor="middle" x="3467.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset()&#45;&gt;frozenset() -->
-<g id="edge17" class="edge"><title>frozenset()&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3266.89,-20.5543C3277.56,-20.3143 3285.34,-19.4629 3285.34,-18 3285.34,-17.0628 3282.15,-16.3766 3277.05,-15.9413"/>
-<polygon fill="black" stroke="black" points="3277.05,-12.4373 3266.89,-15.4457 3276.71,-19.429 3277.05,-12.4373"/>
-<text text-anchor="middle" x="3288.84" y="-14.3" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset()&#45;&gt;frozenset() -->
-<g id="edge18" class="edge"><title>frozenset()&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3265.65,-23.1872C3285.96,-23.6119 3303.34,-21.8828 3303.34,-18 3303.34,-14.7845 3291.42,-13.0461 3275.79,-12.7847"/>
-<polygon fill="black" stroke="black" points="3275.64,-9.28499 3265.65,-12.8128 3275.66,-16.285 3275.64,-9.28499"/>
-<text text-anchor="middle" x="3306.84" y="-14.3" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset()&#45;&gt;frozenset() -->
-<g id="edge19" class="edge"><title>frozenset()&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3263.48,-25.217C3292.88,-27.1732 3321.34,-24.7676 3321.34,-18 3321.34,-12.0255 3299.16,-9.45049 3273.74,-10.275"/>
-<polygon fill="black" stroke="black" points="3273.3,-6.7923 3263.48,-10.783 3273.64,-13.7837 3273.3,-6.7923"/>
-<text text-anchor="middle" x="3324.84" y="-14.3" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 2, 4}) -->
-<g id="node6" class="node"><title>frozenset({1, 2, 4})</title>
-<ellipse fill="none" stroke="black" cx="3398.59" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="3398.59" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="3398.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 2, 4})</text>
-</g>
-<!-- frozenset({1, 2, 4})&#45;&gt;frozenset() -->
-<g id="edge33" class="edge"><title>frozenset({1, 2, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3363.68,-571.168C3352.79,-546.817 3340.94,-519.67 3330.59,-494.57 3293.39,-404.29 3276.07,-383.964 3252.59,-289.186 3227.27,-186.957 3237.49,-158.398 3223.59,-54 3223.25,-51.4445 3222.89,-48.7855 3222.52,-46.1257"/>
-<polygon fill="black" stroke="black" points="3225.97,-45.4922 3221.1,-36.0808 3219.03,-46.4724 3225.97,-45.4922"/>
-<text text-anchor="middle" x="3256.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({1, 2, 4})&#45;&gt;frozenset({3}) -->
-<g id="edge32" class="edge"><title>frozenset({1, 2, 4})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3399.62,-563.566C3400.19,-516.645 3400.87,-461.254 3401.26,-428.995"/>
-<polygon fill="black" stroke="black" points="3404.76,-429.029 3401.38,-418.987 3397.76,-428.944 3404.76,-429.029"/>
-<text text-anchor="middle" x="3403.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({1, 2, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge34" class="edge"><title>frozenset({1, 2, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M3346.17,-581.92C3333.76,-568.846 3319.94,-555.958 3305.59,-545.57 3289.8,-534.137 3282.87,-536.6 3265.59,-527.57 3254.11,-521.567 3253.06,-516.107 3240.59,-512.57 3164.21,-490.895 1883.67,-527.855 1811.59,-494.57 1781.58,-480.711 1758.26,-449.757 1744.51,-427.427"/>
-<polygon fill="black" stroke="black" points="1747.48,-425.579 1739.38,-418.756 1741.46,-429.145 1747.48,-425.579"/>
-<text text-anchor="middle" x="3269.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({3})&#45;&gt;frozenset() -->
-<g id="edge48" class="edge"><title>frozenset({3})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3413.58,-382.904C3447.75,-332.28 3538.68,-180.1 3467.59,-87 3444.23,-56.4033 3340.07,-36.2472 3274.09,-26.2988"/>
-<polygon fill="black" stroke="black" points="3274.25,-22.7846 3263.85,-24.7898 3273.23,-29.7099 3274.25,-22.7846"/>
-<text text-anchor="middle" x="3497.09" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({3})&#45;&gt;frozenset({0}) -->
-<g id="edge47" class="edge"><title>frozenset({3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M3387.3,-383.045C3363.63,-356.192 3313.6,-303.691 3260.59,-274.186 2959.28,-106.474 2857.06,-108.742 2516.59,-54 2312.65,-21.2102 1678.31,-18.7082 1463.53,-18.8313"/>
-<polygon fill="black" stroke="black" points="1463.31,-15.3314 1453.32,-18.8393 1463.32,-22.3314 1463.31,-15.3314"/>
-<text text-anchor="middle" x="3224.09" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({2, 4}) -->
-<g id="node27" class="node"><title>frozenset({2, 4})</title>
-<ellipse fill="none" stroke="black" cx="3383.59" cy="-171.593" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="3383.59" cy="-171.593" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="3383.59" y="-167.893" font-family="Times,serif" font-size="14.00">frozenset({2, 4})</text>
-</g>
-<!-- frozenset({3})&#45;&gt;frozenset({2, 4}) -->
-<g id="edge49" class="edge"><title>frozenset({3})&#45;&gt;frozenset({2, 4})</title>
-<path fill="none" stroke="black" d="M3400.24,-382.794C3398.13,-356.201 3393.93,-303.158 3390.28,-257.012"/>
-<polygon fill="black" stroke="black" points="3393.76,-256.671 3389.48,-246.979 3386.78,-257.224 3393.76,-256.671"/>
-<text text-anchor="middle" x="3396.09" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0})&#45;&gt;frozenset({0}) -->
-<g id="edge50" class="edge"><title>frozenset({0})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1452.78,-20.471C1463.7,-20.1498 1471.34,-19.3262 1471.34,-18 1471.34,-17.1504 1468.2,-16.5071 1463.08,-16.0699"/>
-<polygon fill="black" stroke="black" points="1462.95,-12.5582 1452.78,-15.529 1462.58,-19.5486 1462.95,-12.5582"/>
-<text text-anchor="middle" x="1474.84" y="-14.3" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0})&#45;&gt;frozenset({0}) -->
-<g id="edge51" class="edge"><title>frozenset({0})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1450.76,-23.2449C1472.01,-23.3577 1489.34,-21.6094 1489.34,-18 1489.34,-14.9828 1477.23,-13.2661 1460.85,-12.8499"/>
-<polygon fill="black" stroke="black" points="1460.8,-9.34936 1450.76,-12.7551 1460.73,-16.3491 1460.8,-9.34936"/>
-<text text-anchor="middle" x="1492.84" y="-14.3" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0})&#45;&gt;frozenset({0}) -->
-<g id="edge52" class="edge"><title>frozenset({0})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1447.87,-25.5115C1478.87,-26.8818 1507.34,-24.3779 1507.34,-18 1507.34,-12.3197 1484.75,-9.71229 1457.91,-10.1779"/>
-<polygon fill="black" stroke="black" points="1457.75,-6.68109 1447.87,-10.4885 1457.97,-13.6778 1457.75,-6.68109"/>
-<text text-anchor="middle" x="1510.84" y="-14.3" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 1, 3}) -->
-<g id="node9" class="node"><title>frozenset({0, 1, 3})</title>
-<ellipse fill="none" stroke="black" cx="792.593" cy="-648.361" rx="80.6858" ry="18"/>
-<text text-anchor="middle" x="792.593" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 3})</text>
-</g>
-<!-- frozenset({0, 1, 3})&#45;&gt;frozenset({0}) -->
-<g id="edge24" class="edge"><title>frozenset({0, 1, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M801.714,-630.368C850.91,-538.817 1083.29,-107.681 1107.59,-87 1140.14,-59.3061 1252.96,-38.5994 1326.23,-27.686"/>
-<polygon fill="black" stroke="black" points="1326.91,-31.1243 1336.3,-26.2114 1325.89,-24.1983 1326.91,-31.1243"/>
-<text text-anchor="middle" x="999.093" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 1, 3})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge25" class="edge"><title>frozenset({0, 1, 3})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M804.045,-630.218C819.473,-608.2 848.806,-569.929 881.593,-545.57 948.049,-496.197 1034.17,-458.514 1099.87,-434.15"/>
-<polygon fill="black" stroke="black" points="1101.23,-437.381 1109.42,-430.652 1098.82,-430.808 1101.23,-437.381"/>
-<text text-anchor="middle" x="933.093" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 1, 3})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge23" class="edge"><title>frozenset({0, 1, 3})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M802.179,-630.434C816.322,-607.175 845.092,-565.907 881.593,-545.57 920.751,-523.752 1036.08,-517.878 1080.59,-512.57 1189.45,-499.589 1218.19,-510.875 1326.59,-494.57 1452.58,-475.62 1597.54,-438.546 1674.97,-417.481"/>
-<polygon fill="black" stroke="black" points="1676.26,-420.757 1684.98,-414.743 1674.41,-414.004 1676.26,-420.757"/>
-<text text-anchor="middle" x="1084.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({2, 3, 4}) -->
-<g id="node10" class="node"><title>frozenset({2, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="1949.59" cy="-171.593" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="1949.59" cy="-171.593" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="1949.59" y="-167.893" font-family="Times,serif" font-size="14.00">frozenset({2, 3, 4})</text>
-</g>
-<!-- frozenset({2, 3, 4})&#45;&gt;frozenset() -->
-<g id="edge63" class="edge"><title>frozenset({2, 3, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M2012.24,-114.188C2041.98,-90.9972 2079.33,-66.6463 2117.59,-54 2216.58,-21.2813 2945.73,-18.9073 3159.72,-18.9224"/>
-<polygon fill="black" stroke="black" points="3159.81,-22.4223 3169.81,-18.9249 3159.81,-15.4223 3159.81,-22.4223"/>
-<text text-anchor="middle" x="2121.09" y="-57.8" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({2, 3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge62" class="edge"><title>frozenset({2, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1892.53,-108.848C1869.29,-87.7008 1840.79,-66.2905 1810.59,-54 1749.56,-29.1559 1566.2,-21.9462 1463.42,-19.8545"/>
-<polygon fill="black" stroke="black" points="1463.19,-16.3495 1453.13,-19.6565 1463.06,-23.3482 1463.19,-16.3495"/>
-<text text-anchor="middle" x="1841.09" y="-57.8" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({2, 3, 4})&#45;&gt;frozenset({2, 3, 4}) -->
-<g id="edge64" class="edge"><title>frozenset({2, 3, 4})&#45;&gt;frozenset({2, 3, 4})</title>
-<path fill="none" stroke="black" d="M2032.51,-190.102C2044.29,-187.108 2052.19,-180.939 2052.19,-171.593 2052.19,-165.168 2048.45,-160.244 2042.29,-156.821"/>
-<polygon fill="black" stroke="black" points="2043.11,-153.384 2032.51,-153.084 2040.61,-159.923 2043.11,-153.384"/>
-<text text-anchor="middle" x="2055.69" y="-167.893" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 2, 4}) -->
-<g id="node11" class="node"><title>frozenset({0, 2, 4})</title>
-<ellipse fill="none" stroke="black" cx="1675.59" cy="-171.593" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="1675.59" cy="-171.593" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="1675.59" y="-167.893" font-family="Times,serif" font-size="14.00">frozenset({0, 2, 4})</text>
-</g>
-<!-- frozenset({0, 2, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge65" class="edge"><title>frozenset({0, 2, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1630.51,-99.7917C1616.22,-82.3758 1599.01,-65.4581 1579.59,-54 1544.7,-33.4143 1500.36,-24.5012 1463.5,-20.8102"/>
-<polygon fill="black" stroke="black" points="1463.59,-17.3043 1453.32,-19.9023 1462.97,-24.2766 1463.59,-17.3043"/>
-<text text-anchor="middle" x="1603.09" y="-57.8" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 2, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge66" class="edge"><title>frozenset({0, 2, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1645.06,-92.4983C1636.01,-77.7181 1624.65,-63.8292 1610.59,-54 1586.98,-37.4837 1516.11,-28.316 1461.32,-23.5499"/>
-<polygon fill="black" stroke="black" points="1461.54,-20.0568 1451.29,-22.7104 1460.96,-27.0324 1461.54,-20.0568"/>
-<text text-anchor="middle" x="1631.09" y="-57.8" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 2, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge67" class="edge"><title>frozenset({0, 2, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1684.03,-255.803C1685.84,-267.094 1688,-278.474 1690.59,-289.186 1697.72,-318.637 1710.01,-351.11 1719.09,-373.222"/>
-<polygon fill="black" stroke="black" points="1715.93,-374.724 1723.01,-382.604 1722.39,-372.028 1715.93,-374.724"/>
-<text text-anchor="middle" x="1694.09" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({3, 4}) -->
-<g id="node12" class="node"><title>frozenset({3, 4})</title>
-<ellipse fill="none" stroke="black" cx="2070.59" cy="-400.878" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="2070.59" cy="-400.878" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="2070.59" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({3, 4})</text>
-</g>
-<!-- frozenset({3, 4})&#45;&gt;frozenset() -->
-<g id="edge72" class="edge"><title>frozenset({3, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M2104.47,-332.985C2151.21,-249.177 2244.25,-109.789 2370.59,-54 2442.2,-22.3804 2979.22,-19.1382 3159.66,-18.9494"/>
-<polygon fill="black" stroke="black" points="3159.76,-22.4494 3169.76,-18.9416 3159.76,-15.4494 3159.76,-22.4494"/>
-<text text-anchor="middle" x="2315.09" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge71" class="edge"><title>frozenset({3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M2084.54,-326.647C2099.74,-236.798 2117.45,-91.7206 2081.59,-54 2060.55,-31.8624 1636.07,-22.7941 1463.55,-20.0133"/>
-<polygon fill="black" stroke="black" points="1463.36,-16.5098 1453.3,-19.8507 1463.24,-23.5089 1463.36,-16.5098"/>
-<text text-anchor="middle" x="2106.09" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({3, 4})&#45;&gt;frozenset({2, 3, 4}) -->
-<g id="edge73" class="edge"><title>frozenset({3, 4})&#45;&gt;frozenset({2, 3, 4})</title>
-<path fill="none" stroke="black" d="M2035.43,-333.832C2022.45,-309.446 2007.57,-281.49 1993.88,-255.779"/>
-<polygon fill="black" stroke="black" points="1996.88,-253.971 1989.09,-246.788 1990.7,-257.26 1996.88,-253.971"/>
-<text text-anchor="middle" x="2014.09" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({2, 3}) -->
-<g id="node13" class="node"><title>frozenset({2, 3})</title>
-<ellipse fill="none" stroke="black" cx="1895.59" cy="-400.878" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="1895.59" cy="-400.878" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="1895.59" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({2, 3})</text>
-</g>
-<!-- frozenset({2, 3})&#45;&gt;frozenset() -->
-<g id="edge78" class="edge"><title>frozenset({2, 3})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M1867.99,-330.446C1860.08,-307.221 1852.54,-280.939 1848.59,-256.186 1834.44,-167.418 1786.19,-113.475 1853.59,-54 1878.42,-32.0873 2900.56,-21.757 3159.47,-19.4889"/>
-<polygon fill="black" stroke="black" points="3159.83,-22.986 3169.79,-19.3992 3159.76,-15.9863 3159.83,-22.986"/>
-<text text-anchor="middle" x="1852.09" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({2, 3})&#45;&gt;frozenset({0}) -->
-<g id="edge77" class="edge"><title>frozenset({2, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1854.09,-337.553C1844.32,-322.002 1834.24,-305.19 1825.59,-289.186 1817.94,-275.011 1815.85,-271.416 1810.59,-256.186 1785.36,-183.045 1824.05,-141.955 1769.59,-87 1727.6,-44.6313 1559.67,-28.2702 1462.35,-22.2588"/>
-<polygon fill="black" stroke="black" points="1462.48,-18.7605 1452.29,-21.6587 1462.06,-25.7481 1462.48,-18.7605"/>
-<text text-anchor="middle" x="1814.09" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({2, 3})&#45;&gt;frozenset({2, 3, 4}) -->
-<g id="edge79" class="edge"><title>frozenset({2, 3})&#45;&gt;frozenset({2, 3, 4})</title>
-<path fill="none" stroke="black" d="M1912.83,-327.338C1917.6,-307.263 1922.84,-285.21 1927.83,-264.201"/>
-<polygon fill="black" stroke="black" points="1931.27,-264.849 1930.18,-254.311 1924.46,-263.231 1931.27,-264.849"/>
-<text text-anchor="middle" x="1928.09" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 2}) -->
-<g id="node14" class="node"><title>frozenset({0, 2})</title>
-<ellipse fill="none" stroke="black" cx="618.593" cy="-648.361" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="618.593" cy="-648.361" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="618.593" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 2})</text>
-</g>
-<!-- frozenset({0, 2})&#45;&gt;frozenset({0}) -->
-<g id="edge80" class="edge"><title>frozenset({0, 2})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M659.944,-584.869C672.173,-570.217 686.619,-555.889 702.593,-545.57 728.132,-529.071 745.3,-547.112 768.593,-527.57 851.565,-457.957 821.575,-402.724 872.593,-307.186 926.339,-206.539 912.81,-154.782 1004.59,-87 1053.88,-50.5996 1224.56,-31.8008 1322,-23.8249"/>
-<polygon fill="black" stroke="black" points="1322.37,-27.3064 1332.06,-23.0185 1321.81,-20.3288 1322.37,-27.3064"/>
-<text text-anchor="middle" x="893.093" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 2})&#45;&gt;frozenset({0}) -->
-<g id="edge81" class="edge"><title>frozenset({0, 2})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M661.714,-586.209C673.823,-571.705 687.769,-557.113 702.593,-545.57 717.337,-534.088 728.656,-541.948 740.593,-527.57 805.289,-449.641 765.733,-402.991 798.593,-307.186 833.114,-206.536 810.805,-155.064 892.593,-87 956.081,-34.1653 1197.66,-22.279 1319.88,-19.6773"/>
-<polygon fill="black" stroke="black" points="1319.96,-23.1763 1329.89,-19.4791 1319.83,-16.1777 1319.96,-23.1763"/>
-<text text-anchor="middle" x="812.093" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 2})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge82" class="edge"><title>frozenset({0, 2})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M658.695,-584.064C671.024,-569.238 685.83,-555.027 702.593,-545.57 750.329,-518.638 770.569,-536.812 824.593,-527.57 858.959,-521.69 866.967,-516.652 901.593,-512.57 1089.35,-490.433 1139.23,-519.815 1326.59,-494.57 1453.37,-477.488 1598.89,-439.433 1675.99,-417.77"/>
-<polygon fill="black" stroke="black" points="1677.28,-421.042 1685.95,-414.955 1675.37,-414.306 1677.28,-421.042"/>
-<text text-anchor="middle" x="905.093" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 1, 4}) -->
-<g id="node15" class="node"><title>frozenset({0, 1, 4})</title>
-<ellipse fill="none" stroke="black" cx="1564.59" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="1564.59" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="1564.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 4})</text>
-</g>
-<!-- frozenset({0, 1, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge87" class="edge"><title>frozenset({0, 1, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1540.14,-567.239C1518.27,-494.815 1485.73,-385.159 1459.59,-289.186 1435.44,-200.486 1409.67,-94.5724 1398,-45.8918"/>
-<polygon fill="black" stroke="black" points="1401.39,-45.0408 1395.66,-36.1298 1394.58,-46.6698 1401.39,-45.0408"/>
-<text text-anchor="middle" x="1463.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 1, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge86" class="edge"><title>frozenset({0, 1, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1611.72,-577.672C1645.65,-527.493 1689.49,-462.665 1713.31,-427.432"/>
-<polygon fill="black" stroke="black" points="1716.22,-429.384 1718.92,-419.14 1710.42,-425.463 1716.22,-429.384"/>
-<text text-anchor="middle" x="1656.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 1, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge88" class="edge"><title>frozenset({0, 1, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1601.26,-571.889C1611.85,-552.092 1623.98,-531.106 1636.59,-512.57 1658.19,-480.822 1687.36,-447.672 1707.45,-426.025"/>
-<polygon fill="black" stroke="black" points="1710.12,-428.285 1714.4,-418.594 1705.01,-423.5 1710.12,-428.285"/>
-<text text-anchor="middle" x="1640.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 1, 2}) -->
-<g id="node16" class="node"><title>frozenset({0, 1, 2})</title>
-<ellipse fill="none" stroke="black" cx="1956.59" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="1956.59" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="1956.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2})</text>
-</g>
-<!-- frozenset({0, 1, 2})&#45;&gt;frozenset({0}) -->
-<g id="edge90" class="edge"><title>frozenset({0, 1, 2})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M2009.5,-581.972C2021.83,-568.968 2035.49,-556.095 2049.59,-545.57 2070.38,-530.051 2140.6,-516.411 2154.59,-494.57 2179.02,-456.436 2182.5,-126.066 2159.59,-87 2144.39,-61.083 2129.47,-62.293 2100.59,-54 1982.7,-20.1448 1619.5,-17.7773 1463.74,-18.3994"/>
-<polygon fill="black" stroke="black" points="1463.32,-14.9011 1453.34,-18.4466 1463.35,-21.9011 1463.32,-14.9011"/>
-<text text-anchor="middle" x="2179.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 1, 2})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge89" class="edge"><title>frozenset({0, 1, 2})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1903,-582.546C1882.79,-559.524 1859.02,-534.019 1835.59,-512.57 1825.76,-503.566 1821.37,-503.639 1811.59,-494.57 1788.8,-473.423 1765.76,-446.378 1750.11,-426.967"/>
-<polygon fill="black" stroke="black" points="1752.64,-424.531 1743.67,-418.895 1747.17,-428.896 1752.64,-424.531"/>
-<text text-anchor="middle" x="1854.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 1, 2})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge91" class="edge"><title>frozenset({0, 1, 2})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1903.59,-582.095C1891.27,-569.083 1877.63,-556.176 1863.59,-545.57 1849.32,-534.786 1841.41,-538.937 1827.59,-527.57 1792.6,-498.772 1762.54,-455.12 1745.52,-427.572"/>
-<polygon fill="black" stroke="black" points="1748.43,-425.628 1740.26,-418.891 1742.45,-429.257 1748.43,-425.628"/>
-<text text-anchor="middle" x="1831.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({2}) -->
-<g id="node17" class="node"><title>frozenset({2})</title>
-<ellipse fill="none" stroke="black" cx="3735.59" cy="-648.361" rx="61.975" ry="61.975"/>
-<ellipse fill="none" stroke="black" cx="3735.59" cy="-648.361" rx="65.99" ry="65.99"/>
-<text text-anchor="middle" x="3735.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({2})</text>
-</g>
-<!-- frozenset({2})&#45;&gt;frozenset() -->
-<g id="edge53" class="edge"><title>frozenset({2})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3736.86,-582.541C3738.09,-443.855 3732.49,-125.163 3657.59,-54 3630.62,-28.3698 3390.81,-21.4806 3277.46,-19.6508"/>
-<polygon fill="black" stroke="black" points="3277.28,-16.1477 3267.22,-19.4938 3277.17,-23.1468 3277.28,-16.1477"/>
-<text text-anchor="middle" x="3728.09" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({2})&#45;&gt;frozenset() -->
-<g id="edge54" class="edge"><title>frozenset({2})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3731.65,-582.485C3721.39,-468.258 3684.62,-229.84 3553.59,-87 3516.97,-47.0767 3362.19,-29.5116 3276.42,-22.72"/>
-<polygon fill="black" stroke="black" points="3276.55,-19.22 3266.31,-21.9444 3276.01,-26.1995 3276.55,-19.22"/>
-<text text-anchor="middle" x="3672.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({2})&#45;&gt;frozenset({3}) -->
-<g id="edge55" class="edge"><title>frozenset({2})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3702.07,-591.633C3690.4,-575.35 3676.26,-558.48 3660.59,-545.57 3646.17,-533.687 3639.17,-536.195 3622.59,-527.57 3555.51,-492.668 3479.24,-448.191 3436.12,-422.583"/>
-<polygon fill="black" stroke="black" points="3437.82,-419.523 3427.44,-417.416 3434.24,-425.538 3437.82,-419.523"/>
-<text text-anchor="middle" x="3626.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 2, 3}) -->
-<g id="node18" class="node"><title>frozenset({1, 2, 3})</title>
-<ellipse fill="none" stroke="black" cx="2714.59" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="2714.59" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="2714.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 2, 3})</text>
-</g>
-<!-- frozenset({1, 2, 3})&#45;&gt;frozenset() -->
-<g id="edge93" class="edge"><title>frozenset({1, 2, 3})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M2739.66,-567.442C2746.52,-549.013 2754.59,-529.777 2763.59,-512.57 2871.01,-307.308 2885.26,-233.662 3064.59,-87 3095.96,-61.3455 3138.53,-43.5329 3170.96,-32.5934"/>
-<polygon fill="black" stroke="black" points="3172.26,-35.8515 3180.68,-29.418 3170.08,-29.1978 3172.26,-35.8515"/>
-<text text-anchor="middle" x="2892.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({1, 2, 3})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge94" class="edge"><title>frozenset({1, 2, 3})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M2663.72,-580.507C2650.92,-567.281 2636.3,-554.688 2620.59,-545.57 2592.39,-529.196 2509.95,-516.613 2477.59,-512.57 2112.79,-466.997 2015.93,-535.665 1650.59,-494.57 1528.28,-480.812 1389.96,-450.177 1298.92,-427.881"/>
-<polygon fill="black" stroke="black" points="1299.7,-424.47 1289.15,-425.478 1298.03,-431.267 1299.7,-424.47"/>
-<text text-anchor="middle" x="2567.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 2, 3})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge92" class="edge"><title>frozenset({1, 2, 3})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M2667.45,-577.8C2645.65,-551.959 2617.32,-525.74 2584.59,-512.57 2504.89,-480.495 1889.4,-531.003 1811.59,-494.57 1781.82,-480.63 1758.59,-449.981 1744.78,-427.733"/>
-<polygon fill="black" stroke="black" points="1747.75,-425.875 1739.62,-419.081 1741.74,-429.462 1747.75,-425.875"/>
-<text text-anchor="middle" x="2614.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 1}) -->
-<g id="node19" class="node"><title>frozenset({0, 1})</title>
-<ellipse fill="none" stroke="black" cx="2540.59" cy="-648.361" rx="71.4873" ry="18"/>
-<text text-anchor="middle" x="2540.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1})</text>
-</g>
-<!-- frozenset({0, 1})&#45;&gt;frozenset({0}) -->
-<g id="edge96" class="edge"><title>frozenset({0, 1})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M2536.87,-630.357C2531.87,-607.187 2522.89,-564.366 2516.59,-527.57 2497.41,-415.452 2539.72,-371.354 2480.59,-274.186 2391.98,-128.58 2328.93,-105.951 2166.59,-54 2100.8,-32.9468 1642.79,-23.1601 1463.41,-20.1025"/>
-<polygon fill="black" stroke="black" points="1463.34,-16.6009 1453.28,-19.932 1463.22,-23.5999 1463.34,-16.6009"/>
-<text text-anchor="middle" x="2492.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 1})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge95" class="edge"><title>frozenset({0, 1})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M2534.7,-630.244C2523.3,-600.113 2495.06,-538.352 2447.59,-512.57 2385.47,-478.828 1875.54,-524.711 1811.59,-494.57 1781.86,-480.556 1758.62,-449.921 1744.8,-427.697"/>
-<polygon fill="black" stroke="black" points="1747.76,-425.842 1739.63,-419.056 1741.76,-429.434 1747.76,-425.842"/>
-<text text-anchor="middle" x="2470.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 1})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge97" class="edge"><title>frozenset({0, 1})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M2532.09,-630.267C2519.68,-607.202 2494.37,-566.587 2460.59,-545.57 2400.42,-508.131 2374.93,-521.228 2304.59,-512.57 2250.19,-505.873 1861.08,-518.143 1811.59,-494.57 1781.92,-480.434 1758.66,-449.824 1744.82,-427.639"/>
-<polygon fill="black" stroke="black" points="1747.79,-425.788 1739.65,-419.014 1741.79,-429.39 1747.79,-425.788"/>
-<text text-anchor="middle" x="2429.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 4}) -->
-<g id="node20" class="node"><title>frozenset({0, 4})</title>
-<ellipse fill="none" stroke="black" cx="449.593" cy="-648.361" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="449.593" cy="-648.361" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="449.593" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 4})</text>
-</g>
-<!-- frozenset({0, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge14" class="edge"><title>frozenset({0, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M491.224,-584.978C503.646,-570.235 518.339,-555.836 534.593,-545.57 561.752,-528.415 582.856,-551.222 604.593,-527.57 749.033,-370.404 525.026,-195.784 684.593,-54 708.068,-33.141 1144.89,-23.2771 1319.93,-20.1494"/>
-<polygon fill="black" stroke="black" points="1320.14,-23.6464 1330.08,-19.9705 1320.02,-16.6475 1320.14,-23.6464"/>
-<text text-anchor="middle" x="644.093" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge15" class="edge"><title>frozenset({0, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M490.615,-584.613C503.087,-569.782 517.957,-555.433 534.593,-545.57 570.057,-524.544 589.223,-546.985 625.593,-527.57 643.891,-517.802 647.398,-512.031 658.593,-494.57 762.853,-331.947 668.102,-218.517 809.593,-87 848.227,-51.089 871.681,-63.3503 923.593,-54 1062.33,-29.0112 1227.3,-21.8126 1319.68,-19.7715"/>
-<polygon fill="black" stroke="black" points="1319.83,-23.2692 1329.75,-19.563 1319.68,-16.2707 1319.83,-23.2692"/>
-<text text-anchor="middle" x="724.093" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge16" class="edge"><title>frozenset({0, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M489.572,-584.077C502.136,-569.061 517.312,-554.754 534.593,-545.57 569.31,-527.12 671.576,-532.404 710.593,-527.57 756.503,-521.882 767.519,-516.72 813.593,-512.57 1040.81,-492.1 1100.39,-524.213 1326.59,-494.57 1453.43,-477.948 1598.93,-439.714 1676,-417.899"/>
-<polygon fill="black" stroke="black" points="1677.3,-421.168 1685.96,-415.063 1675.39,-414.435 1677.3,-421.168"/>
-<text text-anchor="middle" x="817.093" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge20" class="edge"><title>frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1225.43,-310.688C1253.4,-222.051 1297.77,-93.7527 1331.59,-54 1336.54,-48.1903 1342.7,-43.1149 1349.18,-38.7655"/>
-<polygon fill="black" stroke="black" points="1351.42,-41.4933 1358.12,-33.2839 1347.77,-35.5249 1351.42,-41.4933"/>
-<text text-anchor="middle" x="1313.09" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge21" class="edge"><title>frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1185.46,-307.867C1180.91,-240.373 1186.01,-149.899 1232.59,-87 1255.36,-56.2574 1294.86,-39.2718 1328.78,-29.9646"/>
-<polygon fill="black" stroke="black" points="1329.84,-33.3083 1338.65,-27.4271 1328.09,-26.529 1329.84,-33.3083"/>
-<text text-anchor="middle" x="1236.09" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge22" class="edge"><title>frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M1290.61,-420.268C1302.46,-416.906 1310.28,-410.442 1310.28,-400.878 1310.28,-394.153 1306.42,-388.961 1300,-385.302"/>
-<polygon fill="black" stroke="black" points="1301.19,-382.009 1290.61,-381.487 1298.56,-388.494 1301.19,-382.009"/>
-<text text-anchor="middle" x="1313.78" y="-397.178" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({4}) -->
-<g id="node22" class="node"><title>frozenset({4})</title>
-<ellipse fill="none" stroke="black" cx="3884.59" cy="-648.361" rx="61.975" ry="61.975"/>
-<ellipse fill="none" stroke="black" cx="3884.59" cy="-648.361" rx="65.99" ry="65.99"/>
-<text text-anchor="middle" x="3884.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({4})</text>
-</g>
-<!-- frozenset({4})&#45;&gt;frozenset() -->
-<g id="edge26" class="edge"><title>frozenset({4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3876.86,-582.826C3861.28,-473.201 3818.28,-246.952 3714.59,-87 3702.43,-68.2302 3697.23,-62.6216 3676.59,-54 3606.18,-24.5882 3385.09,-19.591 3277.95,-18.9423"/>
-<polygon fill="black" stroke="black" points="3277.66,-15.4409 3267.64,-18.8912 3277.62,-22.4408 3277.66,-15.4409"/>
-<text text-anchor="middle" x="3811.09" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({4})&#45;&gt;frozenset() -->
-<g id="edge27" class="edge"><title>frozenset({4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3890.7,-582.73C3897.82,-467.82 3895.29,-226.927 3768.59,-87 3746.58,-62.6888 3734.22,-62.6818 3702.59,-54 3624.09,-32.4487 3388.27,-23.4895 3277.4,-20.3927"/>
-<polygon fill="black" stroke="black" points="3277.16,-16.8851 3267.07,-20.1111 3276.97,-23.8825 3277.16,-16.8851"/>
-<text text-anchor="middle" x="3870.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({4})&#45;&gt;frozenset({3}) -->
-<g id="edge28" class="edge"><title>frozenset({4})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3852.62,-590.869C3841.11,-574.456 3826.89,-557.705 3810.59,-545.57 3795.53,-534.358 3555.41,-453.307 3450.27,-418.115"/>
-<polygon fill="black" stroke="black" points="3451.12,-414.709 3440.53,-414.856 3448.9,-421.348 3451.12,-414.709"/>
-<text text-anchor="middle" x="3764.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 3, 4}) -->
-<g id="node23" class="node"><title>frozenset({1, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="2901.59" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="2901.59" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="2901.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 3, 4})</text>
-</g>
-<!-- frozenset({1, 3, 4})&#45;&gt;frozenset() -->
-<g id="edge6" class="edge"><title>frozenset({1, 3, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M2930.42,-568.813C2973.03,-457.267 3058.93,-248.579 3161.59,-87 3171.55,-71.3214 3184.78,-55.3256 3195.98,-42.7901"/>
-<polygon fill="black" stroke="black" points="3198.85,-44.8396 3203,-35.0903 3193.67,-40.1252 3198.85,-44.8396"/>
-<text text-anchor="middle" x="3060.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({1, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge7" class="edge"><title>frozenset({1, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M2851.71,-579.892C2839.02,-566.7 2824.43,-554.275 2808.59,-545.57 2734.63,-504.917 2705.59,-520.71 2621.59,-512.57 2191.98,-470.938 2079.59,-542.125 1650.59,-494.57 1528.26,-481.009 1389.95,-450.335 1298.91,-427.976"/>
-<polygon fill="black" stroke="black" points="1299.69,-424.565 1289.14,-425.566 1298.01,-431.361 1299.69,-424.565"/>
-<text text-anchor="middle" x="2772.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 3, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge5" class="edge"><title>frozenset({1, 3, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M2884.11,-565.571C2875.65,-544.923 2863.12,-525.085 2844.59,-512.57 2797.03,-480.442 1863.64,-518.759 1811.59,-494.57 1781.78,-480.717 1758.56,-450.051 1744.76,-427.775"/>
-<polygon fill="black" stroke="black" points="1747.73,-425.913 1739.6,-419.111 1741.71,-429.494 1747.73,-425.913"/>
-<text text-anchor="middle" x="2862.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
-</g>
-<!-- frozenset({1, 3})&#45;&gt;frozenset() -->
-<g id="edge30" class="edge"><title>frozenset({1, 3})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M1388.25,-630.34C1376.78,-539.447 1336.24,-113.201 1575.59,-54 1731.46,-15.4486 2883.58,-17.6331 3159.39,-18.7218"/>
-<polygon fill="black" stroke="black" points="3159.58,-22.2225 3169.59,-18.7632 3159.61,-15.2225 3159.58,-22.2225"/>
-<text text-anchor="middle" x="1401.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
-</g>
-<!-- frozenset({1, 3})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge31" class="edge"><title>frozenset({1, 3})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M1389.19,-630.072C1386.25,-602.825 1377.38,-549.231 1351.59,-512.57 1335.21,-489.285 1312.34,-469.061 1289.27,-452.5"/>
-<polygon fill="black" stroke="black" points="1290.97,-449.421 1280.77,-446.565 1286.96,-455.16 1290.97,-449.421"/>
-<text text-anchor="middle" x="1363.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
-</g>
-<!-- frozenset({1, 3})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge29" class="edge"><title>frozenset({1, 3})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1400.79,-630.519C1414.55,-608.827 1440.8,-570.908 1470.59,-545.57 1537.3,-488.832 1629.91,-444.143 1684.7,-420.481"/>
-<polygon fill="black" stroke="black" points="1686.33,-423.594 1694.15,-416.449 1683.58,-417.156 1686.33,-423.594"/>
-<text text-anchor="middle" x="1513.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<g id="edge4" class="edge"><title>frozenset({0, 2, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1454.11,-579.665C1466.88,-566.4 1481.63,-554.003 1497.74,-545.57 1550.99,-517.714 1586.62,-567.252 1631.74,-527.57 1707.86,-460.637 1674.31,-154.697 1749.74,-87 1817.43,-26.2534 2087.95,-18.3619 2219.36,-18.2239"/>
+<polygon fill="black" stroke="black" points="2219.72,-21.724 2229.73,-18.2288 2219.73,-14.724 2219.72,-21.724"/>
+<text text-anchor="middle" x="1698.24" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
 </g>
 <!-- frozenset({0, 1, 2, 3}) -->
 <g id="node25" class="node"><title>frozenset({0, 1, 2, 3})</title>
-<ellipse fill="none" stroke="black" cx="984.593" cy="-648.361" rx="89.8763" ry="89.8763"/>
-<ellipse fill="none" stroke="black" cx="984.593" cy="-648.361" rx="93.8845" ry="93.8845"/>
-<text text-anchor="middle" x="984.593" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2, 3})</text>
+<ellipse fill="none" stroke="black" cx="2171.74" cy="-400.878" rx="89.8763" ry="89.8763"/>
+<ellipse fill="none" stroke="black" cx="2171.74" cy="-400.878" rx="93.8845" ry="93.8845"/>
+<text text-anchor="middle" x="2171.74" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2, 3})</text>
+</g>
+<!-- frozenset({0, 2, 3})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge3" class="edge"><title>frozenset({0, 2, 3})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1453.42,-579.033C1466.26,-565.714 1481.22,-553.453 1497.74,-545.57 1558.43,-516.629 1733.76,-540.444 1799.74,-527.57 1806.79,-526.196 1965.57,-472.229 2073.39,-435.464"/>
+<polygon fill="black" stroke="black" points="2074.67,-438.725 2083,-432.184 2072.41,-432.1 2074.67,-438.725"/>
+<text text-anchor="middle" x="1846.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({1, 2, 3, 4}) -->
+<g id="node3" class="node"><title>frozenset({1, 2, 3, 4})</title>
+<ellipse fill="none" stroke="black" cx="2010.74" cy="-648.361" rx="89.8763" ry="89.8763"/>
+<ellipse fill="none" stroke="black" cx="2010.74" cy="-648.361" rx="93.8845" ry="93.8845"/>
+<text text-anchor="middle" x="2010.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 2, 3, 4})</text>
+</g>
+<!-- frozenset() -->
+<g id="node5" class="node"><title>frozenset()</title>
+<ellipse fill="none" stroke="black" cx="716.745" cy="-18" rx="48.9926" ry="18"/>
+<text text-anchor="middle" x="716.745" y="-14.3" font-family="Times,serif" font-size="14.00">frozenset()</text>
+</g>
+<!-- frozenset({1, 2, 3, 4})&#45;&gt;frozenset() -->
+<g id="edge8" class="edge"><title>frozenset({1, 2, 3, 4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M1952.2,-575.064C1939.17,-563.274 1924.5,-552.626 1908.74,-545.57 1897.57,-540.565 1037.55,-503.074 1028.74,-494.57 897.866,-368.203 1109.37,-224.937 990.745,-87 962.76,-54.4586 844.825,-34.616 773.112,-25.3275"/>
+<polygon fill="black" stroke="black" points="773.244,-21.8162 762.883,-24.0333 772.365,-28.7609 773.244,-21.8162"/>
+<text text-anchor="middle" x="1015.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 2}) -->
+<g id="node14" class="node"><title>frozenset({0, 2})</title>
+<ellipse fill="none" stroke="black" cx="2577.74" cy="-400.878" rx="71.4873" ry="18"/>
+<text text-anchor="middle" x="2577.74" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({0, 2})</text>
+</g>
+<!-- frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge10" class="edge"><title>frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2073.02,-577.928C2085.46,-566.236 2098.96,-554.89 2112.74,-545.57 2129.57,-534.193 2136.66,-536.815 2154.74,-527.57 2166.28,-521.671 2167.55,-516.948 2179.74,-512.57 2230.5,-494.348 2247.3,-507.146 2299.74,-494.57 2383.05,-474.592 2477.05,-440.791 2531.62,-419.996"/>
+<polygon fill="black" stroke="black" points="2532.93,-423.243 2541.02,-416.397 2530.43,-416.707 2532.93,-423.243"/>
+<text text-anchor="middle" x="2183.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge9" class="edge"><title>frozenset({1, 2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1946.12,-580.04C1932.73,-558.115 1926.27,-533.933 1939.74,-512.57 1968.6,-466.835 2022.11,-439.596 2070.48,-423.59"/>
+<polygon fill="black" stroke="black" points="2071.61,-426.904 2080.08,-420.536 2069.49,-420.233 2071.61,-426.904"/>
+<text text-anchor="middle" x="1943.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({1, 2}) -->
+<g id="node4" class="node"><title>frozenset({1, 2})</title>
+<ellipse fill="none" stroke="black" cx="1183.74" cy="-400.878" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="1183.74" cy="-400.878" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="1183.74" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({1, 2})</text>
+</g>
+<!-- frozenset({1, 2})&#45;&gt;frozenset() -->
+<g id="edge11" class="edge"><title>frozenset({1, 2})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M1161.36,-328.517C1154.42,-305.519 1146.97,-279.858 1140.74,-256.186 1117.3,-167.061 1164.05,-114.747 1094.74,-54 1071.29,-33.4406 875.834,-24.1489 775.576,-20.7028"/>
+<polygon fill="black" stroke="black" points="775.413,-17.1954 765.302,-20.3586 775.179,-24.1915 775.413,-17.1954"/>
+<text text-anchor="middle" x="1144.24" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({1, 2})&#45;&gt;frozenset({0}) -->
+<g id="edge13" class="edge"><title>frozenset({1, 2})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1171.71,-326.228C1160.28,-245.053 1148.85,-121.387 1178.74,-87 1213,-47.5949 1980.23,-26.3072 2220.48,-20.5903"/>
+<polygon fill="black" stroke="black" points="2220.59,-24.0888 2230.5,-20.3536 2220.42,-17.0908 2220.59,-24.0888"/>
+<text text-anchor="middle" x="1182.24" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 2, 3}) -->
+<g id="node18" class="node"><title>frozenset({1, 2, 3})</title>
+<ellipse fill="none" stroke="black" cx="1279.74" cy="-171.593" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="1279.74" cy="-171.593" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="1279.74" y="-167.893" font-family="Times,serif" font-size="14.00">frozenset({1, 2, 3})</text>
+</g>
+<!-- frozenset({1, 2})&#45;&gt;frozenset({1, 2, 3}) -->
+<g id="edge12" class="edge"><title>frozenset({1, 2})&#45;&gt;frozenset({1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1212.81,-331.068C1222.36,-308.46 1233.1,-283.034 1243.13,-259.275"/>
+<polygon fill="black" stroke="black" points="1246.42,-260.487 1247.09,-249.913 1239.97,-257.763 1246.42,-260.487"/>
+<text text-anchor="middle" x="1238.24" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset()&#45;&gt;frozenset() -->
+<g id="edge17" class="edge"><title>frozenset()&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M765.043,-20.5543C775.717,-20.3143 783.49,-19.4629 783.49,-18 783.49,-17.0628 780.3,-16.3766 775.201,-15.9413"/>
+<polygon fill="black" stroke="black" points="775.202,-12.4373 765.043,-15.4457 774.861,-19.429 775.202,-12.4373"/>
+<text text-anchor="middle" x="786.99" y="-14.3" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset()&#45;&gt;frozenset() -->
+<g id="edge18" class="edge"><title>frozenset()&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M763.805,-23.1872C784.107,-23.6119 801.49,-21.8828 801.49,-18 801.49,-14.7845 789.569,-13.0461 773.941,-12.7847"/>
+<polygon fill="black" stroke="black" points="773.795,-9.28499 763.805,-12.8128 773.814,-16.285 773.795,-9.28499"/>
+<text text-anchor="middle" x="804.99" y="-14.3" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset()&#45;&gt;frozenset() -->
+<g id="edge19" class="edge"><title>frozenset()&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M761.635,-25.217C791.035,-27.1732 819.49,-24.7676 819.49,-18 819.49,-12.0255 797.313,-9.45049 771.888,-10.275"/>
+<polygon fill="black" stroke="black" points="771.45,-6.7923 761.635,-10.783 771.796,-13.7837 771.45,-6.7923"/>
+<text text-anchor="middle" x="822.99" y="-14.3" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 2, 4}) -->
+<g id="node6" class="node"><title>frozenset({1, 2, 4})</title>
+<ellipse fill="none" stroke="black" cx="1591.74" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="1591.74" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="1591.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 2, 4})</text>
+</g>
+<!-- frozenset({1, 2, 4})&#45;&gt;frozenset() -->
+<g id="edge32" class="edge"><title>frozenset({1, 2, 4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M1542.58,-579.263C1529.8,-566.019 1515,-553.732 1498.74,-545.57 1295.95,-443.76 1178.21,-622.415 990.745,-494.57 822.56,-379.876 899.751,-252.878 781.745,-87 770.111,-70.6473 754.669,-54.3256 741.756,-41.773"/>
+<polygon fill="black" stroke="black" points="744.145,-39.2148 734.493,-34.8461 739.314,-44.2805 744.145,-39.2148"/>
+<text text-anchor="middle" x="866.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({1, 2, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge34" class="edge"><title>frozenset({1, 2, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M1640.33,-578.842C1653.18,-565.532 1668.15,-553.323 1684.74,-545.57 1767.37,-506.957 2007.41,-553.836 2094.74,-527.57 2107.15,-523.838 2107.44,-516.646 2119.74,-512.57 2196.06,-487.276 2221.12,-511.389 2299.74,-494.57 2383.99,-476.548 2478.42,-441.812 2532.7,-420.359"/>
+<polygon fill="black" stroke="black" points="2534.03,-423.594 2542.03,-416.645 2531.44,-417.091 2534.03,-423.594"/>
+<text text-anchor="middle" x="2123.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 2, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge33" class="edge"><title>frozenset({1, 2, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1640.95,-579.344C1653.72,-566.096 1668.51,-553.786 1684.74,-545.57 1751.74,-511.653 1779.82,-545.496 1852.74,-527.57 1875.45,-521.989 1990.43,-475.917 2075.88,-441.156"/>
+<polygon fill="black" stroke="black" points="2077.42,-444.309 2085.36,-437.297 2074.78,-437.826 2077.42,-444.309"/>
+<text text-anchor="middle" x="1897.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({3}) -->
+<g id="node7" class="node"><title>frozenset({3})</title>
+<ellipse fill="none" stroke="black" cx="214.745" cy="-648.361" rx="61.975" ry="61.975"/>
+<ellipse fill="none" stroke="black" cx="214.745" cy="-648.361" rx="65.99" ry="65.99"/>
+<text text-anchor="middle" x="214.745" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({3})</text>
+</g>
+<!-- frozenset({3})&#45;&gt;frozenset() -->
+<g id="edge47" class="edge"><title>frozenset({3})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M242.073,-588.21C250.477,-569.055 259.43,-547.587 266.745,-527.57 336.898,-335.577 259.748,-236.876 398.745,-87 433.397,-49.6351 577.316,-31.153 659.161,-23.503"/>
+<polygon fill="black" stroke="black" points="659.667,-26.9716 669.309,-22.5803 659.033,-20.0004 659.667,-26.9716"/>
+<text text-anchor="middle" x="312.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({3})&#45;&gt;frozenset() -->
+<g id="edge49" class="edge"><title>frozenset({3})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M217.133,-582.576C223.295,-451.096 244.078,-159.272 308.745,-87 354.17,-36.2318 556.376,-23.3647 658.015,-20.105"/>
+<polygon fill="black" stroke="black" points="658.23,-23.6002 668.121,-19.802 658.02,-16.6034 658.23,-23.6002"/>
+<text text-anchor="middle" x="250.245" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({2}) -->
+<g id="node17" class="node"><title>frozenset({2})</title>
+<ellipse fill="none" stroke="black" cx="549.745" cy="-400.878" rx="61.99" ry="18"/>
+<text text-anchor="middle" x="549.745" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({2})</text>
+</g>
+<!-- frozenset({3})&#45;&gt;frozenset({2}) -->
+<g id="edge48" class="edge"><title>frozenset({3})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M245.122,-589.807C256.834,-572.931 271.791,-556.178 289.745,-545.57 342.237,-514.553 371.162,-554.741 425.745,-527.57 472.249,-504.42 511.523,-456.838 532.76,-427.317"/>
+<polygon fill="black" stroke="black" points="535.872,-428.976 538.76,-418.782 530.145,-424.95 535.872,-428.976"/>
+<text text-anchor="middle" x="454.245" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0})&#45;&gt;frozenset({0}) -->
+<g id="edge50" class="edge"><title>frozenset({0})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2352.93,-20.471C2363.86,-20.1498 2371.49,-19.3262 2371.49,-18 2371.49,-17.1504 2368.36,-16.5071 2363.23,-16.0699"/>
+<polygon fill="black" stroke="black" points="2363.1,-12.5582 2352.93,-15.529 2362.73,-19.5486 2363.1,-12.5582"/>
+<text text-anchor="middle" x="2374.99" y="-14.3" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0})&#45;&gt;frozenset({0}) -->
+<g id="edge51" class="edge"><title>frozenset({0})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2350.91,-23.2449C2372.16,-23.3577 2389.49,-21.6094 2389.49,-18 2389.49,-14.9828 2377.38,-13.2661 2361,-12.8499"/>
+<polygon fill="black" stroke="black" points="2360.95,-9.34936 2350.91,-12.7551 2360.88,-16.3491 2360.95,-9.34936"/>
+<text text-anchor="middle" x="2392.99" y="-14.3" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0})&#45;&gt;frozenset({0}) -->
+<g id="edge52" class="edge"><title>frozenset({0})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2348.02,-25.5115C2379.02,-26.8818 2407.49,-24.3779 2407.49,-18 2407.49,-12.3197 2384.91,-9.71229 2358.07,-10.1779"/>
+<polygon fill="black" stroke="black" points="2357.91,-6.68109 2348.02,-10.4885 2358.12,-13.6778 2357.91,-6.68109"/>
+<text text-anchor="middle" x="2410.99" y="-14.3" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 1, 3}) -->
+<g id="node9" class="node"><title>frozenset({0, 1, 3})</title>
+<ellipse fill="none" stroke="black" cx="2469.74" cy="-171.593" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="2469.74" cy="-171.593" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="2469.74" y="-167.893" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 3})</text>
+</g>
+<!-- frozenset({0, 1, 3})&#45;&gt;frozenset({0}) -->
+<g id="edge23" class="edge"><title>frozenset({0, 1, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2420.7,-102.419C2406.01,-85.113 2388.93,-67.594 2370.74,-54 2361.45,-47.0531 2350.56,-41.1091 2339.89,-36.1961"/>
+<polygon fill="black" stroke="black" points="2341.18,-32.9394 2330.61,-32.1447 2338.38,-39.3544 2341.18,-32.9394"/>
+<text text-anchor="middle" x="2391.24" y="-57.8" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 1, 3})&#45;&gt;frozenset({0}) -->
+<g id="edge25" class="edge"><title>frozenset({0, 1, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2434.35,-94.7108C2424.54,-79.6149 2412.68,-65.0375 2398.74,-54 2385.55,-43.5472 2369.12,-36.1662 2353.13,-30.9732"/>
+<polygon fill="black" stroke="black" points="2353.85,-27.5341 2343.26,-28.0147 2351.84,-34.2392 2353.85,-27.5341"/>
+<text text-anchor="middle" x="2416.24" y="-57.8" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 1, 3})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge24" class="edge"><title>frozenset({0, 1, 3})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2505.71,-248.29C2526.3,-291.608 2550.83,-343.235 2565.3,-373.688"/>
+<polygon fill="black" stroke="black" points="2562.17,-375.264 2569.63,-382.794 2568.5,-372.26 2562.17,-375.264"/>
+<text text-anchor="middle" x="2527.24" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({2, 3, 4}) -->
+<g id="node10" class="node"><title>frozenset({2, 3, 4})</title>
+<ellipse fill="none" stroke="black" cx="2206.74" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="2206.74" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="2206.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({2, 3, 4})</text>
+</g>
+<!-- frozenset({2, 3, 4})&#45;&gt;frozenset() -->
+<g id="edge62" class="edge"><title>frozenset({2, 3, 4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M2158.13,-578.916C2145.28,-565.603 2130.31,-553.373 2113.74,-545.57 2109.59,-543.614 1458.33,-512.791 1453.74,-512.57 1432.25,-511.532 1082.4,-509.336 1066.74,-494.57 1000.49,-432.086 1075.4,-162.008 1023.74,-87 995.871,-46.5242 855.346,-29.3465 774.417,-22.7166"/>
+<polygon fill="black" stroke="black" points="774.618,-19.2216 764.374,-21.9228 774.067,-26.1999 774.618,-19.2216"/>
+<text text-anchor="middle" x="1044.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({2, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge64" class="edge"><title>frozenset({2, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2216.02,-564.063C2221.56,-545.241 2230.23,-526.677 2243.74,-512.57 2261.83,-493.69 2274.9,-502.704 2299.74,-494.57 2379.34,-468.51 2471.52,-437.637 2527.19,-418.917"/>
+<polygon fill="black" stroke="black" points="2528.45,-422.186 2536.81,-415.68 2526.22,-415.552 2528.45,-422.186"/>
+<text text-anchor="middle" x="2247.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge63" class="edge"><title>frozenset({2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M2194.94,-564.594C2192.18,-545.185 2189.2,-524.278 2186.32,-504.13"/>
+<polygon fill="black" stroke="black" points="2189.75,-503.4 2184.88,-493.994 2182.82,-504.388 2189.75,-503.4"/>
+<text text-anchor="middle" x="2193.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 2, 4}) -->
+<g id="node11" class="node"><title>frozenset({0, 2, 4})</title>
+<ellipse fill="none" stroke="black" cx="3147.74" cy="-648.361" rx="80.6858" ry="18"/>
+<text text-anchor="middle" x="3147.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 2, 4})</text>
+</g>
+<!-- frozenset({0, 2, 4})&#45;&gt;frozenset({0}) -->
+<g id="edge65" class="edge"><title>frozenset({0, 2, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M3149.21,-630.262C3150.77,-603.733 3150.91,-551.643 3132.74,-512.57 3022.81,-276.074 2952.16,-221.542 2728.74,-87 2668.21,-50.546 2468.82,-31.3597 2361.53,-23.4553"/>
+<polygon fill="black" stroke="black" points="2361.67,-19.9563 2351.45,-22.7253 2361.17,-26.9381 2361.67,-19.9563"/>
+<text text-anchor="middle" x="3001.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 2, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge67" class="edge"><title>frozenset({0, 2, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3137.28,-630.297C3122.53,-607.645 3093.5,-567.911 3058.74,-545.57 3054.12,-542.594 2757.23,-454.824 2632.25,-417.948"/>
+<polygon fill="black" stroke="black" points="2633.07,-414.54 2622.48,-415.067 2631.08,-421.254 2633.07,-414.54"/>
+<text text-anchor="middle" x="3001.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 2, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge66" class="edge"><title>frozenset({0, 2, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M3138.73,-630.175C3125.08,-606.199 3096.69,-563.627 3058.74,-545.57 3008.65,-521.728 2614.38,-537.211 2559.74,-527.57 2457.6,-509.545 2345.31,-470.994 2267.93,-441.309"/>
+<polygon fill="black" stroke="black" points="2268.79,-437.887 2258.2,-437.551 2266.27,-444.418 2268.79,-437.887"/>
+<text text-anchor="middle" x="2563.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({3, 4}) -->
+<g id="node12" class="node"><title>frozenset({3, 4})</title>
+<ellipse fill="none" stroke="black" cx="373.745" cy="-648.361" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="373.745" cy="-648.361" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="373.745" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({3, 4})</text>
+</g>
+<!-- frozenset({3, 4})&#45;&gt;frozenset() -->
+<g id="edge71" class="edge"><title>frozenset({3, 4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M369.731,-572.546C367.196,-458.727 376.639,-239.252 472.745,-87 485.983,-66.0273 494.934,-63.7363 517.745,-54 562.804,-34.767 617.928,-26.1023 658.724,-22.199"/>
+<polygon fill="black" stroke="black" points="659.121,-25.6775 668.772,-21.3057 658.501,-18.705 659.121,-25.6775"/>
+<text text-anchor="middle" x="401.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge72" class="edge"><title>frozenset({3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M412.38,-583.305C424.838,-568.192 440.075,-554.029 457.745,-545.57 532.263,-509.896 1865.26,-550.105 1944.74,-527.57 1957.21,-524.035 1957.36,-516.368 1969.74,-512.57 2110.18,-469.52 2155.45,-522.045 2299.74,-494.57 2384.85,-478.365 2479.73,-442.709 2533.73,-420.647"/>
+<polygon fill="black" stroke="black" points="2535.09,-423.872 2543.01,-416.827 2532.43,-417.399 2535.09,-423.872"/>
+<text text-anchor="middle" x="1973.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({3, 4})&#45;&gt;frozenset({2}) -->
+<g id="edge73" class="edge"><title>frozenset({3, 4})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M419.132,-588.033C433.574,-568.868 449.493,-547.439 463.745,-527.57 488.419,-493.167 515.872,-452.627 532.974,-427.087"/>
+<polygon fill="black" stroke="black" points="535.924,-428.972 538.57,-418.713 530.104,-425.082 535.924,-428.972"/>
+<text text-anchor="middle" x="477.245" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({2, 3}) -->
+<g id="node13" class="node"><title>frozenset({2, 3})</title>
+<ellipse fill="none" stroke="black" cx="1400.74" cy="-400.878" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="1400.74" cy="-400.878" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="1400.74" y="-397.178" font-family="Times,serif" font-size="14.00">frozenset({2, 3})</text>
+</g>
+<!-- frozenset({2, 3})&#45;&gt;frozenset() -->
+<g id="edge77" class="edge"><title>frozenset({2, 3})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M1414.69,-326.645C1429.89,-236.794 1447.61,-91.7141 1411.74,-54 1389.98,-31.1105 939.849,-22.2601 775.85,-19.7876"/>
+<polygon fill="black" stroke="black" points="775.52,-16.2824 765.469,-19.6339 775.416,-23.2816 775.52,-16.2824"/>
+<text text-anchor="middle" x="1437.24" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({2, 3})&#45;&gt;frozenset({0}) -->
+<g id="edge79" class="edge"><title>frozenset({2, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1423.67,-328.849C1427.78,-315.691 1431.96,-302.043 1435.74,-289.186 1460.85,-203.897 1485.72,-57.3781 1489.74,-54 1517.47,-30.7558 2028.02,-22.1909 2219.77,-19.7858"/>
+<polygon fill="black" stroke="black" points="2220.07,-23.2824 2230.03,-19.6592 2219.99,-16.283 2220.07,-23.2824"/>
+<text text-anchor="middle" x="1485.24" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({2, 3})&#45;&gt;frozenset({1, 2, 3}) -->
+<g id="edge78" class="edge"><title>frozenset({2, 3})&#45;&gt;frozenset({1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1365.58,-333.832C1352.6,-309.446 1337.72,-281.49 1324.03,-255.779"/>
+<polygon fill="black" stroke="black" points="1327.03,-253.971 1319.24,-246.788 1320.85,-257.26 1327.03,-253.971"/>
+<text text-anchor="middle" x="1344.24" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 2})&#45;&gt;frozenset({0}) -->
+<g id="edge80" class="edge"><title>frozenset({0, 2})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2579.55,-382.679C2585.33,-323.95 2600.91,-132.467 2563.74,-87 2538.09,-55.6145 2430.68,-36.2842 2358.76,-26.6081"/>
+<polygon fill="black" stroke="black" points="2358.79,-23.0822 2348.42,-25.2503 2357.87,-30.0226 2358.79,-23.0822"/>
+<text text-anchor="middle" x="2592.24" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 2})&#45;&gt;frozenset({0}) -->
+<g id="edge82" class="edge"><title>frozenset({0, 2})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2585.37,-382.931C2606.59,-333.018 2660.84,-183.984 2599.74,-87 2574.7,-47.2482 2444.85,-30.2353 2361.95,-23.338"/>
+<polygon fill="black" stroke="black" points="2362.08,-19.8373 2351.83,-22.5268 2361.52,-26.8149 2362.08,-19.8373"/>
+<text text-anchor="middle" x="2632.24" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 2})&#45;&gt;frozenset({0, 1, 3}) -->
+<g id="edge81" class="edge"><title>frozenset({0, 2})&#45;&gt;frozenset({0, 1, 3})</title>
+<path fill="none" stroke="black" d="M2565.67,-382.909C2551.01,-361.739 2526.2,-324.068 2509.74,-289.186 2505.68,-280.567 2501.82,-271.418 2498.21,-262.185"/>
+<polygon fill="black" stroke="black" points="2501.38,-260.655 2494.55,-252.552 2494.83,-263.143 2501.38,-260.655"/>
+<text text-anchor="middle" x="2513.24" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 1, 4}) -->
+<g id="node15" class="node"><title>frozenset({0, 1, 4})</title>
+<ellipse fill="none" stroke="black" cx="2964.74" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="2964.74" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="2964.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 4})</text>
+</g>
+<!-- frozenset({0, 1, 4})&#45;&gt;frozenset({0}) -->
+<g id="edge86" class="edge"><title>frozenset({0, 1, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2940.99,-566.907C2934.6,-548.686 2927.1,-529.676 2918.74,-512.57 2819.44,-309.373 2807.78,-238.376 2639.74,-87 2615.97,-65.5799 2606.32,-63.4375 2575.74,-54 2505.55,-32.3369 2421.69,-24.0223 2363.37,-20.8633"/>
+<polygon fill="black" stroke="black" points="2363.32,-17.3561 2353.15,-20.3483 2362.97,-24.3472 2363.32,-17.3561"/>
+<text text-anchor="middle" x="2814.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 1, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge87" class="edge"><title>frozenset({0, 1, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2911.82,-581.998C2899.49,-568.993 2885.83,-556.113 2871.74,-545.57 2793.82,-487.241 2688.51,-442.624 2627.38,-419.493"/>
+<polygon fill="black" stroke="black" points="2628.55,-416.194 2617.96,-415.966 2626.09,-422.75 2628.55,-416.194"/>
+<text text-anchor="middle" x="2847.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 1, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge88" class="edge"><title>frozenset({0, 1, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2935.31,-569.042C2924.51,-548.449 2910.46,-527.771 2892.74,-512.57 2822.93,-452.674 2718.62,-424.501 2649.42,-411.737"/>
+<polygon fill="black" stroke="black" points="2649.93,-408.273 2639.47,-409.963 2648.7,-415.164 2649.93,-408.273"/>
+<text text-anchor="middle" x="2911.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 1, 2}) -->
+<g id="node16" class="node"><title>frozenset({0, 1, 2})</title>
+<ellipse fill="none" stroke="black" cx="1217.74" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="1217.74" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="1217.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2})</text>
+</g>
+<!-- frozenset({0, 1, 2})&#45;&gt;frozenset({0}) -->
+<g id="edge89" class="edge"><title>frozenset({0, 1, 2})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1266.5,-579.212C1279.34,-565.884 1294.27,-553.574 1310.74,-545.57 1359.25,-521.999 1513.99,-565.066 1552.74,-527.57 1628.82,-453.972 1526.82,-126.703 1603.74,-54 1625.88,-33.0815 2048.45,-23.2921 2220.14,-20.1658"/>
+<polygon fill="black" stroke="black" points="2220.4,-23.6617 2230.34,-19.9826 2220.28,-16.6628 2220.4,-23.6617"/>
+<text text-anchor="middle" x="1581.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 1, 2})&#45;&gt;frozenset({0}) -->
+<g id="edge91" class="edge"><title>frozenset({0, 1, 2})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1266.47,-579.143C1279.31,-565.819 1294.25,-553.527 1310.74,-545.57 1363.31,-520.209 1523.25,-558.495 1572.74,-527.57 1744.95,-419.967 1560.03,-239.822 1693.74,-87 1719.88,-57.1237 1738.03,-62.7849 1776.74,-54 1859.12,-35.3082 2099.42,-25.1664 2220.4,-21.1179"/>
+<polygon fill="black" stroke="black" points="2220.79,-24.6071 2230.67,-20.7794 2220.56,-17.6109 2220.79,-24.6071"/>
+<text text-anchor="middle" x="1648.24" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 1, 2})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge90" class="edge"><title>frozenset({0, 1, 2})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1266.4,-578.99C1279.24,-565.673 1294.2,-553.424 1310.74,-545.57 1375.29,-514.928 1561.02,-537.706 1631.74,-527.57 1787.44,-505.256 1964.37,-460.22 2072.01,-430.559"/>
+<polygon fill="black" stroke="black" points="2073.18,-433.867 2081.88,-427.827 2071.31,-427.12 2073.18,-433.867"/>
+<text text-anchor="middle" x="1725.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({2})&#45;&gt;frozenset() -->
+<g id="edge53" class="edge"><title>frozenset({2})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M539.646,-382.945C510.971,-332.436 435.412,-180.546 503.745,-87 538.769,-39.0531 607.983,-24.1265 658.025,-19.8781"/>
+<polygon fill="black" stroke="black" points="658.358,-23.3632 668.077,-19.1448 657.849,-16.3817 658.358,-23.3632"/>
+<text text-anchor="middle" x="507.245" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({2})&#45;&gt;frozenset({0}) -->
+<g id="edge55" class="edge"><title>frozenset({2})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M608.271,-395.07C690.057,-385.934 840.329,-360.132 945.745,-289.186 1055.39,-215.39 1009.97,-113.991 1127.74,-54 1176.45,-29.1924 1973.59,-21.3207 2219.85,-19.4748"/>
+<polygon fill="black" stroke="black" points="2220.15,-22.9729 2230.12,-19.399 2220.1,-15.9731 2220.15,-22.9729"/>
+<text text-anchor="middle" x="1085.24" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 3}) -->
+<g id="node24" class="node"><title>frozenset({1, 3})</title>
+<ellipse fill="none" stroke="black" cx="594.745" cy="-171.593" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="594.745" cy="-171.593" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="594.745" y="-167.893" font-family="Times,serif" font-size="14.00">frozenset({1, 3})</text>
+</g>
+<!-- frozenset({2})&#45;&gt;frozenset({1, 3}) -->
+<g id="edge54" class="edge"><title>frozenset({2})&#45;&gt;frozenset({1, 3})</title>
+<path fill="none" stroke="black" d="M550.2,-382.623C551.111,-358.234 553.816,-312.391 561.745,-274.186 563.208,-267.132 564.988,-259.881 566.953,-252.653"/>
+<polygon fill="black" stroke="black" points="570.377,-253.408 569.736,-242.833 563.642,-251.5 570.377,-253.408"/>
+<text text-anchor="middle" x="565.245" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({1, 2, 3})&#45;&gt;frozenset() -->
+<g id="edge92" class="edge"><title>frozenset({1, 2, 3})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M1221.25,-109.888C1196.03,-87.8946 1164.76,-65.6197 1131.74,-54 1067.6,-31.4244 873.68,-23.1287 775.315,-20.3161"/>
+<polygon fill="black" stroke="black" points="775.333,-16.8154 765.241,-20.0377 775.14,-23.8127 775.333,-16.8154"/>
+<text text-anchor="middle" x="1168.24" y="-57.8" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({1, 2, 3})&#45;&gt;frozenset({0}) -->
+<g id="edge94" class="edge"><title>frozenset({1, 2, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1342.45,-114.36C1372.2,-91.2029 1409.55,-66.8311 1447.74,-54 1519.84,-29.783 2029.24,-21.8317 2219.93,-19.6863"/>
+<polygon fill="black" stroke="black" points="2220.16,-23.184 2230.12,-19.5737 2220.08,-16.1844 2220.16,-23.184"/>
+<text text-anchor="middle" x="1451.24" y="-57.8" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 2, 3})&#45;&gt;frozenset({1, 2, 3}) -->
+<g id="edge93" class="edge"><title>frozenset({1, 2, 3})&#45;&gt;frozenset({1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1362.67,-190.102C1374.44,-187.108 1382.34,-180.939 1382.34,-171.593 1382.34,-165.168 1378.6,-160.244 1372.45,-156.821"/>
+<polygon fill="black" stroke="black" points="1373.26,-153.384 1362.67,-153.084 1370.76,-159.923 1373.26,-153.384"/>
+<text text-anchor="middle" x="1385.84" y="-167.893" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 1}) -->
+<g id="node19" class="node"><title>frozenset({0, 1})</title>
+<ellipse fill="none" stroke="black" cx="3874.74" cy="-648.361" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="3874.74" cy="-648.361" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="3874.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1})</text>
+</g>
+<!-- frozenset({0, 1})&#45;&gt;frozenset({0}) -->
+<g id="edge95" class="edge"><title>frozenset({0, 1})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M3834.02,-584.58C3750.15,-461.736 3544.75,-192.407 3292.74,-87 3190.57,-44.263 3156.05,-63.9104 3045.74,-54 2795.79,-31.5435 2497.84,-23.0986 2363.6,-20.269"/>
+<polygon fill="black" stroke="black" points="2363.51,-16.7666 2353.44,-20.0591 2363.37,-23.7651 2363.51,-16.7666"/>
+<text text-anchor="middle" x="3586.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 1})&#45;&gt;frozenset({0}) -->
+<g id="edge97" class="edge"><title>frozenset({0, 1})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M3848.56,-577.363C3819.34,-504.985 3767.17,-391.033 3699.74,-307.186 3603.57,-187.586 3574.79,-147.501 3433.74,-87 3335.72,-44.9524 2598.15,-25.5914 2363.32,-20.4493"/>
+<polygon fill="black" stroke="black" points="2363.26,-16.9472 2353.19,-20.2294 2363.11,-23.9456 2363.26,-16.9472"/>
+<text text-anchor="middle" x="3688.24" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 1})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge96" class="edge"><title>frozenset({0, 1})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3834.97,-584.126C3822.6,-569.205 3807.69,-554.933 3790.74,-545.57 3740.73,-517.936 3592.46,-519.516 3535.74,-512.57 3206.45,-472.24 2812.97,-428.026 2651.95,-410.102"/>
+<polygon fill="black" stroke="black" points="2652.01,-406.588 2641.68,-408.96 2651.24,-413.545 2652.01,-406.588"/>
+<text text-anchor="middle" x="3727.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 4}) -->
+<g id="node20" class="node"><title>frozenset({0, 4})</title>
+<ellipse fill="none" stroke="black" cx="3504.74" cy="-648.361" rx="71.4873" ry="18"/>
+<text text-anchor="middle" x="3504.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 4})</text>
+</g>
+<!-- frozenset({0, 4})&#45;&gt;frozenset({0}) -->
+<g id="edge14" class="edge"><title>frozenset({0, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M3500.04,-629.989C3492.19,-603.093 3474.61,-550.522 3447.74,-512.57 3285.52,-283.362 3232.87,-210.642 2980.74,-87 2873.53,-34.4238 2517.72,-22.4978 2363.77,-19.7931"/>
+<polygon fill="black" stroke="black" points="2363.54,-16.2889 2353.48,-19.6209 2363.42,-23.2879 2363.54,-16.2889"/>
+<text text-anchor="middle" x="3278.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge15" class="edge"><title>frozenset({0, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3497.07,-630.315C3485.33,-606.509 3460.43,-564.143 3424.74,-545.57 3360.19,-511.973 3167.32,-548.917 3097.74,-527.57 3085.36,-523.769 3084.78,-517.379 3072.74,-512.57 2929.2,-455.203 2749.78,-424.464 2651.17,-410.808"/>
+<polygon fill="black" stroke="black" points="2651.39,-407.305 2641.01,-409.422 2650.44,-414.241 2651.39,-407.305"/>
+<text text-anchor="middle" x="3101.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge16" class="edge"><title>frozenset({0, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3496.57,-630.464C3484.38,-607.241 3459.13,-566.015 3424.74,-545.57 3407.86,-535.532 2844.95,-444.67 2646.31,-412.835"/>
+<polygon fill="black" stroke="black" points="2646.71,-409.355 2636.28,-411.229 2645.6,-416.267 2646.71,-409.355"/>
+<text text-anchor="middle" x="3333.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 2, 3, 4}) -->
+<g id="node21" class="node"><title>frozenset({0, 2, 3, 4})</title>
+<ellipse fill="none" stroke="black" cx="3687.74" cy="-648.361" rx="89.8763" ry="89.8763"/>
+<ellipse fill="none" stroke="black" cx="3687.74" cy="-648.361" rx="93.8845" ry="93.8845"/>
+<text text-anchor="middle" x="3687.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 2, 3, 4})</text>
+</g>
+<!-- frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0}) -->
+<g id="edge20" class="edge"><title>frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M3669.61,-556.277C3664.3,-540.963 3657.48,-525.774 3648.74,-512.57 3483.34,-262.677 3399.7,-208.463 3125.74,-87 2990.16,-26.8874 2540.31,-19.407 2363.76,-18.8416"/>
+<polygon fill="black" stroke="black" points="2363.54,-15.3412 2353.53,-18.8157 2363.53,-22.3411 2363.54,-15.3412"/>
+<text text-anchor="middle" x="3473.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge22" class="edge"><title>frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3628.03,-576.111C3614.93,-564.23 3600.28,-553.281 3584.74,-545.57 3421.11,-464.371 2864.3,-420.569 2656.66,-406.75"/>
+<polygon fill="black" stroke="black" points="2656.65,-403.242 2646.44,-406.075 2656.19,-410.226 2656.65,-403.242"/>
+<text text-anchor="middle" x="3528.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge21" class="edge"><title>frozenset({0, 2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M3628.99,-574.904C3615.76,-563.047 3600.82,-552.416 3584.74,-545.57 3513.16,-515.085 2960.23,-546.417 2884.74,-527.57 2870.28,-523.959 2869.16,-516.359 2854.74,-512.57 2701.09,-472.187 2654.49,-520.46 2497.74,-494.57 2419.75,-481.686 2333.83,-456.795 2269.78,-436.049"/>
+<polygon fill="black" stroke="black" points="2270.69,-432.663 2260.1,-432.889 2268.52,-439.318 2270.69,-432.663"/>
+<text text-anchor="middle" x="2888.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({4}) -->
+<g id="node22" class="node"><title>frozenset({4})</title>
+<ellipse fill="none" stroke="black" cx="528.745" cy="-648.361" rx="61.99" ry="18"/>
+<text text-anchor="middle" x="528.745" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({4})</text>
+</g>
+<!-- frozenset({4})&#45;&gt;frozenset() -->
+<g id="edge26" class="edge"><title>frozenset({4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M537.112,-630.36C548.554,-608.496 570.877,-570.391 598.745,-545.57 611.512,-534.198 622.728,-541.427 632.745,-527.57 661.358,-487.986 702.258,-146.053 713.68,-46.2428"/>
+<polygon fill="black" stroke="black" points="717.185,-46.3991 714.838,-36.0674 710.23,-45.6075 717.185,-46.3991"/>
+<text text-anchor="middle" x="688.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge27" class="edge"><title>frozenset({4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M534.744,-630.184C544.152,-606.22 564.884,-563.662 598.745,-545.57 666.173,-509.541 1901.2,-548.459 1974.74,-527.57 1987.21,-524.029 1987.37,-516.401 1999.74,-512.57 2127.34,-473.074 2168.6,-519.912 2299.74,-494.57 2384.8,-478.134 2479.7,-442.554 2533.72,-420.569"/>
+<polygon fill="black" stroke="black" points="2535.07,-423.797 2542.99,-416.763 2532.41,-417.321 2535.07,-423.797"/>
+<text text-anchor="middle" x="2003.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({4})&#45;&gt;frozenset({2}) -->
+<g id="edge28" class="edge"><title>frozenset({4})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M530.221,-630.099C533.813,-588.107 543.032,-480.341 547.392,-429.374"/>
+<polygon fill="black" stroke="black" points="550.904,-429.383 548.269,-419.121 543.93,-428.786 550.904,-429.383"/>
+<text text-anchor="middle" x="544.245" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 3, 4}) -->
+<g id="node23" class="node"><title>frozenset({1, 3, 4})</title>
+<ellipse fill="none" stroke="black" cx="692.745" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="692.745" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="692.745" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 3, 4})</text>
+</g>
+<!-- frozenset({1, 3, 4})&#45;&gt;frozenset() -->
+<g id="edge5" class="edge"><title>frozenset({1, 3, 4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M707.477,-564.748C709.219,-552.324 710.734,-539.635 711.745,-527.57 727.093,-344.325 720.778,-122.654 717.889,-46.3467"/>
+<polygon fill="black" stroke="black" points="721.379,-46.0204 717.491,-36.1649 714.385,-46.2942 721.379,-46.0204"/>
+<text text-anchor="middle" x="725.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({1, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge6" class="edge"><title>frozenset({1, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M741.288,-578.995C754.391,-565.499 769.722,-553.171 786.745,-545.57 848.538,-517.977 1939.66,-546.116 2004.74,-527.57 2017.21,-524.019 2017.38,-516.442 2029.74,-512.57 2144.51,-476.627 2181.74,-517.779 2299.74,-494.57 2384.75,-477.852 2479.66,-442.365 2533.7,-420.474"/>
+<polygon fill="black" stroke="black" points="2535.04,-423.705 2542.98,-416.685 2532.4,-417.225 2535.04,-423.705"/>
+<text text-anchor="middle" x="2033.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({1, 3, 4})&#45;&gt;frozenset({2}) -->
+<g id="edge7" class="edge"><title>frozenset({1, 3, 4})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M650.42,-574.704C621.513,-525.08 584.925,-462.271 564.773,-427.677"/>
+<polygon fill="black" stroke="black" points="567.603,-425.582 559.545,-418.702 561.555,-429.105 567.603,-425.582"/>
+<text text-anchor="middle" x="625.245" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 3})&#45;&gt;frozenset() -->
+<g id="edge29" class="edge"><title>frozenset({1, 3})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M608.788,-97.285C614.492,-81.607 622.502,-66.1342 633.745,-54 642.807,-44.2187 655.04,-37.0703 667.327,-31.8861"/>
+<polygon fill="black" stroke="black" points="668.601,-35.1462 676.681,-28.2935 666.091,-28.6115 668.601,-35.1462"/>
+<text text-anchor="middle" x="637.245" y="-57.8" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- frozenset({1, 3})&#45;&gt;frozenset() -->
+<g id="edge31" class="edge"><title>frozenset({1, 3})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M635.101,-107.384C647.619,-89.4576 662.017,-70.3761 676.745,-54 680.601,-49.7119 684.959,-45.4314 689.343,-41.4104"/>
+<polygon fill="black" stroke="black" points="691.981,-43.7499 697.161,-34.5073 687.348,-38.5027 691.981,-43.7499"/>
+<text text-anchor="middle" x="680.245" y="-57.8" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- frozenset({1, 3})&#45;&gt;frozenset({2}) -->
+<g id="edge30" class="edge"><title>frozenset({1, 3})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M580.224,-245.933C571.644,-289.267 561.287,-341.582 555.122,-372.715"/>
+<polygon fill="black" stroke="black" points="551.636,-372.305 553.127,-382.794 558.502,-373.665 551.636,-372.305"/>
+<text text-anchor="middle" x="577.245" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
 </g>
 <!-- frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0}) -->
-<g id="edge36" class="edge"><title>frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1011.47,-558.527C1057.1,-409.768 1147.92,-122.939 1180.59,-87 1216.41,-47.5995 1275.14,-30.925 1321.55,-23.9204"/>
-<polygon fill="black" stroke="black" points="1322.14,-27.3732 1331.56,-22.5295 1321.17,-20.4399 1322.14,-27.3732"/>
-<text text-anchor="middle" x="1107.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge35" class="edge"><title>frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2185.29,-308.121C2195.94,-245.009 2212.97,-159.776 2236.74,-87 2241.75,-71.6856 2242.13,-66.9291 2251.74,-54 2254.9,-49.7582 2258.64,-45.6623 2262.56,-41.8594"/>
+<polygon fill="black" stroke="black" points="2265.12,-44.2565 2270.18,-34.9461 2260.42,-39.0711 2265.12,-44.2565"/>
+<text text-anchor="middle" x="2240.24" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge37" class="edge"><title>frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M1045.92,-577.015C1072.33,-546.714 1103.32,-511.167 1130.45,-480.045"/>
-<polygon fill="black" stroke="black" points="1133.33,-482.072 1137.26,-472.234 1128.05,-477.472 1133.33,-482.072"/>
-<text text-anchor="middle" x="1102.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0}) -->
+<g id="edge37" class="edge"><title>frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2217.1,-318.677C2226.95,-298.686 2236.56,-277.025 2243.74,-256.186 2269.18,-182.435 2282.97,-90.8833 2288.63,-46.1572"/>
+<polygon fill="black" stroke="black" points="2292.12,-46.4369 2289.86,-36.0851 2285.17,-45.5846 2292.12,-46.4369"/>
+<text text-anchor="middle" x="2287.24" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
 </g>
-<!-- frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge35" class="edge"><title>frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1045.92,-577.165C1058.51,-565.48 1072.3,-554.332 1086.59,-545.57 1126.85,-520.883 1141.53,-522.981 1187.59,-512.57 1248.35,-498.836 1265.27,-505.548 1326.59,-494.57 1450.99,-472.299 1594.83,-436.963 1672.9,-416.968"/>
-<polygon fill="black" stroke="black" points="1674.2,-420.249 1683.01,-414.37 1672.46,-413.469 1674.2,-420.249"/>
-<text text-anchor="middle" x="1191.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<!-- frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge36" class="edge"><title>frozenset({0, 1, 2, 3})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M2263.76,-420.268C2275.61,-416.906 2283.44,-410.442 2283.44,-400.878 2283.44,-394.153 2279.57,-388.961 2273.15,-385.302"/>
+<polygon fill="black" stroke="black" points="2274.34,-382.009 2263.76,-381.487 2271.71,-388.494 2274.34,-382.009"/>
+<text text-anchor="middle" x="2286.94" y="-397.178" font-family="Times,serif" font-size="14.00">b</text>
+</g>
+<!-- frozenset({0, 3}) -->
+<g id="node26" class="node"><title>frozenset({0, 3})</title>
+<ellipse fill="none" stroke="black" cx="1039.74" cy="-648.361" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="1039.74" cy="-648.361" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="1039.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 3})</text>
 </g>
 <!-- frozenset({0, 3})&#45;&gt;frozenset({0}) -->
 <g id="edge38" class="edge"><title>frozenset({0, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1694.28,-385.176C1654.65,-367.541 1591.55,-334.576 1551.59,-289.186 1480.24,-208.129 1562.39,-134.659 1490.59,-54 1480.94,-43.1576 1467.72,-35.674 1454.07,-30.5086"/>
-<polygon fill="black" stroke="black" points="1455.2,-27.1934 1444.6,-27.2901 1452.94,-33.8213 1455.2,-27.1934"/>
-<text text-anchor="middle" x="1533.09" y="-167.893" font-family="Times,serif" font-size="14.00">c</text>
+<path fill="none" stroke="black" d="M1079.81,-583.994C1092.14,-569.168 1106.95,-554.976 1123.74,-545.57 1265.11,-466.381 1372.66,-611.587 1484.74,-494.57 1552.79,-423.531 1456.42,-121.743 1527.74,-54 1552.59,-30.4005 2034.33,-22.1013 2219.81,-19.7733"/>
+<polygon fill="black" stroke="black" points="2220.05,-23.2707 2230.01,-19.6476 2219.96,-16.2712 2220.05,-23.2707"/>
+<text text-anchor="middle" x="1510.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
 <!-- frozenset({0, 3})&#45;&gt;frozenset({0}) -->
-<g id="edge39" class="edge"><title>frozenset({0, 3})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1704.92,-383.897C1669.59,-360.466 1606.73,-313.311 1574.59,-256.186 1528.38,-174.035 1590.47,-104.028 1510.59,-54 1493.42,-43.2445 1472.79,-35.667 1453.57,-30.3844"/>
-<polygon fill="black" stroke="black" points="1454.23,-26.9402 1443.67,-27.8265 1452.48,-33.7175 1454.23,-26.9402"/>
-<text text-anchor="middle" x="1578.09" y="-167.893" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge40" class="edge"><title>frozenset({0, 3})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1079.25,-583.645C1091.63,-568.726 1106.61,-554.575 1123.74,-545.57 1200.73,-505.119 1451.46,-557.249 1511.74,-494.57 1649.59,-351.245 1418.97,-155.875 1589.74,-54 1642.83,-22.3342 2051.61,-18.8684 2219.81,-18.8001"/>
+<polygon fill="black" stroke="black" points="2219.81,-22.3002 2229.81,-18.8 2219.81,-15.3002 2219.81,-22.3002"/>
+<text text-anchor="middle" x="1549.24" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
 </g>
-<!-- frozenset({0, 3})&#45;&gt;frozenset({0, 2, 4}) -->
-<g id="edge40" class="edge"><title>frozenset({0, 3})&#45;&gt;frozenset({0, 2, 4})</title>
-<path fill="none" stroke="black" d="M1726.46,-382.794C1720.35,-357.552 1708.48,-308.481 1697.74,-264.096"/>
-<polygon fill="black" stroke="black" points="1701.07,-263.015 1695.32,-254.119 1694.27,-264.661 1701.07,-263.015"/>
-<text text-anchor="middle" x="1707.09" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({0, 3})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge39" class="edge"><title>frozenset({0, 3})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M1078.42,-583.388C1090.88,-568.274 1106.1,-554.091 1123.74,-545.57 1170.83,-522.827 2014.49,-542.008 2064.74,-527.57 2077.2,-523.992 2077.42,-516.559 2089.74,-512.57 2178.87,-483.729 2208.01,-513.517 2299.74,-494.57 2384.35,-477.096 2479.03,-442.022 2533.19,-420.383"/>
+<polygon fill="black" stroke="black" points="2534.53,-423.618 2542.5,-416.638 2531.92,-417.124 2534.53,-423.618"/>
+<text text-anchor="middle" x="2093.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
 <!-- frozenset({2, 4})&#45;&gt;frozenset() -->
 <g id="edge41" class="edge"><title>frozenset({2, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3345.37,-106.483C3332,-87.8203 3315.74,-68.56 3297.59,-54 3287.62,-45.9999 3275.53,-39.4476 3263.85,-34.2657"/>
-<polygon fill="black" stroke="black" points="3265.18,-31.0304 3254.6,-30.4022 3262.48,-37.4887 3265.18,-31.0304"/>
-<text text-anchor="middle" x="3315.09" y="-57.8" font-family="Times,serif" font-size="14.00">c</text>
+<path fill="none" stroke="black" d="M2373.12,-630.231C2361.42,-606.324 2336.59,-563.836 2300.74,-545.57 2253.59,-521.541 1877.41,-532.838 1824.74,-527.57 1783.52,-523.446 1773.99,-516.501 1732.74,-512.57 1697.72,-509.232 1125.82,-518.192 1099.74,-494.57 1065.91,-463.916 1071.7,-125.86 1047.74,-87 1033.96,-64.6504 1023.34,-63.2024 998.745,-54 925.191,-26.4744 834.068,-19.6479 775.67,-18.4211"/>
+<polygon fill="black" stroke="black" points="775.571,-14.9192 765.516,-18.2575 775.458,-21.9183 775.571,-14.9192"/>
+<text text-anchor="middle" x="1073.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({2, 4})&#45;&gt;frozenset() -->
-<g id="edge42" class="edge"><title>frozenset({2, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3357.91,-100.599C3348.91,-83.4973 3337.27,-66.5346 3322.59,-54 3308.48,-41.9532 3290.06,-34.0069 3272.64,-28.7847"/>
-<polygon fill="black" stroke="black" points="3273.12,-25.2851 3262.55,-26.0143 3271.26,-32.0356 3273.12,-25.2851"/>
-<text text-anchor="middle" x="3338.09" y="-57.8" font-family="Times,serif" font-size="14.00">a</text>
+<!-- frozenset({2, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge43" class="edge"><title>frozenset({2, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2391.76,-630.246C2408.8,-604.135 2443.01,-553.11 2475.74,-512.57 2501,-481.287 2532.74,-447.623 2554.05,-425.74"/>
+<polygon fill="black" stroke="black" points="2556.63,-428.109 2561.13,-418.514 2551.63,-423.212 2556.63,-428.109"/>
+<text text-anchor="middle" x="2479.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
 </g>
-<!-- frozenset({2, 4})&#45;&gt;frozenset({3}) -->
-<g id="edge43" class="edge"><title>frozenset({2, 4})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3382.77,-247.217C3382.7,-256.302 3382.64,-265.455 3382.59,-274.186 3382.56,-280.852 3382.03,-282.543 3382.59,-289.186 3385.04,-317.903 3391,-350.361 3395.59,-372.666"/>
-<polygon fill="black" stroke="black" points="3392.23,-373.677 3397.72,-382.739 3399.08,-372.232 3392.23,-373.677"/>
-<text text-anchor="middle" x="3386.09" y="-277.986" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({2, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge42" class="edge"><title>frozenset({2, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M2370.23,-630.242C2356.31,-608.594 2330.1,-571.075 2300.74,-545.57 2288.72,-535.12 2281.75,-538.043 2269.74,-527.57 2255.93,-515.522 2242.71,-501.295 2230.69,-486.822"/>
+<polygon fill="black" stroke="black" points="2233.17,-484.32 2224.14,-478.769 2227.74,-488.736 2233.17,-484.32"/>
+<text text-anchor="middle" x="2273.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
 <!-- frozenset({0, 3, 4}) -->
 <g id="node28" class="node"><title>frozenset({0, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="271.593" cy="-648.361" rx="80.6814" ry="80.6814"/>
-<ellipse fill="none" stroke="black" cx="271.593" cy="-648.361" rx="84.6858" ry="84.6858"/>
-<text text-anchor="middle" x="271.593" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 3, 4})</text>
+<ellipse fill="none" stroke="black" cx="3330.74" cy="-648.361" rx="80.6814" ry="80.6814"/>
+<ellipse fill="none" stroke="black" cx="3330.74" cy="-648.361" rx="84.6858" ry="84.6858"/>
+<text text-anchor="middle" x="3330.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 3, 4})</text>
 </g>
 <!-- frozenset({0, 3, 4})&#45;&gt;frozenset({0}) -->
 <g id="edge44" class="edge"><title>frozenset({0, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M322.325,-580.267C335.138,-567.054 349.794,-554.527 365.593,-545.57 399.564,-526.311 421.862,-552.888 451.593,-527.57 627.718,-377.583 448.757,-129.013 667.593,-54 728.11,-33.2561 1149.29,-23.3837 1319.99,-20.2002"/>
-<polygon fill="black" stroke="black" points="1320.2,-23.697 1330.13,-20.0134 1320.07,-16.6982 1320.2,-23.697"/>
-<text text-anchor="middle" x="547.093" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
+<path fill="none" stroke="black" d="M3293.67,-572.095C3227.07,-446.168 3074.17,-195.889 2862.74,-87 2777.11,-42.8959 2496.13,-26.6446 2362.96,-21.3157"/>
+<polygon fill="black" stroke="black" points="2362.99,-17.8143 2352.86,-20.9212 2362.72,-24.8089 2362.99,-17.8143"/>
+<text text-anchor="middle" x="3105.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({0, 3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge45" class="edge"><title>frozenset({0, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M323.237,-581.102C335.952,-567.924 350.337,-555.199 365.593,-545.57 388.417,-531.163 404.906,-547.045 423.593,-527.57 458.659,-491.023 506.394,-124.36 540.593,-87 569.641,-55.2659 589.403,-62.4186 631.593,-54 761.747,-28.0289 1155.9,-21.2645 1319.36,-19.5564"/>
-<polygon fill="black" stroke="black" points="1319.83,-23.052 1329.79,-19.451 1319.75,-16.0523 1319.83,-23.052"/>
-<text text-anchor="middle" x="493.093" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<!-- frozenset({0, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge45" class="edge"><title>frozenset({0, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3281.55,-579.321C3268.78,-566.075 3253.98,-553.771 3237.74,-545.57 3169.53,-511.118 3139.22,-551.801 3066.74,-527.57 3054.46,-523.461 3053.74,-517.464 3041.74,-512.57 2908.33,-458.151 2741.95,-426.575 2649.03,-411.927"/>
+<polygon fill="black" stroke="black" points="2649.32,-408.429 2638.9,-410.35 2648.24,-415.346 2649.32,-408.429"/>
+<text text-anchor="middle" x="3070.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
-<!-- frozenset({0, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge46" class="edge"><title>frozenset({0, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M321.056,-579.352C334.027,-566.017 349.069,-553.669 365.593,-545.57 407.252,-525.15 527.667,-534.154 573.593,-527.57 760,-500.846 974.701,-454.124 1097.75,-425.791"/>
-<polygon fill="black" stroke="black" points="1098.58,-429.19 1107.54,-423.53 1097.01,-422.369 1098.58,-429.19"/>
-<text text-anchor="middle" x="663.093" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({0, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge46" class="edge"><title>frozenset({0, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M3281.65,-579.123C3268.87,-565.886 3254.05,-553.638 3237.74,-545.57 3156.56,-505.402 3121.12,-554.843 3034.74,-527.57 3022.02,-523.553 3021.1,-517.609 3008.74,-512.57 2885.06,-462.115 2731.84,-429.32 2645.4,-413.346"/>
+<polygon fill="black" stroke="black" points="2645.92,-409.883 2635.46,-411.528 2644.66,-416.769 2645.92,-409.883"/>
+<text text-anchor="middle" x="3038.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
 </g>
 <!-- frozenset({0, 1, 2, 3, 4}) -->
 <g id="node29" class="node"><title>frozenset({0, 1, 2, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="1198.59" cy="-648.361" rx="98.591" ry="98.591"/>
-<ellipse fill="none" stroke="black" cx="1198.59" cy="-648.361" rx="102.583" ry="102.583"/>
-<text text-anchor="middle" x="1198.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2, 3, 4})</text>
+<ellipse fill="none" stroke="black" cx="1796.74" cy="-648.361" rx="98.591" ry="98.591"/>
+<ellipse fill="none" stroke="black" cx="1796.74" cy="-648.361" rx="102.583" ry="102.583"/>
+<text text-anchor="middle" x="1796.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2, 3, 4})</text>
 </g>
 <!-- frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge57" class="edge"><title>frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1272.56,-576.297C1293.34,-552.307 1313.74,-524.075 1326.59,-494.57 1365.99,-404.113 1361.87,-150.673 1381.59,-54 1382.14,-51.3065 1382.79,-48.5178 1383.5,-45.744"/>
-<polygon fill="black" stroke="black" points="1386.91,-46.5293 1386.18,-35.9598 1380.16,-44.6792 1386.91,-46.5293"/>
-<text text-anchor="middle" x="1365.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge56" class="edge"><title>frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M1726.13,-573.537C1715.49,-554.105 1710.71,-532.885 1719.74,-512.57 1830.72,-263.077 2139.48,-92.9608 2250.95,-38.1142"/>
+<polygon fill="black" stroke="black" points="2252.72,-41.1409 2260.18,-33.6132 2249.66,-34.8486 2252.72,-41.1409"/>
+<text text-anchor="middle" x="1901.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge58" class="edge"><title>frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M1198.59,-545.387C1198.59,-532.055 1198.59,-518.387 1198.59,-505.036"/>
-<polygon fill="black" stroke="black" points="1202.09,-504.899 1198.59,-494.899 1195.09,-504.899 1202.09,-504.899"/>
-<text text-anchor="middle" x="1202.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge58" class="edge"><title>frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M1865.78,-571.785C1878.72,-561.389 1892.89,-552.068 1907.74,-545.57 1996.4,-506.776 2032.63,-557.239 2124.74,-527.57 2137.08,-523.597 2137.49,-516.768 2149.74,-512.57 2213.27,-490.817 2234.23,-509.264 2299.74,-494.57 2383.57,-475.769 2477.77,-441.441 2532.18,-420.25"/>
+<polygon fill="black" stroke="black" points="2533.51,-423.489 2541.54,-416.581 2530.95,-416.972 2533.51,-423.489"/>
+<text text-anchor="middle" x="2153.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
 </g>
-<!-- frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge56" class="edge"><title>frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1267.87,-572.191C1291.13,-550.44 1318.38,-528.339 1346.59,-512.57 1447.65,-456.084 1580.11,-426.206 1660.1,-412.248"/>
-<polygon fill="black" stroke="black" points="1660.81,-415.679 1670.07,-410.543 1659.63,-408.779 1660.81,-415.679"/>
-<text text-anchor="middle" x="1350.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<!-- frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge57" class="edge"><title>frozenset({0, 1, 2, 3, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M1860.93,-568.069C1879.47,-548.29 1900.69,-528.269 1922.74,-512.57 1968.63,-479.902 2025.69,-453.677 2073.61,-434.969"/>
+<polygon fill="black" stroke="black" points="2075,-438.188 2083.07,-431.328 2072.48,-431.655 2075,-438.188"/>
+<text text-anchor="middle" x="1926.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
 <!-- frozenset({1, 4}) -->
 <g id="node30" class="node"><title>frozenset({1, 4})</title>
-<ellipse fill="none" stroke="black" cx="3079.59" cy="-648.361" rx="71.4876" ry="71.4876"/>
-<ellipse fill="none" stroke="black" cx="3079.59" cy="-648.361" rx="75.4873" ry="75.4873"/>
-<text text-anchor="middle" x="3079.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 4})</text>
+<ellipse fill="none" stroke="black" cx="870.745" cy="-648.361" rx="71.4876" ry="71.4876"/>
+<ellipse fill="none" stroke="black" cx="870.745" cy="-648.361" rx="75.4873" ry="75.4873"/>
+<text text-anchor="middle" x="870.745" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1, 4})</text>
 </g>
 <!-- frozenset({1, 4})&#45;&gt;frozenset() -->
-<g id="edge60" class="edge"><title>frozenset({1, 4})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3095.74,-574.358C3126.57,-434.994 3192.53,-136.804 3212.65,-45.8749"/>
-<polygon fill="black" stroke="black" points="3216.07,-46.5916 3214.82,-36.0717 3209.24,-45.0797 3216.07,-46.5916"/>
-<text text-anchor="middle" x="3165.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge59" class="edge"><title>frozenset({1, 4})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M858.474,-573.423C838.531,-459.844 794.958,-236.438 732.745,-54 731.742,-51.0595 730.575,-48.0325 729.338,-45.0474"/>
+<polygon fill="black" stroke="black" points="732.5,-43.5433 725.256,-35.8117 726.097,-46.3731 732.5,-43.5433"/>
+<text text-anchor="middle" x="803.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({1, 4})&#45;&gt;frozenset({3}) -->
-<g id="edge59" class="edge"><title>frozenset({1, 4})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3100.47,-575.756C3109.83,-553.301 3122.86,-529.887 3140.59,-512.57 3196.69,-457.799 3284.02,-428.332 3342,-413.885"/>
-<polygon fill="black" stroke="black" points="3342.86,-417.278 3351.76,-411.526 3341.22,-410.474 3342.86,-417.278"/>
-<text text-anchor="middle" x="3144.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<!-- frozenset({1, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge60" class="edge"><title>frozenset({1, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M909.778,-583.61C922.426,-568.398 937.88,-554.108 955.745,-545.57 1009.84,-519.716 1977.1,-544.055 2034.74,-527.57 2047.2,-524.007 2047.4,-516.493 2059.74,-512.57 2161.69,-480.179 2194.88,-515.647 2299.74,-494.57 2384.44,-477.547 2479.09,-442.325 2533.22,-420.537"/>
+<polygon fill="black" stroke="black" points="2534.57,-423.766 2542.53,-416.764 2531.94,-417.279 2534.57,-423.766"/>
+<text text-anchor="middle" x="2063.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
-<!-- frozenset({1, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge61" class="edge"><title>frozenset({1, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M3038.31,-584.759C3026.08,-570.108 3011.62,-555.808 2995.59,-545.57 2946.81,-514.404 2926.94,-520.452 2869.59,-512.57 2811.35,-504.566 1864.91,-519.333 1811.59,-494.57 1781.78,-480.723 1758.55,-450.055 1744.76,-427.777"/>
-<polygon fill="black" stroke="black" points="1747.72,-425.916 1739.6,-419.113 1741.71,-429.496 1747.72,-425.916"/>
-<text text-anchor="middle" x="2963.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({1, 4})&#45;&gt;frozenset({2}) -->
+<g id="edge61" class="edge"><title>frozenset({1, 4})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M826.554,-586.976C814.515,-572.537 800.87,-557.784 786.745,-545.57 724.511,-491.758 639.687,-445.729 590.21,-421.091"/>
+<polygon fill="black" stroke="black" points="591.616,-417.882 581.099,-416.598 588.52,-424.16 591.616,-417.882"/>
+<text text-anchor="middle" x="767.245" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
 </g>
 <!-- frozenset({0, 1, 2, 4}) -->
 <g id="node31" class="node"><title>frozenset({0, 1, 2, 4})</title>
-<ellipse fill="none" stroke="black" cx="1760.59" cy="-648.361" rx="89.8763" ry="89.8763"/>
-<ellipse fill="none" stroke="black" cx="1760.59" cy="-648.361" rx="93.8845" ry="93.8845"/>
-<text text-anchor="middle" x="1760.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2, 4})</text>
+<ellipse fill="none" stroke="black" cx="2563.74" cy="-648.361" rx="89.8763" ry="89.8763"/>
+<ellipse fill="none" stroke="black" cx="2563.74" cy="-648.361" rx="93.8845" ry="93.8845"/>
+<text text-anchor="middle" x="2563.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 2, 4})</text>
 </g>
 <!-- frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge69" class="edge"><title>frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M1704.96,-572.914C1687.11,-548.3 1667.59,-520.559 1650.59,-494.57 1583.23,-391.542 1563.47,-366.862 1509.59,-256.186 1474.26,-183.615 1483.16,-157.347 1443.59,-87 1434.93,-71.5929 1423.09,-55.8231 1412.89,-43.3537"/>
-<polygon fill="black" stroke="black" points="1415.58,-41.108 1406.48,-35.6731 1410.21,-45.5933 1415.58,-41.108"/>
-<text text-anchor="middle" x="1530.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge68" class="edge"><title>frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2503.69,-575.973C2490.66,-564.18 2476.13,-553.299 2460.74,-545.57 2413.34,-521.76 2379.06,-566.244 2342.74,-527.57 2270.42,-450.551 2318.63,-158.127 2300.74,-54 2300.28,-51.3102 2299.72,-48.5239 2299.1,-45.7516"/>
+<polygon fill="black" stroke="black" points="2302.48,-44.8494 2296.7,-35.9693 2295.68,-46.5149 2302.48,-44.8494"/>
+<text text-anchor="middle" x="2305.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge68" class="edge"><title>frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1738.26,-557.104C1736.4,-547.186 1734.78,-537.197 1733.59,-527.57 1729.43,-493.829 1729.22,-454.619 1729.7,-429.084"/>
-<polygon fill="black" stroke="black" points="1733.2,-429.113 1729.93,-419.034 1726.2,-428.949 1733.2,-429.113"/>
-<text text-anchor="middle" x="1737.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<!-- frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge70" class="edge"><title>frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2569.04,-554.554C2571.59,-509.812 2574.46,-459.419 2576.19,-429.182"/>
+<polygon fill="black" stroke="black" points="2579.69,-429.186 2576.77,-419.003 2572.7,-428.787 2579.69,-429.186"/>
+<text text-anchor="middle" x="2575.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
 </g>
-<!-- frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge70" class="edge"><title>frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M1749.34,-555.254C1743.86,-510.421 1737.67,-459.764 1733.95,-429.351"/>
-<polygon fill="black" stroke="black" points="1737.39,-428.612 1732.7,-419.111 1730.44,-429.461 1737.39,-428.612"/>
-<text text-anchor="middle" x="1749.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 1, 2, 3}) -->
+<g id="edge69" class="edge"><title>frozenset({0, 1, 2, 4})&#45;&gt;frozenset({0, 1, 2, 3})</title>
+<path fill="none" stroke="black" d="M2504.22,-575.732C2491.1,-563.883 2476.4,-553.044 2460.74,-545.57 2395.77,-514.549 2364.77,-558.487 2299.74,-527.57 2285.85,-520.963 2263.61,-500.732 2241.54,-478.378"/>
+<polygon fill="black" stroke="black" points="2243.88,-475.768 2234.39,-471.06 2238.88,-480.659 2243.88,-475.768"/>
+<text text-anchor="middle" x="2303.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
 <!-- frozenset({0, 1, 3, 4}) -->
 <g id="node32" class="node"><title>frozenset({0, 1, 3, 4})</title>
-<ellipse fill="none" stroke="black" cx="2152.59" cy="-648.361" rx="89.8763" ry="89.8763"/>
-<ellipse fill="none" stroke="black" cx="2152.59" cy="-648.361" rx="93.8845" ry="93.8845"/>
-<text text-anchor="middle" x="2152.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 3, 4})</text>
+<ellipse fill="none" stroke="black" cx="2768.74" cy="-648.361" rx="89.8763" ry="89.8763"/>
+<ellipse fill="none" stroke="black" cx="2768.74" cy="-648.361" rx="93.8845" ry="93.8845"/>
+<text text-anchor="middle" x="2768.74" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({0, 1, 3, 4})</text>
 </g>
 <!-- frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0}) -->
-<g id="edge75" class="edge"><title>frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0})</title>
-<path fill="none" stroke="black" d="M2183.37,-559.426C2218.21,-443.837 2260.56,-237.808 2181.59,-87 2170.09,-65.0285 2159.98,-62.2674 2136.59,-54 2074.28,-31.9676 1637.44,-22.8156 1463.15,-20.0134"/>
-<polygon fill="black" stroke="black" points="1463.1,-16.5123 1453.05,-19.8534 1462.99,-23.5114 1463.1,-16.5123"/>
-<text text-anchor="middle" x="2230.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge74" class="edge"><title>frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0})</title>
+<path fill="none" stroke="black" d="M2709.75,-575.175C2696.8,-563.454 2682.28,-552.803 2666.74,-545.57 2625.09,-526.173 2496.56,-556.364 2460.74,-527.57 2289.2,-389.637 2410.45,-252.704 2315.74,-54 2314.21,-50.7764 2312.39,-47.5188 2310.46,-44.3557"/>
+<polygon fill="black" stroke="black" points="2313.25,-42.2309 2304.83,-35.798 2307.4,-46.0766 2313.25,-42.2309"/>
+<text text-anchor="middle" x="2362.24" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4}) -->
-<g id="edge76" class="edge"><title>frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 2, 3, 4})</title>
-<path fill="none" stroke="black" d="M2092.79,-575.977C2079.97,-564.259 2065.69,-553.405 2050.59,-545.57 1974.9,-506.298 1946.16,-523.538 1861.59,-512.57 1768.26,-500.464 1743.74,-508.047 1650.59,-494.57 1528.97,-476.973 1390.8,-447.18 1299.58,-426.127"/>
-<polygon fill="black" stroke="black" points="1300.34,-422.708 1289.8,-423.861 1298.76,-429.528 1300.34,-422.708"/>
-<text text-anchor="middle" x="2010.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge75" class="edge"><title>frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2718.14,-569.491C2705.12,-550.52 2690.81,-530.527 2676.74,-512.57 2652.4,-481.474 2621.74,-447.957 2601.04,-426.052"/>
+<polygon fill="black" stroke="black" points="2603.32,-423.371 2593.9,-418.533 2598.25,-428.193 2603.32,-423.371"/>
+<text text-anchor="middle" x="2691.24" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
-<!-- frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge74" class="edge"><title>frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M2177.07,-557.874C2176.73,-541.047 2172.3,-524.893 2160.59,-512.57 2133.85,-484.415 1846.52,-511.532 1811.59,-494.57 1782.02,-480.211 1758.75,-449.646 1744.87,-427.532"/>
-<polygon fill="black" stroke="black" points="1747.85,-425.689 1739.68,-418.938 1741.86,-429.307 1747.85,-425.689"/>
-<text text-anchor="middle" x="2174.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<!-- frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 2}) -->
+<g id="edge76" class="edge"><title>frozenset({0, 1, 3, 4})&#45;&gt;frozenset({0, 2})</title>
+<path fill="none" stroke="black" d="M2708.17,-576.441C2694.97,-560.529 2681.22,-543.607 2668.74,-527.57 2642.26,-493.522 2613.3,-452.893 2595.33,-427.236"/>
+<polygon fill="black" stroke="black" points="2598.05,-425.015 2589.45,-418.821 2592.31,-429.023 2598.05,-425.015"/>
+<text text-anchor="middle" x="2672.24" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
 </g>
 <!-- frozenset({1}) -->
 <g id="node33" class="node"><title>frozenset({1})</title>
-<ellipse fill="none" stroke="black" cx="3234.59" cy="-648.361" rx="61.99" ry="18"/>
-<text text-anchor="middle" x="3234.59" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1})</text>
+<ellipse fill="none" stroke="black" cx="65.7445" cy="-648.361" rx="61.975" ry="61.975"/>
+<ellipse fill="none" stroke="black" cx="65.7445" cy="-648.361" rx="65.99" ry="65.99"/>
+<text text-anchor="middle" x="65.7445" y="-644.661" font-family="Times,serif" font-size="14.00">frozenset({1})</text>
 </g>
 <!-- frozenset({1})&#45;&gt;frozenset() -->
-<g id="edge84" class="edge"><title>frozenset({1})&#45;&gt;frozenset()</title>
-<path fill="none" stroke="black" d="M3233.02,-630.319C3230.95,-607.105 3227.35,-564.234 3225.59,-527.57 3216.77,-343.886 3217.67,-122.49 3218.31,-46.3009"/>
-<polygon fill="black" stroke="black" points="3221.81,-46.1665 3218.4,-36.1353 3214.81,-46.1033 3221.81,-46.1665"/>
-<text text-anchor="middle" x="3222.09" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
+<g id="edge83" class="edge"><title>frozenset({1})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M82.6889,-584.765C120.581,-446.487 211.595,-124.246 246.745,-87 301.687,-28.7809 543.711,-19.7589 657.383,-18.7962"/>
+<polygon fill="black" stroke="black" points="657.668,-22.2945 667.644,-18.7284 657.621,-15.2947 657.668,-22.2945"/>
+<text text-anchor="middle" x="177.245" y="-277.986" font-family="Times,serif" font-size="14.00">a</text>
 </g>
-<!-- frozenset({1})&#45;&gt;frozenset({3}) -->
-<g id="edge83" class="edge"><title>frozenset({1})&#45;&gt;frozenset({3})</title>
-<path fill="none" stroke="black" d="M3229.93,-630.363C3223.57,-603.516 3215.14,-550.46 3235.59,-512.57 3260.53,-466.39 3314.09,-436.1 3353.66,-419.067"/>
-<polygon fill="black" stroke="black" points="3355.25,-422.196 3363.14,-415.122 3352.56,-415.733 3355.25,-422.196"/>
-<text text-anchor="middle" x="3239.09" y="-516.37" font-family="Times,serif" font-size="14.00">c</text>
+<!-- frozenset({1})&#45;&gt;frozenset() -->
+<g id="edge85" class="edge"><title>frozenset({1})&#45;&gt;frozenset()</title>
+<path fill="none" stroke="black" d="M57.914,-583.057C47.6669,-467.035 44.4279,-222.204 176.745,-87 207.714,-55.355 227.421,-63.1421 270.745,-54 407.304,-25.1833 571.902,-19.5765 657.891,-18.7943"/>
+<polygon fill="black" stroke="black" points="658.006,-22.2937 667.98,-18.7216 657.955,-15.2939 658.006,-22.2937"/>
+<text text-anchor="middle" x="81.2445" y="-277.986" font-family="Times,serif" font-size="14.00">c</text>
 </g>
-<!-- frozenset({1})&#45;&gt;frozenset({0, 3}) -->
-<g id="edge85" class="edge"><title>frozenset({1})&#45;&gt;frozenset({0, 3})</title>
-<path fill="none" stroke="black" d="M3229.46,-630.213C3219.39,-600.033 3193.89,-538.198 3147.59,-512.57 3082.65,-476.621 1878.97,-525.719 1811.59,-494.57 1781.59,-480.697 1758.27,-449.746 1744.51,-427.421"/>
-<polygon fill="black" stroke="black" points="1747.48,-425.573 1739.38,-418.752 1741.46,-429.14 1747.48,-425.573"/>
-<text text-anchor="middle" x="3171.09" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
+<!-- frozenset({1})&#45;&gt;frozenset({2}) -->
+<g id="edge84" class="edge"><title>frozenset({1})&#45;&gt;frozenset({2})</title>
+<path fill="none" stroke="black" d="M96.9184,-590.267C108.424,-573.726 122.849,-557.053 139.745,-545.57 166.312,-527.513 179.084,-537.152 209.745,-527.57 317.728,-493.824 441.717,-445.49 505.982,-419.698"/>
+<polygon fill="black" stroke="black" points="507.427,-422.89 515.397,-415.909 504.813,-416.396 507.427,-422.89"/>
+<text text-anchor="middle" x="260.245" y="-516.37" font-family="Times,serif" font-size="14.00">b</text>
 </g>
 </g>
 </svg>

@@ -36,10 +36,11 @@ class DFA(object):
     def complete(self):
         sink = Sink()
         transitions = deepcopy(self.transition_function)
-        for state, sym2state in self.transition_function.items():
+        for state in self.states:
+            sym2state = self.transition_function.get(state, {})
             for action in self.alphabet.symbols:
                 if not action in sym2state:
-                    transitions[state][action]= sink
+                    transitions.setdefault(state, {})[action]= sink
 
         transitions[sink] = {}
         for action in self.alphabet.symbols:
@@ -174,18 +175,19 @@ class DFA(object):
 
     def word_acceptance(self, word:List[Symbol]):
         assert all(char in self.alphabet.symbols for char in word)
+        complete_dfa = self.complete()
 
-        current_state = self.initial_state
+        current_state = complete_dfa.initial_state
         # return false if current_state is None
         if current_state is None:
             return False
 
         for char in word:
-            if char not in self.transition_function[current_state]:
+            if char not in complete_dfa.transition_function.get(current_state, {}):
                 return False
             else:
-                current_state = self.transition_function[current_state][char]
-        return current_state in self.accepting_states
+                current_state = complete_dfa.transition_function[current_state][char]
+        return current_state in complete_dfa.accepting_states
 
 
     def to_dot(self, path):
