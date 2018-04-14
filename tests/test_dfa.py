@@ -81,32 +81,48 @@ class TestDFA(unittest.TestCase):
         # not needed, but useful for testing purposes
         complete_dfa = self.dfa.complete()
         simulator = Simulator(complete_dfa)
-        self.assertEqual(simulator.cur_state, complete_dfa.initial_state)
+        self.assertEqual(simulator.cur_state, simulator.state2id[complete_dfa.initial_state])
 
         simulator.make_transition(self.a)
-        self.assertEqual(simulator.cur_state, "s2")
         self.assertTrue(simulator.is_true())
 
         simulator.make_transition(self.b)
-        self.assertEqual(simulator.cur_state, "s1")
         self.assertFalse(simulator.is_true())
 
         simulator.make_transition(self.c)
-        self.assertEqual(simulator.cur_state, "s5")
         self.assertFalse(simulator.is_true())
 
         simulator.make_transition(self.c)
-        self.assertEqual(simulator.cur_state, "s5")
         self.assertFalse(simulator.is_true())
 
         simulator.make_transition(self.a)
-        self.assertEqual(simulator.cur_state, Sink())
+        self.assertEqual(simulator.id2state[simulator.cur_state], Sink())
         self.assertFalse(simulator.is_true())
 
         simulator.make_transition(self.b)
-        self.assertEqual(simulator.cur_state, Sink())
+        self.assertEqual(simulator.id2state[simulator.cur_state], Sink())
         self.assertFalse(simulator.is_true())
 
         self.assertFalse(simulator.word_acceptance([self.a, self.b, self.c, self.c, self.a, self.b]))
         self.assertTrue(simulator.word_acceptance([self.a, self.b, self.a]))
 
+
+    def test_issue_15(self):
+        H, E, L, O = Symbol("H"), Symbol("E"), Symbol("L"), Symbol("O")
+        alphabet = Alphabet({H, E, L, O})
+        states = frozenset({"s0", "s1", "s2", "s3", "s4"})
+        initial_state = "s0"
+        accepting_states = frozenset({"s4"})
+        transition_function = {
+            "s0": {H: "s1"},
+            "s1": {E: "s2"},
+            "s2": {L: "s3"},
+            "s3": {O: "s4"},
+        }
+
+        dfa = DFA(alphabet, states, initial_state, accepting_states, transition_function)
+        dfa.minimize().to_dot("temp")
+
+        self.assertTrue(dfa.word_acceptance([H, E, L, O]))
+        self.assertFalse(dfa.word_acceptance([H, E, L, L]))
+        self.assertFalse(dfa.word_acceptance([H, E, O]))
