@@ -2,6 +2,12 @@ language: python
 python:
 - 3.6
 - 3.5
+before_install:
+  - wget http://ftp.it.debian.org/debian/pool/main/g/graphviz/graphviz_2.38.0-17_amd64.deb
+  - sudo dpkg -i --force-all graphviz_2.38.0-17_amd64.deb
+  - sudo apt-get install -f
+  - sudo apt-get update
+  - sudo apt-get install graphviz
 install:
 - pip install -U tox-travis
 - pip  install codecov

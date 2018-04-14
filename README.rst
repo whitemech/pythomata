@@ -9,6 +9,9 @@ Pythomata
 .. image:: https://img.shields.io/pypi/pyversions/pythomata.svg
         :target: https://pypi.python.org/pypi/pythomata
 
+.. image:: https://img.shields.io/badge/status-development-orange.svg
+        :target: https://img.shields.io/badge/status-development-orange.svg
+
 .. image:: https://img.shields.io/travis/MarcoFavorito/pythomata.svg
         :target: https://travis-ci.org/MarcoFavorito/pythomata
 
@@ -40,7 +43,9 @@ Install
 Features
 --------
 
-* TODO
+* Basic DFA and NFA support;
+* Algorithms for DFA minimization and trimming;
+* Algorithm for NFA determinization.
 
 Credits
 -------
