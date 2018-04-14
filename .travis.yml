@@ -4,7 +4,7 @@ python:
 - 3.5
 before_install:
   - wget http://ftp.it.debian.org/debian/pool/main/g/graphviz/graphviz_2.38.0-17_amd64.deb
-  - sudo dpkg -i graphviz_2.38.0-17_amd64.deb
+  - sudo dpkg -i graphviz_2.38.0-17_amd64.deb --force-all
   - sudo apt-get install -f
 install:
 - pip install -U tox-travis
