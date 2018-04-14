@@ -121,8 +121,8 @@ class TestDFA(unittest.TestCase):
         }
 
         dfa = DFA(alphabet, states, initial_state, accepting_states, transition_function)
-        dfa.complete().to_dot("temp_complete")
-        dfa.minimize().to_dot("temp")
+        dfa.complete().to_dot("tests/automata/issue_15_complete")
+        dfa.minimize().to_dot("tests/automata/issue_15_minimized")
 
         self.assertTrue(dfa.word_acceptance([H, E, L, O]))
         self.assertFalse(dfa.word_acceptance([H, E, L, L, O]))
