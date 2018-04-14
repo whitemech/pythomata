@@ -45,7 +45,8 @@ Features
 
 * Basic DFA and NFA support;
 * Algorithms for DFA minimization and trimming;
-* Algorithm for NFA determinization.
+* Algorithm for NFA determinization;
+* Print automata in SVG format.
 
 Credits
 -------
