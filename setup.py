@@ -14,15 +14,15 @@ with open('HISTORY.rst') as history_file:
 requirements = ["graphviz", "pydot", "pyparsing"]
 # requirements = []
 
-# setup_requirements = ["graphviz", "pydot", "pyparsing"]
-setup_requirements = []
+setup_requirements = ["graphviz", "pydot", "pyparsing"]
+# setup_requirements = []
 
 test_requirements = ["graphviz", "pydot", "pyparsing"]
 # test_requirements = []
 
 setup(
     name='pythomata',
-    version='0.1b2',
+    version='0.1.3',
     description="Python implementation of automata.",
     long_description=readme + '\n\n' + history,
     author="Marco Favorito",

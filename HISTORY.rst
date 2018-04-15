@@ -18,3 +18,8 @@ History
 ------------------
 
 * Minor bug fixes
+
+0.1.3 (2018-03-16)
+------------------
+
+* Changes in word acceptance procedure for DFAs
