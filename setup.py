@@ -14,11 +14,11 @@ with open('HISTORY.rst') as history_file:
 requirements = ["graphviz", "pydot", "pyparsing"]
 # requirements = []
 
-setup_requirements = ["graphviz", "pydot", "pyparsing"]
-# setup_requirements = []
+# setup_requirements = ["graphviz", "pydot", "pyparsing"]
+setup_requirements = []
 
-test_requirements = ["graphviz", "pydot", "pyparsing"]
-# test_requirements = []
+# test_requirements = ["graphviz", "pydot", "pyparsing"]
+test_requirements = []
 
 setup(
     name='pythomata',
@@ -44,6 +44,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     test_suite='tests',
-    setup_requires=setup_requirements,
-    tests_require=test_requirements,
+    # setup_requires=setup_requirements,
+    # tests_require=test_requirements,
 )
