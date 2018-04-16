@@ -74,9 +74,9 @@ class TestNFAOnSets(unittest.TestCase):
     def test_sets(self):
         inc = Symbol("inc")
         doub = Symbol("doub")
-        inc_ =  frozenset({inc})
-        doub_ = frozenset({doub})
-        not_ =  frozenset()
+        inc_  =  Symbol(frozenset({inc}))
+        doub_ =  Symbol(frozenset({doub}))
+        not_  =  Symbol(frozenset())
 
         initial_states = frozenset({
             frozenset({1}),
@@ -117,7 +117,7 @@ class TestNFAOnSets(unittest.TestCase):
         tt = Symbol("TT")
         eventually_true_tt = Symbol("<true>tt")
 
-        alphabet = {frozenset(), frozenset({a})}
+        alphabet = {Symbol(frozenset()), Symbol(frozenset({a}))}
 
         delta = {
             (frozenset(), frozenset(), frozenset()),
