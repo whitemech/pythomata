@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Set, Any
 
 from pythomata.base.Symbol import Symbol
 
@@ -8,8 +8,8 @@ class Alphabet(object):
         self.symbols = symbols
 
     @staticmethod
-    def fromStrings(symbol_strings:Set[str]):
-        return Alphabet(set(Symbol(s) for s in symbol_strings))
+    def fromObjects(symbols:Set[Any]):
+        return Alphabet(set(Symbol(s) for s in symbols))
 
     def __eq__(self, other):
         if type(self)==type(other):

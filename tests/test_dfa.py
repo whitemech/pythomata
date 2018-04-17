@@ -3,7 +3,7 @@ import unittest
 
 from pythomata.base.DFA import DFA
 from pythomata.base.Alphabet import Alphabet
-from pythomata.base.Simulator import Simulator
+from pythomata.base.Simulator import DFASimulator
 from pythomata.base.Symbol import Symbol
 from pythomata.base.utils import Sink
 
@@ -80,7 +80,7 @@ class TestDFA(unittest.TestCase):
     def test_simulator(self):
         # not needed, but useful for testing purposes
         complete_dfa = self.dfa.complete()
-        simulator = Simulator(complete_dfa)
+        simulator = DFASimulator(complete_dfa)
         self.assertEqual(simulator.cur_state, simulator.state2id[complete_dfa.initial_state])
 
         simulator.make_transition(self.a)

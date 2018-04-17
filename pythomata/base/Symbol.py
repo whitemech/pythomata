@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+from typing import Hashable
 
 
 class Symbol(object):
-    """A class to represent a symbol (actually, a wrap for a string)"""
-    def __init__(self, name):
+    """A class to represent a symbol"""
+    def __init__(self, name:Hashable):
         self.name = name
 
     def __str__(self):

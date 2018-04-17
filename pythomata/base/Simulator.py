@@ -1,10 +1,30 @@
-from typing import List
+from abc import ABC, abstractmethod
+from typing import List, Any
 
 from pythomata.base.DFA import DFA
 from pythomata.base.Symbol import Symbol
 
 
-class Simulator(object):
+class Simulator(ABC):
+
+    @abstractmethod
+    def make_transition(self, s:Symbol) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def is_true(self) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def word_acceptance(self, word: List[Symbol]) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def reset(self) -> Any:
+        raise NotImplementedError
+
+
+class DFASimulator(Simulator):
     def __init__(self, dfa:DFA):
         self.dfa = dfa.complete()
         self.id2state = dict(enumerate(self.dfa.states))
