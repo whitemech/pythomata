@@ -39,6 +39,64 @@ Install
     $ sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
     $ sudo apt-get install -f
 
+How to use
+--------
+
+* Define an automaton:
+
+.. code-block:: python
+
+    a, b, c = Symbol("a"), Symbol("b"), Symbol("c")
+        alphabet = Alphabet({a, b, c})
+        states = frozenset({"s1", "s2", "s3"})
+        initial_state = "s1"
+        accepting_states = frozenset({"s3"})
+        transition_function = {
+            "s1": {
+                b : "s1",
+                a : "s2"
+            },
+            "s2": {
+                a : "s3",
+                b : "s1"
+            },
+            "s3":{
+                c : "s3"
+            }
+        }
+
+        dfa = DFA(alphabet, states, initial_state, accepting_states, transition_function)
+
+* Test word acceptance:
+
+.. code-block:: python
+
+    # a word is a list of symbols
+    word = [b, b, b, a, b, c]
+
+    dfa.word_acceptance(word)        # True
+
+    # without the last symbol c, the final state is not reached
+    dfa.word_acceptance(word[:-1])   # False
+
+* Operations such as minimization and trimming:
+
+.. code-block:: python
+
+
+    dfa_minimized = dfa.minimize()
+    dfa_trimmed = dfa.trim()
+
+* Print the automata:
+
+.. code-block:: python
+
+    dfa.minimize().trim().to_dot("my_awesome_automaton")
+
+The output in .svg format is the following:
+
+.. image:: https://github.com/MarcoFavorito/pythomata/tree/master/docs/my_awesome_automaton.svg
+
 
 Features
 --------
