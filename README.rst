@@ -91,7 +91,8 @@ How to use
 
 .. code-block:: python
 
-    dfa.minimize().trim().to_dot("my_awesome_automaton")
+    filepath = "./my_awesome_automaton"
+    dfa.minimize().trim().to_dot(filepath)
 
 The output in .svg format is the following:
 
