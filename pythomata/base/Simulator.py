@@ -26,10 +26,10 @@ class Simulator(ABC):
 
 class DFASimulator(Simulator):
     def __init__(self, dfa:DFA):
-        self.dfa = dfa.complete()
+        self.dfa = dfa.minimize()
         self.id2state = dict(enumerate(self.dfa.states))
         self.state2id = {v: k for k, v in self.id2state.items()}
-        self.cur_state = self.state2id[dfa.initial_state]
+        self.cur_state = self.state2id[self.dfa.initial_state]
 
 
     def make_transition(self, s:Symbol):
