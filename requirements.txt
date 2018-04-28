@@ -1,4 +1,4 @@
-setuptools==39.0.1
+setuptools==39.1.0
 pydot==1.2.4
 graphviz==0.8.2
 pydot==1.2.4
