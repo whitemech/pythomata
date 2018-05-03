@@ -33,11 +33,18 @@ Python implementation of automata.
 Install
 -------
 
+Graphviz
+~~~~~~~~~~~~~~~~~~~~~~
+
+For Debian systems, the following commands should work:
+
 .. code-block:: console
 
     $ wget http://ftp.it.debian.org/debian/pool/main/g/graphviz/graphviz_2.38.0-17_amd64.deb
     $ sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
     $ sudo apt-get install -f
+
+Otherwise check the installation guide from the `official site <https://www.graphviz.org/download/>`_
 
 How to use
 --------
