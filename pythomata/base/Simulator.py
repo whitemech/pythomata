@@ -23,6 +23,10 @@ class Simulator(ABC):
     def reset(self) -> Any:
         raise NotImplementedError
 
+    @abstractmethod
+    def get_current_state(self):
+        raise NotImplementedError
+
 
 class DFASimulator(Simulator):
     def __init__(self, dfa:DFA):
@@ -50,3 +54,6 @@ class DFASimulator(Simulator):
 
     def reset(self):
         self.cur_state = self.state2id[self.dfa.initial_state]
+
+    def get_current_state(self):
+        return self.cur_state
