@@ -49,45 +49,52 @@ class DFA(object):
                    dict(transitions))
 
     def minimize(self):
-        dfa = self.complete()
+        complete_dfa = self.complete()
 
         # index the set of states such that avoid to deepcopy every time the states
-        id2states = dict(enumerate(dfa.states))
+        id2states = dict(enumerate(complete_dfa.states))
         state2id = {v:k for k,v in id2states.items()}
+
+        id2action = dict(enumerate(complete_dfa.alphabet.symbols))
+        action2id = {v: k for k, v in id2action.items()}
+
+        dfa = complete_dfa.map_states_and_action(state2id, action2id)
 
         # Greatest−fixpoint
         z_current = set()
         z_next = set()
-        for ids, state_s in id2states.items():
-            for idt, state_t in id2states.items():
+        for state_s in range(len(dfa.states)):
+            for state_t in range(len(dfa.states)):
                 s_is_final = state_s in dfa.accepting_states
                 t_is_final = state_t in dfa.accepting_states
                 if s_is_final and t_is_final or (not s_is_final and not t_is_final):
-                    z_next.add((ids, idt))
+                    z_next.add((state_s, state_t))
 
         while z_current != z_next:
             z_current = z_next
             z_next = copy(z_current)
-            for (ids, idt) in z_current:
-                s, t = id2states[ids], id2states[idt]
-                for a in dfa.alphabet.symbols:
-                    s_prime = dfa.transition_function[s][a] if s in dfa.transition_function and a in dfa.transition_function[s] else None
-                    if s_prime and not any(
-                        dfa.transition_function[t][a]==t_prime and (state2id[s_prime], state2id[t_prime]) in z_current
-                        for t_prime in dfa.states if t in dfa.transition_function):
-                        z_next.remove((ids,idt))
+
+            for (s, t) in z_current:
+                skip = False
+                s_transitions = dfa.transition_function.get(s, dict())
+                t_transitions = dfa.transition_function.get(t, dict())
+
+                for a, s_prime in s_transitions.items():
+                    t_prime = t_transitions[a]
+                    if not (s_prime, t_prime) in z_current:
+                        z_next.remove((s, t))
+                        skip = True
                         break
 
-                    t_prime = dfa.transition_function[t][a] if t in dfa.transition_function and a in dfa.transition_function[t] else None
-                    if t_prime and not any(
-                        dfa.transition_function[s][a] == s_prime and (state2id[s_prime], state2id[t_prime]) in z_current
-                        for s_prime in dfa.states if s in dfa.transition_function):
-                        z_next.remove((ids, idt))
+                for a, t_prime in t_transitions.items():
+                    if skip: break
+                    s_prime = s_transitions[a]
+                    if not (s_prime, t_prime) in z_current:
+                        z_next.remove((s, t))
                         break
 
         state2equiv_class = dict()
-        for (ids, idt) in z_current:
-            s, t = id2states[ids], id2states[idt]
+        for (s, t) in z_current:
             state2equiv_class.setdefault(s, set()).add(t)
         state2equiv_class = {k: frozenset(v) for k,v in state2equiv_class.items()}
 
@@ -102,9 +109,14 @@ class DFA(object):
                 new_transition_function.setdefault(new_state, {})
                 new_transition_function[new_state][action] = new_next_state
 
+        new_states = frozenset(equiv_class2new_state.values())
+        new_initial_state = equiv_class2new_state[state2equiv_class[dfa.initial_state]]
         new_final_states = frozenset(s for s in set(equiv_class2new_state[state2equiv_class[old_state]] for old_state in  dfa.accepting_states))
 
-        return DFA(dfa.alphabet, frozenset(equiv_class2new_state.values()), equiv_class2new_state[state2equiv_class[dfa.initial_state]], new_final_states, new_transition_function)
+        new_dfa = DFA(dfa.alphabet, new_states, new_initial_state, new_final_states, new_transition_function)
+        return new_dfa.map_states_and_action(actions_map=id2action)
+
+
 
     def reachable(self):
 
@@ -165,8 +177,6 @@ class DFA(object):
             initial_state = self.initial_state
         return DFA(self.alphabet, new_states, initial_state, self.accepting_states, new_transition_function)
 
-
-
     def trim(self):
         dfa = self.reachable()
         dfa = dfa.coreachable()
@@ -218,3 +228,24 @@ class DFA(object):
         g.render(filename=path)
         return
 
+
+    def map_states_and_action(self, states_map:dict=None, actions_map:dict=None):
+        if states_map  is None: states_map  = dict()
+        if actions_map is None: actions_map = dict()
+
+        new_alphabet = Alphabet({actions_map.get(s, s) for s in  self.alphabet.symbols})
+        new_states = frozenset({states_map.get(s,s) for s in self.states})
+        new_accepting_states = frozenset({states_map.get(s,s) for s in self.accepting_states})
+        new_initial_state = states_map.get(self.initial_state, self.initial_state)
+
+        new_transition_function = {}
+        for s, a2ns in self.transition_function.items():
+            new_a2ns = {actions_map.get(a,a):states_map.get(ns, ns) for a,ns in a2ns.items()}
+            new_transition_function[states_map.get(s,s)] = new_a2ns
+
+        return DFA(new_alphabet, new_states, new_initial_state, new_accepting_states, new_transition_function)
+
+    def map_to_int(self, states=True, actions=False):
+        state2id  = {v: k for k, v in enumerate(self.states)}           if states  else dict()
+        action2id = {v: k for k, v in enumerate(self.alphabet.symbols)} if actions else dict()
+        return self.map_states_and_action(state2id, action2id)
