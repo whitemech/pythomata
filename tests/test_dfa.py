@@ -35,6 +35,7 @@ class TestDFA(unittest.TestCase):
             }
         }
         self.dfa = DFA(self.alphabet, self.states, self.initial_state, self.accepting_states, self.transition_function)
+        self._test_word_acceptance(self.dfa)
 
 
     def test_dfa_strings(self):
@@ -43,39 +44,45 @@ class TestDFA(unittest.TestCase):
 
     def test_completion(self):
         dfa_complete = DFA.complete(self.dfa)
+        self._test_word_acceptance(dfa_complete)
         dfa_complete.to_dot("tests/automata/strings_complete.dot")
 
 
     def test_reachable(self):
         dfa = DFA.reachable(self.dfa)
+        self._test_word_acceptance(dfa)
         dfa.to_dot("tests/automata/strings_reachable.dot")
 
     def test_coreachable(self):
         dfa = DFA.coreachable(self.dfa)
+        self._test_word_acceptance(dfa)
         dfa.to_dot("tests/automata/strings_coreachable.dot")
 
     def test_trim(self):
         dfa = DFA.reachable(self.dfa)
         dfa = DFA.coreachable(dfa)
+        self._test_word_acceptance(dfa)
         dfa.to_dot("tests/automata/strings_trimmed.dot")
 
     def test_minimize(self):
         dfa_minimized= DFA.minimize(self.dfa)
+        self._test_word_acceptance(dfa_minimized)
         dfa_minimized.to_dot("tests/automata/strings_minimized.dot")
 
     def test_minimized_and_trimmed(self):
         dfa_minimized= DFA.minimize(self.dfa)
         dfa_minimized_and_trimmed = DFA.trim(dfa_minimized)
+        self._test_word_acceptance(dfa_minimized_and_trimmed)
         dfa_minimized_and_trimmed.to_dot("tests/automata/strings_minimized_and_trimmed.dot")
 
-    def test_word_acceptance(self):
+    def _test_word_acceptance(self, dfa):
         word = [self.a, self.b, self.b, self.b, self.b]
-        self.assertFalse(self.dfa.word_acceptance([]))
-        self.assertTrue(self.dfa.word_acceptance(word[:1]))
-        self.assertFalse(self.dfa.word_acceptance(word[:2]))
-        self.assertTrue(self.dfa.word_acceptance(word[:3]))
-        self.assertFalse(self.dfa.word_acceptance(word[:4]))
-        self.assertTrue(self.dfa.word_acceptance(word[:5]))
+        self.assertFalse(dfa.word_acceptance([]))
+        self.assertTrue (dfa.word_acceptance(word[:1]))
+        self.assertFalse(dfa.word_acceptance(word[:2]))
+        self.assertTrue (dfa.word_acceptance(word[:3]))
+        self.assertFalse(dfa.word_acceptance(word[:4]))
+        self.assertTrue (dfa.word_acceptance(word[:5]))
 
     def test_simulator(self):
         simulator = DFASimulator(self.dfa)
