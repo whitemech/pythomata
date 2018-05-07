@@ -6,7 +6,6 @@
 
 import unittest
 
-from pythomata import pythomata
 from pythomata.base.Alphabet import Alphabet
 from pythomata.base.DFA import DFA
 from pythomata.base.Symbol import Symbol

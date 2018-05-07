@@ -22,7 +22,7 @@ test_requirements = []
 
 setup(
     name='pythomata',
-    version='0.1.4post4',
+    version='0.1.4post6',
     description="Python implementation of automata.",
     long_description=readme + '\n\n' + history,
     author="Marco Favorito",
