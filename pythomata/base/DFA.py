@@ -49,19 +49,22 @@ class DFA(object):
                    dict(transitions))
 
     def minimize(self):
+        dfa = self
+
         # preprocessing
-        complete_dfa = self.complete()
-        trimmed_dfa = complete_dfa.trim()
-        complete_dfa = trimmed_dfa.complete()
+
+        dfa = dfa.complete()
+        dfa = dfa.trim()
+        dfa = dfa.complete()
 
         # index the set of states such that avoid to deepcopy every time the states
-        id2states = dict(enumerate(complete_dfa.states))
-        state2id = {v:k for k,v in id2states.items()}
+        id2states = dict(enumerate(dfa.states))
+        state2id = {v: k for k, v in id2states.items()}
 
-        id2action = dict(enumerate(complete_dfa.alphabet.symbols))
+        id2action = dict(enumerate(dfa.alphabet.symbols))
         action2id = {v: k for k, v in id2action.items()}
 
-        dfa = complete_dfa.map_states_and_action(state2id, action2id)
+        dfa = dfa.map_states_and_action(state2id, action2id)
 
         # Greatest−fixpoint
         z_current = set()
