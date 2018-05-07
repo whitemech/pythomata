@@ -4,6 +4,8 @@ from pythomata.base.NFA import NFA
 from pythomata.base.DFA import DFA
 from pythomata.base.Alphabet import Alphabet
 from pythomata.base.Symbol import Symbol
+from pythomata.base.utils import powerset
+
 
 class TestNFA(unittest.TestCase):
     def setUp(self):
@@ -165,8 +167,112 @@ class TestNFAOnSets(unittest.TestCase):
         self.assertEqual(nfa.accepting_states, final_states)
         self.assertEqual(nfa.transition_function, transition_function)
 
-        dfa = nfa.determinize().minimize()
-        dfa.to_dot("tests/automata/formulas.dfa")
+        dfa = nfa.determinize()
+        dfa.to_dot("tests/automata/formula_determinized.dfa")
+        dfa = dfa.minimize()
+        dfa.to_dot("tests/automata/formula_minimized.dfa")
+
+    def test_sapientino_nfa(self):
+        states = {0,1,2,3,4,5,6,7,8,9,10,11}
+        A,B,C,b = [Symbol(s) for s in ["A","B","C","b"]]
+        alphabet = Alphabet(powerset({A,B,C,b}))
+        final_states = {1,4,8,3,6}
+        initial_state = {0}
+        transition_function = {
+            (0, frozenset({}),         7),
+            (0, frozenset({A}),        7),
+            (0, frozenset({B}),        7),
+            (0, frozenset({A,B}),      7),
+            (0, frozenset({}),         5),
+            (0, frozenset({A}),        5),
+            (0, frozenset({B}),        5),
+            (0, frozenset({A, B}),     5),
+            (0, frozenset({A, B, b}),  10),
+            (0, frozenset({A, B, b}),  2),
+            (0, frozenset({b, A}),     1),
+            (0, frozenset({b, B}),     8),
+
+            # left
+            (7, frozenset({}), 7),
+            (7, frozenset({A}), 7),
+            (7, frozenset({B}), 7),
+            (7, frozenset({A, B}), 7),
+            (7, frozenset({b, A}), 1),
+            (7, frozenset({b, B}), 11),
+            (7, frozenset({b, A, B}), 10),
+
+            (1, frozenset({}), 1),
+            (1, frozenset({A}), 1),
+            (1, frozenset({B}), 1),
+            (1, frozenset({A, B}), 1),
+            (1, frozenset({b}),     1),
+            (1, frozenset({b, B}), 10),
+
+            (10, frozenset({}), 10),
+            (10, frozenset({A}), 10),
+            (10, frozenset({B}), 10),
+            (10, frozenset({A, B}), 10),
 
 
+            (11, frozenset({}), 11),
+            (11, frozenset({A}), 11),
+            (11, frozenset({B}), 11),
+            (11, frozenset({A, B}), 11),
+            (11, frozenset({b, A}), 4),
 
+            (4, frozenset({}), 4),
+            (4, frozenset({A}), 4),
+            (4, frozenset({B}), 4),
+            (4, frozenset({A, B}), 4),
+            (4, frozenset({b}), 4),
+
+            # right
+            (5, frozenset({}), 5),
+            (5, frozenset({A}), 5),
+            (5, frozenset({B}), 5),
+            (5, frozenset({A, B}), 5),
+            (5, frozenset({b, A}), 9),
+            (5, frozenset({b, B}), 8),
+            (5, frozenset({b, A, B}), 2),
+
+            (8, frozenset({}), 8),
+            (8, frozenset({A}), 8),
+            (8, frozenset({B}), 8),
+            (8, frozenset({A, B}), 8),
+            (8, frozenset({b}), 8),
+            (8, frozenset({b, A}), 2),
+
+            (2, frozenset({}), 2),
+            (2, frozenset({A}), 2),
+            (2, frozenset({B}), 2),
+            (2, frozenset({A, B}), 2),
+
+            (9, frozenset({}),  9),
+            (9, frozenset({A}),  9),
+            (9, frozenset({B}),  9),
+            (9, frozenset({A, B}),  9),
+            (9, frozenset({b, B}), 3),
+
+            (3, frozenset({}), 3),
+            (3, frozenset({A}), 3),
+            (3, frozenset({B}), 3),
+            (3, frozenset({A, B}), 3),
+            (3, frozenset({b}), 3),
+
+
+            # null
+            (6, frozenset({}), 6),
+            (6, frozenset({A}), 6),
+            (6, frozenset({B}), 6),
+            (6, frozenset({A, B}), 6),
+            (6, frozenset({b}), 6),
+            (6, frozenset({b, A}), 6),
+            (6, frozenset({b, B}), 6),
+            (6, frozenset({b, A,B}), 6),
+
+
+        }
+
+        nfa = NFA.fromTransitions(alphabet, states, initial_state, final_states, transition_function)
+        nfa.to_dot("tests/automata/sapientino.nfa")
+        nfa.determinize().map_to_int().trim().minimize().trim().to_dot("tests/automata/sapientino.dfa")

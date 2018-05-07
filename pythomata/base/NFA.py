@@ -30,7 +30,7 @@ class NFA(object):
                 raise ValueError
 
 
-    def to_dot(self, path):
+    def to_dot(self, path, title=None):
         g = graphviz.Digraph(format='svg')
 
         fakes = []
@@ -58,6 +58,11 @@ class NFA(object):
                     g.edge(str(state), str(destination),
                            label=str(sym))
 
+        if title:
+            g.attr(label=title)
+            g.attr(fontsize='20')
+
+
         g.render(filename=path)
 
 
@@ -66,27 +71,31 @@ class NFA(object):
         id2states = dict(enumerate(self.states))
         state2id = {v: k for k, v in id2states.items()}
 
-        ids = set(id2states)
-        accepting_states_ids = {state2id[s] for s in self.accepting_states}
+        id2action = dict(enumerate(self.alphabet.symbols))
+        action2id = {v: k for k, v in id2action.items()}
 
-        new_states = powerset(ids)
-        initial_state = frozenset({state2id[s] for s in self.initial_states})
-        final_states = frozenset({q for q in new_states if len(q.intersection(accepting_states_ids)) != 0})
+        nfa = self.map_states_and_action(state2id, action2id)
+
+        new_accepting_states = nfa.accepting_states
+
+        new_states = powerset(nfa.states)
+        initial_state = frozenset({s for s in nfa.initial_states})
+        final_states = frozenset({q for q in new_states if len(q.intersection(new_accepting_states)) != 0})
         transition_function = {}
         for state_set in new_states:
-            for action in self.alphabet.symbols:
+            for action in nfa.alphabet.symbols:
 
                 next_states = set()
                 for s in state_set:
-                    for s_prime in self.transition_function.get(id2states[s], {}).get(action, []):
-                        next_states.add(state2id[s_prime])
+                    for s_prime in nfa.transition_function.get(s, {}).get(action, []):
+                        next_states.add(s_prime)
 
                 # next_states = set(s_prime for s in state_set for s_prime in nfa.transition_function.get(s, {}).get(action, []))
 
                 next_states = frozenset(next_states)
                 transition_function.setdefault(state_set, {})[action] = next_states
 
-        return DFA(self.alphabet, new_states, initial_state, final_states, transition_function)
+        return DFA(nfa.alphabet, new_states, initial_state, final_states, transition_function).map_states_and_action(actions_map=id2action)
 
 
     @classmethod
@@ -102,3 +111,24 @@ class NFA(object):
 
         return NFA(alphabet, states, initial_states, accepting_states, transition_function)
 
+
+    def map_states_and_action(self, states_map:dict=None, actions_map:dict=None):
+        if states_map  is None: states_map  = dict()
+        if actions_map is None: actions_map = dict()
+
+        new_alphabet = Alphabet({actions_map.get(s, s) for s in  self.alphabet.symbols})
+        new_states = frozenset({states_map.get(s,s) for s in self.states})
+        new_accepting_states = frozenset({states_map.get(s,s) for s in self.accepting_states})
+        new_initial_states = frozenset({states_map.get(s,s) for s in self.initial_states})
+
+        new_transition_function = {}
+        for s, a2nss in self.transition_function.items():
+            new_a2nss = {actions_map.get(a,a):frozenset(states_map.get(ns, ns) for ns in nss) for a, nss in a2nss.items()}
+            new_transition_function[states_map.get(s,s)] = new_a2nss
+
+        return NFA(new_alphabet, new_states, new_initial_states, new_accepting_states, new_transition_function)
+
+    def map_to_int(self, states=True, actions=False):
+        state2id  = {v: k for k, v in enumerate(self.states)}           if states  else dict()
+        action2id = {v: k for k, v in enumerate(self.alphabet.symbols)} if actions else dict()
+        return self.map_states_and_action(state2id, action2id)

@@ -75,6 +75,16 @@ class TestDFA(unittest.TestCase):
         self._test_word_acceptance(dfa_minimized_and_trimmed)
         dfa_minimized_and_trimmed.to_dot("tests/automata/strings_minimized_and_trimmed.dot")
 
+    def test_idempotence(self):
+        dfa = self.dfa
+        dfa = self.dfa.minimize().minimize().minimize()
+        self._test_word_acceptance(dfa)
+        dfa = dfa.trim().trim().trim()
+        self._test_word_acceptance(dfa)
+        dfa = dfa.complete().trim().complete().minimize().trim().complete()
+        self._test_word_acceptance(dfa)
+
+
     def _test_word_acceptance(self, dfa):
         word = [self.a, self.b, self.b, self.b, self.b]
         self.assertFalse(dfa.word_acceptance([]))
