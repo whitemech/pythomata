@@ -144,3 +144,10 @@ class TestDFA(unittest.TestCase):
         self.assertFalse(dfa.word_acceptance([H, E, O]))
         self.assertFalse(dfa.word_acceptance([H, E, L, O, O]))
         self.assertFalse(dfa.word_acceptance([]))
+
+    def test_levels_to_accepting_states(self):
+        state2lvl = self.dfa.levels_to_accepting_states()
+        self.assertTrue(state2lvl["s1"], 1)
+        self.assertTrue(state2lvl["s2"], 0)
+        self.assertTrue(state2lvl["s5"], -1)
+        self.assertTrue(state2lvl["s4"], 2)
