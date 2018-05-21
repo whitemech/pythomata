@@ -291,3 +291,31 @@ class DFA(object):
         return self.map_states_and_action(states_map=state2int)
 
 
+    def levels_to_accepting_states(self) -> dict:
+        """Return a dict from states to level, i.e. the number of steps to reach any accepting state.
+        level = -1 if the state cannot reach any accepting state"""
+
+        res = {accepting_state: 0 for accepting_state in self.accepting_states}
+        level = 0
+
+        # least fixpoint
+        z_current, z_next = set(), set()
+        z_next = set(self.accepting_states)
+
+        while z_current != z_next:
+            level += 1
+            z_current = z_next
+            z_next = copy(z_current)
+            for state in self.states:
+                for a in self.transition_function.get(state, []):
+                    next_state = self.transition_function[state][a]
+                    if next_state in z_next:
+                        z_next.add(state)
+                        res[state] = level
+                        break
+
+        z_current = z_next
+        for failure_state in filter(lambda x: x not in z_current, self.states):
+            res[failure_state] = -1
+
+        return res
