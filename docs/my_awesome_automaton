@@ -6,8 +6,8 @@ digraph {
 	fake -> 0 [style=bold]
 	0 -> 1 [label=a]
 	0 -> 0 [label=b]
-	1 -> 2 [label=c]
 	1 -> 0 [label=a]
 	1 -> 0 [label=b]
+	1 -> 2 [label=c]
 	2 -> 2 [label=c]
 }

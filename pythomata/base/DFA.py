@@ -281,7 +281,9 @@ class DFA(object):
             for s in list(to_be_visited):
                 del to_be_visited[to_be_visited.index(s)]
                 for a, s_prime in self.transition_function.get(s, {}).items():
-                    if s_prime not in state2int: state2int[s_prime] = len(state2int)
+                    if s_prime not in state2int:
+                        state2int[s_prime] = len(state2int)
+                        to_be_visited.append(s_prime)
 
         for s in self.states:
             if s in state2int:
