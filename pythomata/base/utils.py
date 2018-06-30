@@ -1,6 +1,8 @@
 from itertools import chain, combinations
 
 
+LABEL_MAX_LENGTH = 15
+
 class Sink(object):
     def __str__(self):
         return "sink"
@@ -19,3 +21,15 @@ def powerset(iterable):
     res = set(frozenset(x) for x in combs)
     # res = map(frozenset, combs)
     return res
+
+
+class MacroState(frozenset):
+
+    def __str__(self):
+        if len(self)==0:
+            return "{}"
+        else:
+            return super().__str__().replace("MacroState(", "")[:-1]
+
+    def __repr__(self):
+        return super().__repr__()

@@ -4,10 +4,10 @@ digraph {
 	1
 	2 [shape=doublecircle]
 	fake -> 0 [style=bold]
-	0 -> 1 [label=a]
 	0 -> 0 [label=b]
+	0 -> 1 [label=a]
+	1 -> 0 [label=b]
 	1 -> 2 [label=c]
 	1 -> 0 [label=a]
-	1 -> 0 [label=b]
 	2 -> 2 [label=c]
 }
