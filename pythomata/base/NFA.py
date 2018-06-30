@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import FrozenSet, Dict
 
 import graphviz
@@ -5,23 +6,23 @@ import graphviz
 from pythomata.base.DFA import DFA
 from pythomata.base.Alphabet import Alphabet
 from pythomata.base.Symbol import Symbol
-from pythomata.base.utils import powerset
+from pythomata.base.utils import powerset, LABEL_MAX_LENGTH, MacroState
 
 
 class NFA(object):
 
-    def __init__(self, alphabet: Alphabet, states: FrozenSet, initial_states:FrozenSet, accepting_states: FrozenSet,
+    def __init__(self, alphabet: Alphabet, states: FrozenSet, initial_state:object, accepting_states: FrozenSet,
                  transition_function: Dict[object, Dict[Symbol, FrozenSet]]):
-        self._check_input(alphabet, states, initial_states, accepting_states, transition_function)
+        self._check_input(alphabet, states, initial_state, accepting_states, transition_function)
 
         self.alphabet = alphabet
         self.states = states
-        self.initial_states = initial_states
+        self.initial_state = initial_state
         self.accepting_states = accepting_states
         self.transition_function = transition_function
 
-    def _check_input(self, alphabet, states, initial_states, accepting_states, transition_function):
-        if any(init_state not in states for init_state in initial_states):
+    def _check_input(self, alphabet, states, initial_state, accepting_states, transition_function):
+        if initial_state not in states:
             raise ValueError
         if any(not s in states for s in accepting_states):
             raise ValueError
@@ -34,12 +35,11 @@ class NFA(object):
         g = graphviz.Digraph(format='svg')
 
         fakes = []
-        for i in range(len(self.initial_states)):
-            fakes.append('fake' + str(i))
-            g.node('fake' + str(i), style='invisible')
+        fakes.append('fake' + str(self.initial_state))
+        g.node('fake' + str(self.initial_state), style='invisible')
 
         for state in self.states:
-            if state in self.initial_states:
+            if state == self.initial_state:
                 if state in self.accepting_states:
                     g.node(str(state), root='true',
                            shape='doublecircle')
@@ -50,13 +50,23 @@ class NFA(object):
             else:
                 g.node(str(state))
 
-        for initial_state in self.initial_states:
-            g.edge(fakes.pop(), str(initial_state), style='bold')
-        for state, sym2states in self.transition_function.items():
-            for sym, next_states in sym2states.items():
+        g.edge(fakes.pop(), str(self.initial_state), style='bold')
+        for state, sym2state in self.transition_function.items():
+            s = defaultdict(lambda: [])
+            for sym, next_states in sym2state.items():
                 for destination in next_states:
-                    g.edge(str(state), str(destination),
-                           label=str(sym))
+                    s[destination].append(sym)
+                    g.edge(str(state), str(destination), label=str(sym))
+
+            # for n in s:
+            #     labels = list(map(str, sorted(s[n], key=lambda x: len(str(x)))))
+            #     label_string = ""
+            #     for l in labels:
+            #         if len(label_string) + len(l) + len(", ") > LABEL_MAX_LENGTH:
+            #             label_string += "\n"
+            #         label_string += l + ", "
+            #     label_string = label_string[:-2]
+            #     g.edge(str(state), str(n), label=label_string)
 
         if title:
             g.attr(label=title)
@@ -78,8 +88,8 @@ class NFA(object):
 
         new_accepting_states = nfa.accepting_states
 
-        new_states = powerset(nfa.states)
-        initial_state = frozenset({s for s in nfa.initial_states})
+        new_states = frozenset({MacroState(s) for s in powerset(nfa.states)})
+        initial_state = MacroState([nfa.initial_state])
         final_states = frozenset({q for q in new_states if len(q.intersection(new_accepting_states)) != 0})
         transition_function = {}
         for state_set in new_states:
@@ -92,15 +102,15 @@ class NFA(object):
 
                 # next_states = set(s_prime for s in state_set for s_prime in nfa.transition_function.get(s, {}).get(action, []))
 
-                next_states = frozenset(next_states)
+                next_states = MacroState(next_states)
                 transition_function.setdefault(state_set, {})[action] = next_states
 
         return DFA(nfa.alphabet, new_states, initial_state, final_states, transition_function).map_states_and_action(actions_map=id2action)
 
 
     @classmethod
-    def fromTransitions(cls, alphabet: Alphabet, states: FrozenSet, initial_states:FrozenSet, accepting_states: FrozenSet,
-                 transitions: FrozenSet):
+    def fromTransitions(cls, alphabet: Alphabet, states: FrozenSet, initial_state:object, accepting_states: FrozenSet,
+                        transitions: FrozenSet):
         transition_function = {}
         for start, action, end in transitions:
             transition_function.setdefault(start, {}).setdefault(action, set()).add(end)
@@ -109,7 +119,7 @@ class NFA(object):
             for sym, end_states in sym2states.items():
                 transition_function[state][sym] = frozenset(end_states)
 
-        return NFA(alphabet, states, initial_states, accepting_states, transition_function)
+        return NFA(alphabet, states, initial_state, accepting_states, transition_function)
 
 
     def map_states_and_action(self, states_map:dict=None, actions_map:dict=None):
@@ -119,7 +129,7 @@ class NFA(object):
         new_alphabet = Alphabet({actions_map.get(s, s) for s in  self.alphabet.symbols})
         new_states = frozenset({states_map.get(s,s) for s in self.states})
         new_accepting_states = frozenset({states_map.get(s,s) for s in self.accepting_states})
-        new_initial_states = frozenset({states_map.get(s,s) for s in self.initial_states})
+        new_initial_states = states_map.get(self.initial_state,self.initial_state)
 
         new_transition_function = {}
         for s, a2nss in self.transition_function.items():

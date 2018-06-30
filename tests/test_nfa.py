@@ -12,7 +12,7 @@ class TestNFA(unittest.TestCase):
         self.a, self.b, self.c = Symbol("a"), Symbol("b"), Symbol("c")
         self.alphabet = Alphabet({self.a, self.b, self.c})
         self.states = frozenset({"s1", "s2", "s3", "s4", "s5"})
-        self.initial_states = frozenset({"s1", "s4"})
+        self.initial_state = "s1"
         self.accepting_states = frozenset({"s3", "s2"})
         self.transition_function = {
             "s1": {
@@ -35,14 +35,14 @@ class TestNFA(unittest.TestCase):
                 self.a: frozenset({"s5"})
             }
         }
-        self.nfa = NFA(self.alphabet, self.states, self.initial_states, self.accepting_states, self.transition_function)
+        self.nfa = NFA(self.alphabet, self.states, self.initial_state, self.accepting_states, self.transition_function)
 
     def test_nfa_strings(self):
         self.nfa.to_dot("tests/automata/nfa_strings.dot")
 
     def test_simple_nfa_determinization(self):
         states = frozenset({"s1", "s2"})
-        initial_states = frozenset({"s1"})
+        initial_state = "s1"
         accepting_states = frozenset({"s2"})
         transition_function = {
             "s1": {
@@ -57,7 +57,7 @@ class TestNFA(unittest.TestCase):
                 self.c: frozenset({"s2", "s1"}),
             }
         }
-        nfa = NFA(self.alphabet, states, initial_states, accepting_states, transition_function)
+        nfa = NFA(self.alphabet, states, initial_state, accepting_states, transition_function)
         nfa.to_dot("tests/automata/simple_nfa_strings.dot")
         dfa = NFA.determinize(nfa)
         dfa.to_dot("tests/automata/simple_nfa_strings_determinized.dot")
@@ -80,10 +80,7 @@ class TestNFAOnSets(unittest.TestCase):
         doub_ =  Symbol(frozenset({doub}))
         not_  =  Symbol(frozenset())
 
-        initial_states = frozenset({
-            frozenset({1}),
-            frozenset({2})
-        })
+        initial_state = frozenset({1})
         final_states = frozenset({
             frozenset({5}),
             frozenset({6})
@@ -107,7 +104,7 @@ class TestNFAOnSets(unittest.TestCase):
 
         alphabet = Alphabet({inc_, doub_, not_})
 
-        nfa = NFA.fromTransitions(alphabet,states,initial_states,final_states,transitions)
+        nfa = NFA.fromTransitions(alphabet,states,initial_state,final_states,transitions)
         nfa.to_dot("tests/automata/qui.nfa")
 
         dfa = nfa.determinize().minimize().trim()
@@ -121,7 +118,7 @@ class TestNFAOnSets(unittest.TestCase):
 
         alphabet = {Symbol(frozenset()), Symbol(frozenset({a}))}
 
-        delta = {
+        delta = frozenset({
             (frozenset(), frozenset(), frozenset()),
             (frozenset(), frozenset({a}), frozenset()),
             (frozenset({eventually_true_tt}), frozenset(), frozenset({tt})),
@@ -129,20 +126,13 @@ class TestNFAOnSets(unittest.TestCase):
             (frozenset({tt}), frozenset(), frozenset()),
             (frozenset({tt}), frozenset({a}), frozenset()),
 
-        }
-        final_states = {frozenset(), frozenset([tt])}
-        initial_state = {frozenset([eventually_true_tt])}
-        states = {frozenset(), frozenset([eventually_true_tt]), frozenset([tt])}
+        })
+        final_states = frozenset({frozenset(), frozenset([tt])})
+        initial_state = frozenset([eventually_true_tt])
+        states = frozenset({frozenset(), frozenset([eventually_true_tt]), frozenset([tt])})
 
-        x = {}
-        x["alphabet"] = alphabet
-        x["states"] =  states
-        x["initial_states"] =  initial_state
-        x["accepting_states"] =  final_states
-        x["transitions"] =  delta
 
-        nfa = NFA.fromTransitions(Alphabet(x["alphabet"]), x["states"], x["initial_states"],
-                              x["accepting_states"], x["transitions"])
+        nfa = NFA.fromTransitions(Alphabet(alphabet), states, initial_state, final_states, delta)
         nfa.to_dot("tests/automata/formulas.nfa")
 
         transition_function = {
@@ -162,7 +152,7 @@ class TestNFAOnSets(unittest.TestCase):
 
         self.assertEqual(nfa.alphabet, Alphabet(alphabet))
         self.assertEqual(nfa.states, states)
-        self.assertEqual(nfa.initial_states, initial_state)
+        self.assertEqual(nfa.initial_state, initial_state)
         self.assertEqual(nfa.accepting_states, final_states)
         self.assertEqual(nfa.accepting_states, final_states)
         self.assertEqual(nfa.transition_function, transition_function)
@@ -173,12 +163,12 @@ class TestNFAOnSets(unittest.TestCase):
         dfa.to_dot("tests/automata/formula_minimized.dfa")
 
     def test_sapientino_nfa(self):
-        states = {0,1,2,3,4,5,6,7,8,9,10,11}
+        states = frozenset({0,1,2,3,4,5,6,7,8,9,10,11})
         A,B,C,b = [Symbol(s) for s in ["A","B","C","b"]]
         alphabet = Alphabet(powerset({A,B,C,b}))
-        final_states = {1,4,8,3,6}
-        initial_state = {0}
-        transition_function = {
+        final_states = frozenset({1,4,8,3,6})
+        initial_state = 0
+        transition_function = frozenset({
             (0, frozenset({}),         7),
             (0, frozenset({A}),        7),
             (0, frozenset({B}),        7),
@@ -271,7 +261,7 @@ class TestNFAOnSets(unittest.TestCase):
             (6, frozenset({b, A,B}), 6),
 
 
-        }
+        })
 
         nfa = NFA.fromTransitions(alphabet, states, initial_state, final_states, transition_function)
         nfa.to_dot("tests/automata/sapientino.nfa")

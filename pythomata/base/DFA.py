@@ -2,6 +2,8 @@ from typing import FrozenSet, Dict, Tuple, Iterable, List
 import graphviz
 from copy import deepcopy, copy
 
+import pydot
+
 from pythomata.base.utils import Sink
 from pythomata.base.Alphabet import Alphabet
 from pythomata.base.Symbol import Symbol
