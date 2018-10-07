@@ -147,8 +147,6 @@ class TestDFA(unittest.TestCase):
 
     def test_levels_to_accepting_states(self):
         state2lvl = self.dfa.levels_to_accepting_states()
-        print(state2lvl)
-        self.dfa.to_dot("ciao")
         self.assertEqual(state2lvl["s1"], 1)
         self.assertEqual(state2lvl["s2"], 0)
         self.assertEqual(state2lvl["s5"], -1)
