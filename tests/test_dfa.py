@@ -147,7 +147,37 @@ class TestDFA(unittest.TestCase):
 
     def test_levels_to_accepting_states(self):
         state2lvl = self.dfa.levels_to_accepting_states()
-        self.assertTrue(state2lvl["s1"], 1)
-        self.assertTrue(state2lvl["s2"], 0)
-        self.assertTrue(state2lvl["s5"], -1)
-        self.assertTrue(state2lvl["s4"], 2)
+        print(state2lvl)
+        self.dfa.to_dot("ciao")
+        self.assertEqual(state2lvl["s1"], 1)
+        self.assertEqual(state2lvl["s2"], 0)
+        self.assertEqual(state2lvl["s5"], -1)
+        self.assertEqual(state2lvl["s4"], 2)
+
+
+    def test_levels_to_accepting_states_02(self):
+        a, b, ab, empty = Symbol("a"), Symbol("b"), Symbol("ab"), Symbol("{}")
+        alphabet = Alphabet({a, b, ab, empty})
+        states = frozenset({"s1", "s2"})
+        initial_state = "s1"
+        accepting_states = frozenset({"s2"})
+        transition_function = {
+            "s1": {
+                a: "s1",
+                ab: "s1",
+                empty: "s1",
+                b: "s2"
+            },
+            "s2": {
+                a: "s2",
+                ab: "s2",
+                empty: "s2",
+                b: "s2"
+            }
+        }
+
+        dfa = DFA(alphabet, states, initial_state, accepting_states, transition_function)
+        levels = dfa.levels_to_accepting_states()
+
+        self.assertEqual(levels["s1"], 1)
+        self.assertEqual(levels["s2"], 0)

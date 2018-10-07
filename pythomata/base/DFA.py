@@ -311,9 +311,11 @@ class DFA(object):
             z_current = z_next
             z_next = copy(z_current)
             for state in self.states:
+                if state in z_current:
+                    continue
                 for a in self.transition_function.get(state, []):
                     next_state = self.transition_function[state][a]
-                    if next_state in z_next:
+                    if next_state in z_current:
                         z_next.add(state)
                         res[state] = level
                         break
