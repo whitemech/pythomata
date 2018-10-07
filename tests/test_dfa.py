@@ -153,7 +153,7 @@ class TestDFA(unittest.TestCase):
         self.assertEqual(state2lvl["s4"], 2)
 
 
-    def test_levels_to_accepting_states_02(self):
+    def test_issue_59(self):
         a, b, ab, empty = Symbol("a"), Symbol("b"), Symbol("ab"), Symbol("{}")
         alphabet = Alphabet({a, b, ab, empty})
         states = frozenset({"s1", "s2"})
