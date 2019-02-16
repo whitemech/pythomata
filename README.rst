@@ -47,7 +47,7 @@ For Debian systems, the following commands should work:
 Otherwise check the installation guide from the `official site <https://www.graphviz.org/download/>`_
 
 How to use
---------
+----------
 
 * Define an automaton:
 

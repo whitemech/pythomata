@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """The setup script."""
@@ -11,18 +11,9 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ["graphviz", "pydot", "pyparsing"]
-# requirements = []
-
-# setup_requirements = ["graphviz", "pydot", "pyparsing"]
-setup_requirements = []
-
-# test_requirements = ["graphviz", "pydot", "pyparsing"]
-test_requirements = []
-
 setup(
     name='pythomata',
-    version='0.1.5.post3',
+    version='0.1.6',
     description="Python implementation of automata.",
     long_description=readme + '\n\n' + history,
     author="Marco Favorito",
@@ -42,8 +33,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
-    # setup_requires=setup_requirements,
-    # tests_require=test_requirements,
 )
