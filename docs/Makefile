@@ -6,7 +6,9 @@ SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
 SPHINXPROJ    = pythomata
 SOURCEDIR     = .
+# Swap these two lines to build docs out-of-source
 BUILDDIR      = _build
+# BUILDDIR      = ../../pythomata-docs
 
 # Put it first so that "make" without argument is like "make help".
 help:
