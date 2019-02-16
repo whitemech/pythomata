@@ -1,0 +1,17 @@
+pythomata package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    pythomata.base
+
+Module contents
+---------------
+
+.. automodule:: pythomata
+    :members:
+    :undoc-members:
+    :show-inheritance:
