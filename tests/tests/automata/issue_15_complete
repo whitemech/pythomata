@@ -1,0 +1,34 @@
+digraph {
+	fake [style=invisible]
+	s3
+	s4 [shape=doublecircle]
+	sink
+	s2
+	s0 [root=true]
+	s1
+	fake -> s0 [style=bold]
+	s0 -> s1 [label=H]
+	s0 -> sink [label=O]
+	s0 -> sink [label=E]
+	s0 -> sink [label=L]
+	s1 -> s2 [label=E]
+	s1 -> sink [label=O]
+	s1 -> sink [label=L]
+	s1 -> sink [label=H]
+	s2 -> s3 [label=L]
+	s2 -> sink [label=O]
+	s2 -> sink [label=E]
+	s2 -> sink [label=H]
+	s3 -> s4 [label=O]
+	s3 -> sink [label=E]
+	s3 -> sink [label=L]
+	s3 -> sink [label=H]
+	s4 -> sink [label=O]
+	s4 -> sink [label=E]
+	s4 -> sink [label=L]
+	s4 -> sink [label=H]
+	sink -> sink [label=O]
+	sink -> sink [label=E]
+	sink -> sink [label=L]
+	sink -> sink [label=H]
+}

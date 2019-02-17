@@ -12,7 +12,6 @@ tox = "*"
 coverage = "*"
 twine = "*"
 Sphinx = "*"
-sphinx-to-github = {editable = true,git = "https://github.com/michaeljones/sphinx-to-github.git"}
 
 [packages]
 pydot = "*"

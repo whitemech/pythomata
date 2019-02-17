@@ -1,12 +1,11 @@
+# -*- coding: utf-8 -*-
 from collections import defaultdict
-from typing import FrozenSet, Dict
+from typing import FrozenSet, Dict, Set
 
 import graphviz
 
-from pythomata.base.DFA import DFA
-from pythomata.base.Alphabet import Alphabet
-from pythomata.base.Symbol import Symbol
-from pythomata.base.utils import powerset, LABEL_MAX_LENGTH, MacroState
+from pythomata.dfa import DFA, Alphabet, Symbol
+from pythomata.utils import powerset, MacroState
 
 
 class NFA(object):

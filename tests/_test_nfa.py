@@ -1,10 +1,9 @@
 import unittest
 
-from pythomata.base.NFA import NFA
-from pythomata.base.DFA import DFA
-from pythomata.base.Alphabet import Alphabet
-from pythomata.base.Symbol import Symbol
-from pythomata.base.utils import powerset
+from pythomata.nfa import NFA
+from pythomata.dfa import DFA
+from pythomata.alphabet import Alphabet, Symbol
+from pythomata.utils import powerset
 
 
 class TestNFA(unittest.TestCase):

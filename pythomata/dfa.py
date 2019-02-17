@@ -1,12 +1,14 @@
-from typing import FrozenSet, Dict, Tuple, Iterable, List
+# -*- coding: utf-8 -*-
+from typing import FrozenSet, Dict, Iterable, List, Set, Type, Union, Tuple
 import graphviz
-from copy import deepcopy, copy
+from copy import copy
 
-import pydot
+from pythomata.utils import Sink
 
-from pythomata.base.utils import Sink
-from pythomata.base.Alphabet import Alphabet
-from pythomata.base.Symbol import Symbol
+Symbol = Type[str]
+State = Type[str]
+Alphabet = FrozenSet[Symbol]
+TransitionFunction = Tuple[State, Symbol, State]
 
 
 def _check_same_type(i: Iterable):
@@ -16,8 +18,11 @@ def _check_same_type(i: Iterable):
 
 class DFA(object):
 
-    def __init__(self, alphabet: Alphabet, states: FrozenSet, initial_state, accepting_states: FrozenSet,
-                 transition_function: Dict[object, Dict[Symbol, object]]):
+    def __init__(self, alphabet: Alphabet,
+                 states: FrozenSet[State],
+                 initial_state: State,
+                 accepting_states: FrozenSet[State],
+                 transition_function: TransitionFunction):
         self._check_input(alphabet, states, initial_state, accepting_states, transition_function)
 
         self.alphabet = alphabet
@@ -26,7 +31,15 @@ class DFA(object):
         self.accepting_states = accepting_states
         self.transition_function = transition_function
 
-    def _check_input(self, alphabet, states, initial_state, accepting_states, transition_function):
+    def _check_initial_state_in_states(self, initial_state: State, states: FrozenSet[State]):
+        if initial_state not in states:
+            raise ValueError("Initial state not in the set of states.")
+
+    def _check_input(self, alphabet: Alphabet,
+                     states: FrozenSet[State],
+                     initial_state: State,
+                     accepting_states: FrozenSet[State],
+                     transition_function: TransitionFunction):
         if initial_state and initial_state not in states:
             raise ValueError
         if any(not s in states for s in accepting_states):

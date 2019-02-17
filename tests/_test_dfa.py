@@ -1,11 +1,9 @@
+# -*- coding: utf-8 -*-
 import unittest
 
 
-from pythomata.base.DFA import DFA
-from pythomata.base.Alphabet import Alphabet
-from pythomata.base.Simulator import DFASimulator
-from pythomata.base.Symbol import Symbol
-from pythomata.base.utils import Sink
+from pythomata.dfa import DFA, Symbol, Alphabet
+from pythomata.Simulator import DFASimulator
 
 
 class TestDFA(unittest.TestCase):

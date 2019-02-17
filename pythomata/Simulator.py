@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 from abc import ABC, abstractmethod
 from typing import List, Any
 
-from pythomata.base.DFA import DFA
-from pythomata.base.Symbol import Symbol
+from pythomata.dfa import DFA, Symbol
 
 
 class Simulator(ABC):
