@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-"""Unit test package for pythomata."""
+"""Unit tests package for pythomata."""

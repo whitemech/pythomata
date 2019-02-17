@@ -4,7 +4,8 @@ from typing import FrozenSet, Dict, Set
 
 import graphviz
 
-from pythomata.dfa import DFA, Alphabet, Symbol
+from pythomata.dfa import DFA, Symbol
+from pythomata.base import Alphabet
 from pythomata.utils import powerset, MacroState
 
 

@@ -5,17 +5,6 @@ from itertools import chain, combinations
 LABEL_MAX_LENGTH = 15
 
 
-class Sink(object):
-    def __str__(self):
-        return "sink"
-
-    def __eq__(self, other):
-        return type(self) == type(other)
-
-    def __hash__(self):
-        return hash(type(self))
-
-
 def powerset(iterable):
     "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
     s = list(set(iterable))

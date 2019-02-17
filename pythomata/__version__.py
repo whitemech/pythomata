@@ -3,7 +3,8 @@
 __title__ = "pythomata"
 __description__ = "A Python package implementing automata."
 __url__ = "https://github.com/marcofavorito/pythomata.git"
-__build__ = 0x000200
+__version__ = "0.1.6"
+__build__ = 0x000160
 __author__ = "Marco Favorito"
 __author_email__ = "marco.favorito@gmail.com"
 __license__ = "MIT license"

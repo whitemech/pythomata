@@ -1,254 +1,245 @@
 # -*- coding: utf-8 -*-
-from typing import FrozenSet, Dict, Iterable, List, Set, Type, Union, Tuple
+import itertools
+from copy import copy, deepcopy
+from typing import List, Set, Tuple, Iterable
+
 import graphviz
-from copy import copy
 
-from pythomata.utils import Sink
-
-Symbol = Type[str]
-State = Type[str]
-Alphabet = FrozenSet[Symbol]
-TransitionFunction = Tuple[State, Symbol, State]
-
-
-def _check_same_type(i: Iterable):
-    l = list(i)
-    return len(l) > 0 and not all(type(l[0]) == symbol for symbol in l[1:])
+from pythomata._internal_utils import _check_initial_state_in_states, \
+    _check_accepting_states_in_states, _check_transition_function_is_valid_wrt_states_and_alphabet, \
+    _check_reserved_state_names_not_used, _check_reserved_symbol_names_not_used, _generate_sink_name, \
+    _check_at_least_one_state, greatest_fixpoint, least_fixpoint
+from pythomata.base import State, TransitionFunction, Symbol
 
 
 class DFA(object):
 
-    def __init__(self, alphabet: Alphabet,
-                 states: FrozenSet[State],
+    def __init__(self, states: Set[State],
+                 alphabet: Set[Symbol],
                  initial_state: State,
-                 accepting_states: FrozenSet[State],
+                 accepting_states: Set[State],
                  transition_function: TransitionFunction):
-        self._check_input(alphabet, states, initial_state, accepting_states, transition_function)
+        self._check_input(states, alphabet, initial_state, accepting_states, transition_function)
 
-        self.alphabet = alphabet
-        self.states = states
-        self.initial_state = initial_state
-        self.accepting_states = accepting_states
-        self.transition_function = transition_function
+        self._states = frozenset(states)
+        self._alphabet = frozenset(alphabet)
+        self._initial_state = initial_state
+        self._accepting_states = frozenset(accepting_states)
+        self._transition_function = deepcopy(transition_function)
 
-    def _check_initial_state_in_states(self, initial_state: State, states: FrozenSet[State]):
-        if initial_state not in states:
-            raise ValueError("Initial state not in the set of states.")
+        self._build_indexes()
 
-    def _check_input(self, alphabet: Alphabet,
-                     states: FrozenSet[State],
+    @classmethod
+    def _check_input(cls, states: Set[State],
+                     alphabet: Set[Symbol],
                      initial_state: State,
-                     accepting_states: FrozenSet[State],
+                     accepting_states: Set[State],
                      transition_function: TransitionFunction):
-        if initial_state and initial_state not in states:
-            raise ValueError
-        if any(not s in states for s in accepting_states):
-            raise ValueError
-        for s, sym2state in transition_function.items():
-            if s not in states or any(sym not in alphabet.symbols and next_state not in states for sym, next_state in sym2state.items()):
-                raise ValueError
+        _check_at_least_one_state(states)
+        _check_reserved_state_names_not_used(states)
+        _check_reserved_symbol_names_not_used(alphabet)
+        _check_initial_state_in_states(initial_state, states)
+        _check_accepting_states_in_states(accepting_states, states)
+        _check_transition_function_is_valid_wrt_states_and_alphabet(transition_function, states, alphabet)
 
-    def complete(self):
-        sink = Sink()
-        transitions = copy(self.transition_function)
-        for state in self.states:
-            sym2state = self.transition_function.get(state, {})
-            for action in self.alphabet.symbols:
-                if not action in sym2state:
-                    transitions.setdefault(state, {})[action]= sink
+    def _build_indexes(self):
+        self._idx_to_state = dict(enumerate(list(self._states)))
+        self._state_to_idx = dict(map(reversed, enumerate(self._states)))
+        self._idx_to_symbol = dict(enumerate(self._alphabet))
+        self._symbol_to_idx = dict(map(reversed, enumerate(self._alphabet)))
 
-        transitions[sink] = {}
-        for action in self.alphabet.symbols:
-            transitions[sink][action] = sink
-        return DFA(self.alphabet, self.states.union({sink}), self.initial_state, self.accepting_states,
-                   dict(transitions))
+        self._idx_delta_by_state_action = \
+            dict(map(lambda i:
+                     ((self._state_to_idx[i[0][0]], self._symbol_to_idx[i[0][1]]), self._state_to_idx[i[1]]),
+                     self._transition_function.items()))
+
+        self._idx_delta_by_state = {}
+        for (s, a), e in self._idx_delta_by_state_action.items():
+            self._idx_delta_by_state.setdefault(s, {})[a] = e
+
+        self._idx_initial_state = self._state_to_idx[self._initial_state]
+        self._idx_accepting_states = frozenset(self._state_to_idx[s] for s in self._accepting_states)
+
+    def is_complete(self) -> bool:
+        complete_number_of_transitions = len(self._states) * len(self._alphabet)
+        current_number_of_transitions = len(self._transition_function.keys())
+        return complete_number_of_transitions == current_number_of_transitions
+
+    def complete(self) -> 'DFA':
+        if self.is_complete():
+            return self
+        else:
+            return self._complete()
+
+    def _complete(self) -> 'DFA':
+        sink_state = _generate_sink_name(self._states)
+        transitions = deepcopy(self._transition_function)
+
+        # for every missing transition, add a transition towards the sink state.
+        for state in self._states:
+            for action in self._alphabet:
+                end_state = self._transition_function.get((state, action), None)
+                if end_state is None:
+                    transitions.setdefault((state, action), sink_state)
+
+        # for every action, add a transition from the sink state to the sink state
+        for action in self._alphabet:
+            transitions[(sink_state, action)] = sink_state
+
+        return DFA(set(self._states.union({sink_state})), set(self._alphabet), self._initial_state,
+                   set(self._accepting_states), dict(transitions))
 
     def minimize(self):
         dfa = self
-
-        # preprocessing
-
-        dfa = dfa.complete()
-        dfa = dfa.trim()
         dfa = dfa.complete()
 
-        # index the set of states such that avoid to deepcopy every time the states
-        id2states = dict(enumerate(dfa.states))
-        state2id = {v: k for k, v in id2states.items()}
+        def greatest_fixpoint_condition(el: Tuple[int, int], current_set: Set):
+            s, t = el
+            s_is_final = s in dfa._idx_accepting_states
+            t_is_final = t in dfa._idx_accepting_states
+            if s_is_final and not t_is_final\
+                or \
+               not s_is_final and t_is_final:
+                return True
 
-        id2action = dict(enumerate(dfa.alphabet.symbols))
-        action2id = {v: k for k, v in id2action.items()}
+            s_transitions = dfa._idx_delta_by_state.get(s, {})
+            t_transitions = dfa._idx_delta_by_state.get(t, {})
 
-        dfa = dfa.map_states_and_action(state2id, action2id)
+            for a, s_prime in s_transitions.items():
+                t_prime = t_transitions[a]
+                if t_prime and not (s_prime, t_prime) in current_set:
+                    return True
 
-        # Greatest−fixpoint
-        z_current = set()
-        z_next = set()
-        for state_s in range(len(dfa.states)):
-            for state_t in range(len(dfa.states)):
-                s_is_final = state_s in dfa.accepting_states
-                t_is_final = state_t in dfa.accepting_states
-                if s_is_final and t_is_final or (not s_is_final and not t_is_final):
-                    z_next.add((state_s, state_t))
+            for a, t_prime in t_transitions.items():
+                s_prime = s_transitions[a]
+                if s_prime and not (s_prime, t_prime) in current_set:
+                    return True
 
-        while z_current != z_next:
-            z_current = z_next
-            z_next = copy(z_current)
+            return False
 
-            for (s, t) in z_current:
-                skip = False
-                s_transitions = dfa.transition_function.get(s, dict())
-                t_transitions = dfa.transition_function.get(t, dict())
+        result = greatest_fixpoint(set(itertools.product(self._idx_to_state, self._idx_to_state)),
+                                   condition=greatest_fixpoint_condition)
 
-                for a, s_prime in s_transitions.items():
-                    t_prime = t_transitions[a]
-                    if t_prime and not (s_prime, t_prime) in z_current:
-                        z_next.remove((s, t))
-                        skip = True
-                        break
-
-                for a, t_prime in t_transitions.items():
-                    if skip: break
-                    s_prime = s_transitions[a]
-                    if s_prime and not (s_prime, t_prime) in z_current:
-                        z_next.remove((s, t))
-                        break
-
-        state2equiv_class = dict()
-        for (s, t) in z_current:
+        state2equiv_class = {}
+        for (s, t) in result:
             state2equiv_class.setdefault(s, set()).add(t)
-        state2equiv_class = {k: frozenset(v) for k,v in state2equiv_class.items()}
-
-        equivalence_classes = set(map(frozenset,state2equiv_class.values()))
-        equiv_class2new_state = dict([(ec, i) for i, ec in enumerate(equivalence_classes)])
+        state2equiv_class = {k: frozenset(v) for k, v in state2equiv_class.items()}
+        equivalence_classes = set(map(frozenset, state2equiv_class.values()))
+        equiv_class2new_state = dict((ec, i) for i, ec in enumerate(equivalence_classes))
 
         new_transition_function = {}
-        for state in dfa.transition_function:
+        for state in dfa._idx_delta_by_state:
             new_state = equiv_class2new_state[state2equiv_class[state]]
-            for action, next_state in dfa.transition_function[state].items():
+            for action, next_state in dfa._idx_delta_by_state[state].items():
                 new_next_state = equiv_class2new_state[state2equiv_class[next_state]]
-                new_transition_function.setdefault(new_state, {})
-                new_transition_function[new_state][action] = new_next_state
+                new_transition_function[str(new_state), dfa._idx_to_symbol[action]] = str(new_next_state)
 
         new_states = frozenset(equiv_class2new_state.values())
-        new_initial_state = equiv_class2new_state[state2equiv_class[dfa.initial_state]] if dfa.initial_state is not None else None
-        new_final_states = frozenset(s for s in set(equiv_class2new_state[state2equiv_class[old_state]] for old_state in  dfa.accepting_states))
+        new_initial_state = equiv_class2new_state[state2equiv_class[dfa._idx_initial_state]]
+        new_final_states = frozenset(s for s in set(equiv_class2new_state[state2equiv_class[old_state]]
+                                                    for old_state in dfa._idx_accepting_states))
 
-        new_dfa = DFA(dfa.alphabet, new_states, new_initial_state, new_final_states, new_transition_function)
-        return new_dfa._numbering_states().map_states_and_action(actions_map=id2action)
-
-
+        new_dfa = DFA(set(map(str, new_states)), set(dfa._alphabet), str(new_initial_state),
+                      set(map(str, new_final_states)), new_transition_function)
+        return new_dfa
 
     def reachable(self):
 
-        # least fixpoint
-        z_current, z_next = set(), set()
-        z_next.add(self.initial_state)
+        def reachable_fixpoint_rule(current_set: Set) -> Iterable:
+            result = set()
+            for el in current_set:
+                for a in self._idx_delta_by_state.get(el, {}):
+                    result.add(self._idx_delta_by_state[el][a])
+            return result
 
-        while z_current != z_next:
-            z_current = z_next
-            z_next = copy(z_current)
-            for s in z_current:
-                for a in self.transition_function.get(s, []):
-                    next_state = self.transition_function[s][a]
-                    z_next.add(next_state)
+        result = least_fixpoint({self._idx_initial_state}, reachable_fixpoint_rule)
 
-        new_states = z_current
+        idx_new_states = result
         new_transition_function = {}
-        for s in new_states:
-            for a in self.transition_function.get(s, []):
-                next_state = self.transition_function[s][a]
-                if next_state in new_states:
-                    new_transition_function.setdefault(s, {})
-                    new_transition_function[s].setdefault(a, {})
-                    new_transition_function[s][a] = next_state
+        for s in idx_new_states:
+            for a in self._idx_delta_by_state.get(s, {}):
+                next_state = self._idx_delta_by_state[s][a]
+                if next_state in idx_new_states:
+                    new_transition_function[(self._idx_to_state[s], self._idx_to_symbol[a])] = \
+                        self._idx_to_state[next_state]
 
-        new_final_states = frozenset(new_states.intersection(self.accepting_states))
+        new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
+        new_final_states = new_states.intersection(self._accepting_states)
 
-        return DFA(self.alphabet, new_states, self.initial_state, new_final_states, new_transition_function)
+        return DFA(new_states, set(self._alphabet), self._initial_state, new_final_states, new_transition_function)
 
     def coreachable(self):
         # least fixpoint
-        z_current, z_next = set(), set()
-        z_next = set(self.accepting_states)
 
-        while z_current != z_next:
-            z_current = z_next
-            z_next = copy(z_current)
-            for state in self.states:
-                for a in self.transition_function.get(state, []):
-                    next_state = self.transition_function[state][a]
-                    if next_state in z_next:
-                        z_next.add(state)
+        def coreachable_fixpoint_rule(current_set: Set) -> Iterable:
+            result = set()
+            for s in self._idx_to_state:
+                for a in self._idx_delta_by_state.get(s, {}):
+                    next_state = self._idx_delta_by_state[s][a]
+                    if next_state in current_set:
+                        result.add(s)
                         break
+            return result
 
-        new_states = z_current
+        result = least_fixpoint(set(self._idx_accepting_states), coreachable_fixpoint_rule)
+
+        idx_new_states = result
+        if self._idx_initial_state not in idx_new_states:
+            return EmptyDFA()
+
+        new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
         new_transition_function = {}
-        for s in new_states:
-            for a in self.transition_function.get(s, []):
-                next_state = self.transition_function[s][a]
-                if next_state in new_states:
-                    new_transition_function.setdefault(s, {})
-                    new_transition_function[s].setdefault(a, {})
-                    new_transition_function[s][a] = next_state
+        for s in idx_new_states:
+            for a in self._idx_delta_by_state.get(s, []):
+                next_state = self._idx_delta_by_state[s][a]
+                if next_state in idx_new_states:
+                    new_transition_function[(self._idx_to_state[s], self._idx_to_symbol[a])] = \
+                        self._idx_to_state[next_state]
 
-        if self.initial_state not in new_states:
-            initial_state = None
-        else:
-            initial_state = self.initial_state
-        return DFA(self.alphabet, new_states, initial_state, self.accepting_states, new_transition_function)
+        return DFA(new_states, set(self._alphabet), self._initial_state, set(self._accepting_states), new_transition_function)
 
     def trim(self):
-        # index the set of states such that avoid to deepcopy every time the states
-        id2states = dict(enumerate(self.states))
-        state2id = {v: k for k, v in id2states.items()}
-
-        dfa = self.map_states_and_action(states_map=state2id)
+        dfa = self
         dfa = dfa.reachable()
         dfa = dfa.coreachable()
-        dfa = dfa.map_states_and_action(states_map=id2states)
-        dfa = dfa._numbering_states()
         return dfa
 
-
-    def word_acceptance(self, word:List[Symbol]):
-        assert all(char in self.alphabet.symbols for char in word)
+    def word_acceptance(self, word: List[Symbol]):
+        assert all(char in self._alphabet for char in word)
         complete_dfa = self.complete()
 
-        current_state = complete_dfa.initial_state
+        current_state = complete_dfa._initial_state
         # return false if current_state is None
         if current_state is None:
             return False
 
         for char in word:
-            if char not in complete_dfa.transition_function.get(current_state, {}):
+            if (current_state, char) not in complete_dfa._transition_function:
                 return False
             else:
-                current_state = complete_dfa.transition_function[current_state][char]
-        return current_state in complete_dfa.accepting_states
-
+                current_state = complete_dfa._transition_function[(current_state, char)]
+        return current_state in complete_dfa._accepting_states
 
     def to_dot(self, path, title=None):
         g = graphviz.Digraph(format='svg')
         g.node('fake', style='invisible')
-        for state in self.states:
-            if state == self.initial_state:
-                if state in self.accepting_states:
+        for state in self._states:
+            if state == self._initial_state:
+                if state in self._accepting_states:
                     g.node(str(state), root='true',
                            shape='doublecircle')
                 else:
                     g.node(str(state), root='true')
-            elif state in self.accepting_states:
+            elif state in self._accepting_states:
                 g.node(str(state), shape='doublecircle')
             else:
                 g.node(str(state))
 
-        g.edge('fake', str(self.initial_state), style='bold')
-        for state, sym2state in self.transition_function.items():
-            for sym, next_state in sym2state.items():
-                g.edge(str(state),
-                   str(next_state),
-                   label=str(sym))
+        g.edge('fake', str(self._initial_state), style='bold')
+        for (start, symbol), end in self._transition_function.items():
+            g.edge(str(start),
+                   str(end),
+                   label=str(symbol))
 
         # if not os.path.exists(path):
         #     os.makedirs(path)
@@ -259,82 +250,48 @@ class DFA(object):
         g.render(filename=path)
         return
 
-
-    def map_states_and_action(self, states_map:dict=None, actions_map:dict=None):
-        if states_map  is None: states_map  = dict()
-        if actions_map is None: actions_map = dict()
-
-        new_alphabet = Alphabet({actions_map.get(s, s) for s in  self.alphabet.symbols})
-        new_states = frozenset({states_map.get(s,s) for s in self.states})
-        new_accepting_states = frozenset({states_map.get(s,s) for s in self.accepting_states})
-        new_initial_state = states_map.get(self.initial_state, self.initial_state)
-
-        new_transition_function = {}
-        for s, a2ns in self.transition_function.items():
-            new_a2ns = {actions_map.get(a,a):states_map.get(ns, ns) for a,ns in a2ns.items()}
-            new_transition_function[states_map.get(s,s)] = new_a2ns
-
-        return DFA(new_alphabet, new_states, new_initial_state, new_accepting_states, new_transition_function)
-
-    def map_to_int(self, states=True, actions=False):
-        state2id  = {v: k for k, v in enumerate(self.states)}           if states  else dict()
-        action2id = {v: k for k, v in enumerate(self.alphabet.symbols)} if actions else dict()
-        return self.map_states_and_action(state2id, action2id)
-
-    def _numbering_states(self):
-        state2int = {}
-
-        # least fixpoint
-        z_current, z_next = set(), set()
-        z_next.add(self.initial_state)
-        state2int[self.initial_state] = 0
-
-        old = -1
-        to_be_visited = [self.initial_state]
-        while old != len(state2int):
-            old = len(state2int)
-            for s in list(to_be_visited):
-                del to_be_visited[to_be_visited.index(s)]
-                for a, s_prime in self.transition_function.get(s, {}).items():
-                    if s_prime not in state2int:
-                        state2int[s_prime] = len(state2int)
-                        to_be_visited.append(s_prime)
-
-        for s in self.states:
-            if s in state2int:
-                continue
-            state2int[s] = len(state2int)
-
-        return self.map_states_and_action(states_map=state2int)
-
-
     def levels_to_accepting_states(self) -> dict:
         """Return a dict from states to level, i.e. the number of steps to reach any accepting state.
         level = -1 if the state cannot reach any accepting state"""
 
-        res = {accepting_state: 0 for accepting_state in self.accepting_states}
+        res = {accepting_state: 0 for accepting_state in self._accepting_states}
         level = 0
 
         # least fixpoint
         z_current, z_next = set(), set()
-        z_next = set(self.accepting_states)
+        z_next = set(self._accepting_states)
 
         while z_current != z_next:
             level += 1
             z_current = z_next
             z_next = copy(z_current)
-            for state in self.states:
+            for state, action in self._transition_function:
                 if state in z_current:
                     continue
-                for a in self.transition_function.get(state, []):
-                    next_state = self.transition_function[state][a]
-                    if next_state in z_current:
-                        z_next.add(state)
-                        res[state] = level
-                        break
+                next_state = self._transition_function[(state, action)]
+                if next_state in z_current:
+                    z_next.add(state)
+                    res[state] = level
+                    break
 
         z_current = z_next
-        for failure_state in filter(lambda x: x not in z_current, self.states):
+        for failure_state in filter(lambda x: x not in z_current, self._states):
             res[failure_state] = -1
 
         return res
+
+    def __eq__(self, other):
+        if not isinstance(other, DFA):
+            return False
+
+        return self._states == other._states \
+            and self._alphabet == other._alphabet \
+            and self._initial_state == other._initial_state \
+            and self._accepting_states == other._accepting_states \
+            and self._transition_function == other._transition_function
+
+
+class EmptyDFA(DFA):
+
+    def __init__(self):
+        super().__init__({"0"}, set(), "0", set(), {})
