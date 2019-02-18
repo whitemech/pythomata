@@ -12,6 +12,8 @@ tox = "*"
 coverage = "*"
 twine = "*"
 Sphinx = "*"
+hypothesis = "*"
+hypothesis-pytest = "*"
 
 [packages]
 pydot = "*"

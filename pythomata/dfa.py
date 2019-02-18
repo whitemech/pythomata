@@ -204,21 +204,17 @@ class DFA(object):
         dfa = dfa.coreachable()
         return dfa
 
-    def word_acceptance(self, word: List[Symbol]):
+    def accepts(self, word: List[Symbol]):
         assert all(char in self._alphabet for char in word)
-        complete_dfa = self.complete()
 
-        current_state = complete_dfa._initial_state
-        # return false if current_state is None
-        if current_state is None:
-            return False
+        current_state = self._initial_state
 
         for char in word:
-            if (current_state, char) not in complete_dfa._transition_function:
+            if (current_state, char) not in self._transition_function:
                 return False
             else:
-                current_state = complete_dfa._transition_function[(current_state, char)]
-        return current_state in complete_dfa._accepting_states
+                current_state = self._transition_function[(current_state, char)]
+        return current_state in self._accepting_states
 
     def to_dot(self, path, title=None):
         g = graphviz.Digraph(format='svg')

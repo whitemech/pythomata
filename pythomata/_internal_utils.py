@@ -35,7 +35,7 @@ def _check_transition_function_is_valid_wrt_states_and_alphabet(transition_funct
     if not all(s in states for s in start_states):
         raise ValueError("Transition function not valid: start states {} are not in the set of states."
                          .format(start_states.difference(states)))
-    if not all(s in end_states for s in end_states):
+    if not all(s in states for s in end_states):
         raise ValueError("Transition function not valid: end states {} are not in the set of states."
                          .format(end_states.difference(states)))
     if not all(s in alphabet for s in symbols):

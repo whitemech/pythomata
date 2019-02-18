@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e3f601ccb83b951fc4add27236a986d92565171860ffd99741d05ad05beeecee"
+            "sha256": "c12fd128ca8b6291070507289828f0450ceba77a34140f1b080aaae5add7ba76"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -167,11 +167,27 @@
         },
         "flake8": {
             "hashes": [
-                "sha256:c3ba1e130c813191db95c431a18cb4d20a468e98af7a77e2181b68574481ad36",
-                "sha256:fd9ddf503110bf3d8b1d270e8c673aab29ccb3dd6abf29bae1f54e5116ab4a91"
+                "sha256:6d8c66a65635d46d54de59b027a1dda40abbe2275b3164b634835ac9c13fd048",
+                "sha256:6eab21c6e34df2c05416faa40d0c59963008fff29b6f0ccfe8fa28152ab3e383"
             ],
             "index": "pypi",
-            "version": "==3.7.5"
+            "version": "==3.7.6"
+        },
+        "hypothesis": {
+            "hashes": [
+                "sha256:15e2efc9ea4e667c2410aef80da2e7c42f7b9f130daa595767dad25a468318cc",
+                "sha256:73131d16c8b765db9a84d79c5dfa300678c9243d061c9e2df9ebf8c1c809054f",
+                "sha256:9417e3510560dc221b3567010a1f0e4a90c29eb464b6f988610665d6b29f49d3"
+            ],
+            "index": "pypi",
+            "version": "==4.6.0"
+        },
+        "hypothesis-pytest": {
+            "hashes": [
+                "sha256:550fd3a651eb13d399efba3172bd010a42f6c34c2baa04cf072bda0911054e06"
+            ],
+            "index": "pypi",
+            "version": "==0.19.0"
         },
         "idna": {
             "hashes": [
@@ -307,11 +323,11 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:80cfd9c8b9e93f419abcc0400e9f595974a98e44b6863a77d3e1039961bfc9c4",
-                "sha256:c2396a15726218a2dfef480861c4ba37bd3952ebaaa5b0fede3fc23fddcd7f8c"
+                "sha256:067a1d4bf827ffdd56ad21bd46674703fce77c5957f6c1eef731f6146bfcef1c",
+                "sha256:9687049d53695ad45cf5fdc7bbd51f0c49f1ea3ecfc4b7f3fde7501b541f17f4"
             ],
             "index": "pypi",
-            "version": "==4.2.1"
+            "version": "==4.3.0"
         },
         "pytz": {
             "hashes": [
