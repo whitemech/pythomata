@@ -38,6 +38,27 @@ class TestDFA:
         assert dfa_1 == dfa_2
         assert dfa_1 != tuple()
 
+    def test_dfa_from_transitions(self):
+        """Test that the constructor "from_transitions" works correctly."""
+
+        states = {"q0", "q1", "q2"}
+        actions = {"a0", "a1"}
+        initial_state = "q0"
+        final_states = {"q2"}
+        transition_function = {("q0", "a0"): "q1", ("q1", "a1"): "q2"}
+
+        expected_dfa = DFA(
+            states,
+            actions,
+            initial_state,
+            final_states,
+            transition_function
+        )
+
+        actual_dfa = DFA.from_transitions(initial_state, final_states, transition_function)
+
+        assert expected_dfa == actual_dfa
+
 
 class TestCheckConsistency:
     """Test suite to check the input is validated as expected."""

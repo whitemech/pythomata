@@ -29,6 +29,21 @@ class DFA(object):
 
         self._build_indexes()
 
+    @staticmethod
+    def from_transitions(initial_state, accepting_states, transition_function):
+        # type: (State, Set[State], TransitionFunction) -> DFA
+        """
+        Initialize a DFA without explicitly specifying the set of states and the alphabet.
+
+        :param initial_state: the initial state.
+        :param accepting_states: the accepting state.
+        :param transition_function: the transition function: a mapping from (state, symbol) to the next state.
+        :return: the DFA.
+        """
+        states, alphabet = map(set, zip(*transition_function.keys()))
+        states = states.union(transition_function.values())
+        return DFA(states, alphabet, initial_state, accepting_states, transition_function)
+
     @classmethod
     def _check_input(cls, states: Set[State],
                      alphabet: Set[Symbol],
