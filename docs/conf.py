@@ -56,6 +56,7 @@ author = u"Marco Favorito"
 # the built documents.
 #
 # The short X.Y version.
+import pythomata.__version__
 version = pythomata.__version__
 # The full version, including alpha/beta/rc tags.
 release = pythomata.__version__

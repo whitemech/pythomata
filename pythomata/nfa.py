@@ -1,19 +1,25 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
-from typing import FrozenSet, Dict, Set
+from typing import FrozenSet, Set
 
 import graphviz
 
-from pythomata.dfa import DFA, Symbol
-from pythomata.base import Alphabet
+from pythomata._internal_utils import _check_at_least_one_state, _check_reserved_state_names_not_used, \
+    _check_reserved_symbol_names_not_used, _check_initial_state_in_states, _check_accepting_states_in_states, \
+    _check_nondeterministic_transition_function_is_valid_wrt_states_and_alphabet
+from pythomata.base import Alphabet, NondeterministicTransitionFunction, State, Symbol
+from pythomata.dfa import DFA
 from pythomata.utils import powerset, MacroState
 
 
 class NFA(object):
 
-    def __init__(self, alphabet: Alphabet, states: FrozenSet, initial_state:object, accepting_states: FrozenSet,
-                 transition_function: Dict[object, Dict[Symbol, FrozenSet]]):
-        self._check_input(alphabet, states, initial_state, accepting_states, transition_function)
+    def __init__(self, states: Set[State],
+                 alphabet: Set[Symbol],
+                 initial_state: State,
+                 accepting_states: Set[State],
+                 transition_function: NondeterministicTransitionFunction):
+        self._check_input(states, alphabet, initial_state, accepting_states, transition_function)
 
         self.alphabet = alphabet
         self.states = states
@@ -21,15 +27,18 @@ class NFA(object):
         self.accepting_states = accepting_states
         self.transition_function = transition_function
 
-    def _check_input(self, alphabet, states, initial_state, accepting_states, transition_function):
-        if initial_state not in states:
-            raise ValueError
-        if any(not s in states for s in accepting_states):
-            raise ValueError
-        for s, sym2state in transition_function.items():
-            if s not in states or any(sym not in alphabet.symbols and any(next_state not in states for next_state in next_states) for sym, next_states in sym2state.items()):
-                raise ValueError
-
+    @classmethod
+    def _check_input(cls, states: Set[State],
+                     alphabet: Set[Symbol],
+                     initial_state: State,
+                     accepting_states: Set[State],
+                     transition_function: NondeterministicTransitionFunction):
+        _check_at_least_one_state(states)
+        _check_reserved_state_names_not_used(states)
+        _check_reserved_symbol_names_not_used(alphabet)
+        _check_initial_state_in_states(initial_state, states)
+        _check_accepting_states_in_states(accepting_states, states)
+        _check_nondeterministic_transition_function_is_valid_wrt_states_and_alphabet(transition_function, states, alphabet)
 
     def to_dot(self, path, title=None):
         g = graphviz.Digraph(format='svg')
@@ -75,13 +84,12 @@ class NFA(object):
 
         g.render(filename=path)
 
-
     def determinize(self):
         # index the set of states: we don't care too much about the states...
         id2states = dict(enumerate(self.states))
         state2id = {v: k for k, v in id2states.items()}
 
-        id2action = dict(enumerate(self.alphabet.symbols))
+        id2action = dict(enumerate(self.alphabet))
         action2id = {v: k for k, v in id2action.items()}
 
         nfa = self.map_states_and_action(state2id, action2id)
@@ -142,3 +150,9 @@ class NFA(object):
         state2id  = {v: k for k, v in enumerate(self.states)}           if states  else dict()
         action2id = {v: k for k, v in enumerate(self.alphabet.symbols)} if actions else dict()
         return self.map_states_and_action(state2id, action2id)
+
+
+class EmptyNFA(NFA):
+
+    def __init__(self):
+        super().__init__({"0"}, set(), "0", set(), {})

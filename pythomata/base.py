@@ -1,15 +1,17 @@
-from typing import Dict, Tuple, Set
+from typing import Dict, Tuple, Set, Hashable
 
 SINK = "sink"
 FORBIDDEN_STATE_SYMBOLS = {""}
 FORBIDDEN_ALPHABET_SYMBOLS = {""}
-Symbol = str
-State = str
+Symbol = Hashable
+State = Hashable
 Alphabet = Set[Symbol]
-TransitionFunction = Dict[Tuple[State, Symbol], State]
+TransitionFunction = Dict[State, Dict[Symbol, State]]
+NondeterministicTransitionFunction = Dict[State, Dict[Symbol, Set[State]]]
 
 
 class Sink(object):
+
     def __str__(self):
         return "sink"
 
