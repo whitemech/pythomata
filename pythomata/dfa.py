@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+
 import itertools
-import os
 from copy import copy, deepcopy
-from typing import List, Set, Tuple, Iterable, Optional
+from typing import List, Set, Tuple, Iterable, Optional, FrozenSet
 
 import graphviz
 
@@ -22,11 +22,11 @@ class DFA(object):
                  transition_function: TransitionFunction):
         self._check_input(states, alphabet, initial_state, accepting_states, transition_function)
 
-        self._states = frozenset(states)
-        self._alphabet = frozenset(alphabet)
-        self._initial_state = initial_state
-        self._accepting_states = frozenset(accepting_states)
-        self._transition_function = deepcopy(transition_function)
+        self._states = frozenset(states)  # type: FrozenSet[State]
+        self._alphabet = frozenset(alphabet)  # type: FrozenSet[Symbol]
+        self._initial_state = initial_state  # type: State
+        self._accepting_states = frozenset(accepting_states)  # type: FrozenSet[State]
+        self._transition_function = transition_function  # type: TransitionFunction
 
         self._build_indexes()
 
@@ -226,6 +226,7 @@ class DFA(object):
 
     def trim(self):
         dfa = self
+        dfa = dfa.complete()
         dfa = dfa.reachable()
         dfa = dfa.coreachable()
         return dfa

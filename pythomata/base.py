@@ -1,4 +1,5 @@
-from typing import Dict, Tuple, Set, Hashable
+# -*- coding: utf-8 -*-
+from typing import Dict, Set, Hashable
 
 SINK = "sink"
 FORBIDDEN_STATE_SYMBOLS = {""}

@@ -45,8 +45,8 @@ def _check_nondeterministic_transition_function_is_valid_wrt_states_and_alphabet
     if len(transition_function) == 0:
         return
 
-    extracted_states, extracted_alphabet = _extract_states_from_nodeterministic_transition_function(transition_function)
-    if not all(s in states for s in states):
+    extracted_states, extracted_alphabet = _extract_states_from_nondeterministic_transition_function(transition_function)
+    if not all(s in states for s in extracted_states):
         raise ValueError("Transition function not valid: states {} are not in the set of states."
                          .format(extracted_states.difference(states)))
     if not all(s in alphabet for s in extracted_alphabet):
@@ -86,7 +86,8 @@ def _extract_states_from_transition_function(transition_function: TransitionFunc
     return states, alphabet
 
 
-def _extract_states_from_nodeterministic_transition_function(transition_function: NondeterministicTransitionFunction) -> Tuple[Set[State], Alphabet]:
+def _extract_states_from_nondeterministic_transition_function(transition_function):
+    # type: (NondeterministicTransitionFunction) -> Tuple[Set[State], Alphabet]:
     states, alphabet = set(), set()
     for start_state in transition_function:
         states.add(start_state)

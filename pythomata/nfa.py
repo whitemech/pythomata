@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
-from typing import FrozenSet, Set
+from typing import Set, FrozenSet
 
 import graphviz
 
 from pythomata._internal_utils import _check_at_least_one_state, _check_reserved_state_names_not_used, \
     _check_reserved_symbol_names_not_used, _check_initial_state_in_states, _check_accepting_states_in_states, \
-    _check_nondeterministic_transition_function_is_valid_wrt_states_and_alphabet
-from pythomata.base import Alphabet, NondeterministicTransitionFunction, State, Symbol
+    _check_nondeterministic_transition_function_is_valid_wrt_states_and_alphabet, \
+    _extract_states_from_nondeterministic_transition_function
+from pythomata.base import NondeterministicTransitionFunction, State, Symbol
 from pythomata.dfa import DFA
-from pythomata.utils import powerset, MacroState
+from pythomata.utils import powerset
 
 
 class NFA(object):
@@ -21,11 +22,32 @@ class NFA(object):
                  transition_function: NondeterministicTransitionFunction):
         self._check_input(states, alphabet, initial_state, accepting_states, transition_function)
 
-        self.alphabet = alphabet
-        self.states = states
-        self.initial_state = initial_state
-        self.accepting_states = accepting_states
-        self.transition_function = transition_function
+        self._states = frozenset(states)  # type: FrozenSet[State]
+        self._alphabet = frozenset(alphabet)  # type: FrozenSet[Symbol]
+        self._initial_state = initial_state  # type: State
+        self._accepting_states = frozenset(accepting_states)  # type: FrozenSet[State]
+        self._transition_function = transition_function  # type: NondeterministicTransitionFunction
+
+        self._build_indexes()
+
+    def _build_indexes(self):
+        self._idx_to_state = sorted(self._states)
+        self._state_to_idx = dict(map(reversed, enumerate(self._idx_to_state)))
+        self._idx_to_symbol = sorted(self._alphabet)
+        self._symbol_to_idx = dict(map(reversed, enumerate(self._idx_to_symbol)))
+
+        # state -> action -> state
+        self._idx_transition_function = {
+            self._state_to_idx[state]: {
+                self._symbol_to_idx[symbol]:
+                    set(map(lambda x: self._state_to_idx[x], self._transition_function[state][symbol]))
+                for symbol in self._transition_function.get(state, {})
+            }
+            for state in self._states
+        }
+
+        self._idx_initial_state = self._state_to_idx[self._initial_state]
+        self._idx_accepting_states = frozenset(self._state_to_idx[s] for s in self._accepting_states)
 
     @classmethod
     def _check_input(cls, states: Set[State],
@@ -44,23 +66,23 @@ class NFA(object):
         g = graphviz.Digraph(format='svg')
 
         fakes = []
-        fakes.append('fake' + str(self.initial_state))
-        g.node('fake' + str(self.initial_state), style='invisible')
+        fakes.append('fake' + str(self._initial_state))
+        g.node('fake' + str(self._initial_state), style='invisible')
 
-        for state in self.states:
-            if state == self.initial_state:
-                if state in self.accepting_states:
+        for state in self._states:
+            if state == self._initial_state:
+                if state in self._accepting_states:
                     g.node(str(state), root='true',
                            shape='doublecircle')
                 else:
                     g.node(str(state), root='true')
-            elif state in self.accepting_states:
+            elif state in self._accepting_states:
                 g.node(str(state), shape='doublecircle')
             else:
                 g.node(str(state))
 
-        g.edge(fakes.pop(), str(self.initial_state), style='bold')
-        for state, sym2state in self.transition_function.items():
+        g.edge(fakes.pop(), str(self._initial_state), style='bold')
+        for state, sym2state in self._transition_function.items():
             s = defaultdict(lambda: [])
             for sym, next_states in sym2state.items():
                 for destination in next_states:
@@ -84,72 +106,71 @@ class NFA(object):
 
         g.render(filename=path)
 
-    def determinize(self):
-        # index the set of states: we don't care too much about the states...
-        id2states = dict(enumerate(self.states))
-        state2id = {v: k for k, v in id2states.items()}
+    def determinize(self) -> DFA:
+        """Determinize the NFA
 
-        id2action = dict(enumerate(self.alphabet))
-        action2id = {v: k for k, v in id2action.items()}
+        :return: the DFA equivalent to the DFA.
+        """
 
-        nfa = self.map_states_and_action(state2id, action2id)
+        nfa = self
+        new_accepting_states = nfa._accepting_states
 
-        new_accepting_states = nfa.accepting_states
-
-        new_states = frozenset({MacroState(s) for s in powerset(nfa.states)})
-        initial_state = MacroState([nfa.initial_state])
-        final_states = frozenset({q for q in new_states if len(q.intersection(new_accepting_states)) != 0})
+        new_states = {}
+        # new_states = {macro_state for macro_state in powerset(nfa._states)}
+        initial_state = frozenset([nfa._initial_state])
+        # final_states = {q for q in new_states if len(q.intersection(new_accepting_states)) != 0}
+        final_states = {}
         transition_function = {}
-        for state_set in new_states:
-            for action in nfa.alphabet.symbols:
 
-                next_states = set()
+        # queue = [initial_state]
+        #
+        # while len(queue) == 0:
+        #     cur_macrostate = queue.pop(0)
+        #
+        #     next_macrostate = set()
+        #     for state in cur_macrostate:
+        #         for action in nfa._transition_function[state]:
+        #             next_macrostate.add()
+
+
+        for state_set in new_states:
+            for action in nfa._alphabet:
+
+                next_state = set()
                 for s in state_set:
-                    for s_prime in nfa.transition_function.get(s, {}).get(action, []):
-                        next_states.add(s_prime)
+                    for s_prime in nfa._idx_transition_function.get(s, {}).get(action, []):
+                        next_state.add(s_prime)
 
                 # next_states = set(s_prime for s in state_set for s_prime in nfa.transition_function.get(s, {}).get(action, []))
 
-                next_states = MacroState(next_states)
-                transition_function.setdefault(state_set, {})[action] = next_states
+                next_state = frozenset(next_state)
+                transition_function.setdefault(state_set, {})[action] = next_state
 
-        return DFA(nfa.alphabet, new_states, initial_state, final_states, transition_function).map_states_and_action(actions_map=id2action)
-
+        return DFA(new_states, set(nfa._alphabet), initial_state, set(final_states), transition_function)
 
     @classmethod
-    def fromTransitions(cls, alphabet: Alphabet, states: FrozenSet, initial_state:object, accepting_states: FrozenSet,
-                        transitions: FrozenSet):
-        transition_function = {}
-        for start, action, end in transitions:
-            transition_function.setdefault(start, {}).setdefault(action, set()).add(end)
+    def from_transitions(cls, initial_state, accepting_states, transition_function):
+        # type: (State, Set[State], NondeterministicTransitionFunction) -> NFA
+        """
+        Initialize a DFA without explicitly specifying the set of states and the alphabet.
 
-        for state, sym2states in transition_function.items():
-            for sym, end_states in sym2states.items():
-                transition_function[state][sym] = frozenset(end_states)
+        :param initial_state: the initial state.
+        :param accepting_states: the accepting state.
+        :param transition_function: the (nondeterministic) transition function.
+        :return: the NFA.
+        """
+        states, alphabet = _extract_states_from_nondeterministic_transition_function(transition_function)
 
-        return NFA(alphabet, states, initial_state, accepting_states, transition_function)
+        return NFA(states, alphabet, initial_state, accepting_states, transition_function)
 
-
-    def map_states_and_action(self, states_map:dict=None, actions_map:dict=None):
-        if states_map  is None: states_map  = dict()
-        if actions_map is None: actions_map = dict()
-
-        new_alphabet = Alphabet({actions_map.get(s, s) for s in  self.alphabet.symbols})
-        new_states = frozenset({states_map.get(s,s) for s in self.states})
-        new_accepting_states = frozenset({states_map.get(s,s) for s in self.accepting_states})
-        new_initial_states = states_map.get(self.initial_state,self.initial_state)
-
-        new_transition_function = {}
-        for s, a2nss in self.transition_function.items():
-            new_a2nss = {actions_map.get(a,a):frozenset(states_map.get(ns, ns) for ns in nss) for a, nss in a2nss.items()}
-            new_transition_function[states_map.get(s,s)] = new_a2nss
-
-        return NFA(new_alphabet, new_states, new_initial_states, new_accepting_states, new_transition_function)
-
-    def map_to_int(self, states=True, actions=False):
-        state2id  = {v: k for k, v in enumerate(self.states)}           if states  else dict()
-        action2id = {v: k for k, v in enumerate(self.alphabet.symbols)} if actions else dict()
-        return self.map_states_and_action(state2id, action2id)
+    def __eq__(self, other):
+        if not isinstance(other, NFA):
+            return False
+        return self._states == other._states \
+            and self._alphabet == other._alphabet \
+            and self._initial_state == other._initial_state \
+            and self._accepting_states == other._accepting_states \
+            and self._transition_function == other._transition_function
 
 
 class EmptyNFA(NFA):
