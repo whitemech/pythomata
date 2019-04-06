@@ -109,3 +109,5 @@ docs/my_awesome_automaton
 docs/my_awesome_automaton.svg
 
 ignore/
+tmp/
+

@@ -368,6 +368,64 @@ class TestAccepts:
 
         assert not dfa.accepts([])
         assert not dfa.accepts(["a"])
+        assert not dfa.accepts(["a"])
         assert dfa.accepts(["b"])
         assert dfa.accepts(["a", "b"])
         assert not dfa.accepts(["a", "a"])
+        assert not dfa.accepts(["b", "b"])
+
+
+class TestLevelToAcceptingStates:
+
+    def test_level_to_accepting_states(self):
+        dfa = DFA(
+            {"q0", "q1", "q2", "q3", "q4", "q5"},
+            {"a", "b"},
+            "q0",
+            {"q3"},
+            {"q0": {"a": "q0", "b": "q1"},
+             "q1": {"a": "q0", "b": "q2"},
+             "q2": {"a": "q3", "b": "q4"},
+             "q3": {"a": "q3", "b": "q4"},
+             "q4": {"a": "q3", "b": "q5"}}
+        )
+
+        assert dfa.levels_to_accepting_states() == \
+               {
+                   "q0": 3,
+                   "q1": 2,
+                   "q2": 1,
+                   "q3": 0,
+                   "q4": 1,
+                   "q5": -1
+               }
+
+
+class TestToDot:
+
+    def test_to_dot(self):
+
+        dfa = DFA(
+            {"q0", "q1", "q2", "q3", "q4", "q5"},
+            {"a", "b"},
+            "q0",
+            {"q0"},
+            {}
+        )
+
+        dfa.to_dot("./tmp/dfa", title="test dfa (initial state final)")
+
+        dfa = DFA(
+            {"q0", "q1", "q2", "q3", "q4", "q5"},
+            {"a", "b"},
+            "q0",
+            {"q3"},
+            {"q0": {"a": "q0", "b": "q1"},
+             "q1": {"a": "q0", "b": "q2"},
+             "q2": {"a": "q3", "b": "q4"},
+             "q3": {"a": "q3", "b": "q4"},
+             "q4": {"a": "q3", "b": "q5"}}
+        )
+
+        dfa.to_dot("./tmp/dfa", title="test dfa")
+

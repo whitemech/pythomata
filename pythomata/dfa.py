@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import itertools
+import os
 from copy import copy, deepcopy
-from typing import List, Set, Tuple, Iterable
+from typing import List, Set, Tuple, Iterable, Optional
 
 import graphviz
 
@@ -242,7 +243,14 @@ class DFA(object):
                 current_state = self._idx_transition_function[current_state][char]
         return current_state in self._idx_accepting_states
 
-    def to_dot(self, path, title=None):
+    def to_dot(self, path: str, title: Optional[str] = None):
+        """
+        Print the automaton to a dot file
+
+        :param path: the path where to save the file.
+        :param title:
+        :return:
+        """
         g = graphviz.Digraph(format='svg')
         g.node('fake', style='invisible')
         for state in self._states:
@@ -264,8 +272,6 @@ class DFA(object):
                        str(end),
                        label=str(symbol))
 
-        # if not os.path.exists(path):
-        #     os.makedirs(path)
         if title:
             g.attr(label=title)
             g.attr(fontsize='20')
@@ -288,14 +294,15 @@ class DFA(object):
             level += 1
             z_current = z_next
             z_next = copy(z_current)
-            for state, action in self._transition_function:
-                if state in z_current:
-                    continue
-                next_state = self._transition_function[(state, action)]
-                if next_state in z_current:
-                    z_next.add(state)
-                    res[state] = level
-                    break
+            for state in self._transition_function:
+                for action in self._transition_function[state]:
+                    if state in z_current:
+                        continue
+                    next_state = self._transition_function[state][action]
+                    if next_state in z_current:
+                        z_next.add(state)
+                        res[state] = level
+                        break
 
         z_current = z_next
         for failure_state in filter(lambda x: x not in z_current, self._states):
