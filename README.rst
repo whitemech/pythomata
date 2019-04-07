@@ -53,26 +53,26 @@ How to use
 
 .. code-block:: python
 
-    a, b, c = Symbol("a"), Symbol("b"), Symbol("c")
-        alphabet = Alphabet({a, b, c})
-        states = frozenset({"s1", "s2", "s3"})
-        initial_state = "s1"
-        accepting_states = frozenset({"s3"})
-        transition_function = {
-            "s1": {
-                b : "s1",
-                a : "s2"
-            },
-            "s2": {
-                a : "s3",
-                b : "s1"
-            },
-            "s3":{
-                c : "s3"
-            }
+    from pythomata.dfa import DFA
+    alphabet = {"a", "b", "c"}
+    states = {"s1", "s2", "s3"}
+    initial_state = "s1"
+    accepting_states = {"s3"}
+    transition_function = {
+        "s1": {
+            "b" : "s1",
+            "a" : "s2"
+        },
+        "s2": {
+            "a" : "s3",
+            "b" : "s1"
+        },
+        "s3":{
+            "c" : "s3"
         }
+    }
+    dfa = DFA(states, alphabet, initial_state, accepting_states, transition_function)  
 
-        dfa = DFA(alphabet, states, initial_state, accepting_states, transition_function)
 
 * Test word acceptance:
 
@@ -81,10 +81,10 @@ How to use
     # a word is a list of symbols
     word = [b, b, b, a, b, c]
 
-    dfa.word_acceptance(word)        # True
+    dfa.accepts(word)        # True
 
     # without the last symbol c, the final state is not reached
-    dfa.word_acceptance(word[:-1])   # False
+    dfa.accepts(word[:-1])   # False
 
 * Operations such as minimization and trimming:
 
