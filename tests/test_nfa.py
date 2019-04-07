@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from pythomata.dfa import DFA
-from pythomata.nfa import NFA, EmptyNFA
+from pythomata.nfa import NFA
 
 
 class TestNFA:
@@ -155,11 +154,15 @@ class TestDeterminize:
             }
         )
 
-        nfa.to_dot("tmp/mynfa")
-        actual_dfa = nfa.determinize()
-        actual_dfa.to_dot("tmp/mydfa")
+        actual_dfa = nfa.determinize().trim().minimize()
 
-
+        assert not actual_dfa.accepts([])
+        assert not actual_dfa.accepts(["a"])
+        assert not actual_dfa.accepts(["b"])
+        assert not actual_dfa.accepts(["a", "a"])
+        assert not actual_dfa.accepts(["a", "b", "a"])
+        assert not actual_dfa.accepts(["a", "a", "a", "b"])
+        assert actual_dfa.accepts(["a", "a", "a", "b", "b", "a", "b"])
 
 
 class TestToDot:

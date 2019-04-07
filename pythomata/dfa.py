@@ -59,9 +59,9 @@ class DFA(object):
         _check_transition_function_is_valid_wrt_states_and_alphabet(transition_function, states, alphabet)
 
     def _build_indexes(self):
-        self._idx_to_state = sorted(self._states)
+        self._idx_to_state = list(self._states)
         self._state_to_idx = dict(map(reversed, enumerate(self._idx_to_state)))
-        self._idx_to_symbol = sorted(self._alphabet)
+        self._idx_to_symbol = list(self._alphabet)
         self._symbol_to_idx = dict(map(reversed, enumerate(self._idx_to_symbol)))
 
         # state -> action -> state
@@ -130,18 +130,19 @@ class DFA(object):
             for a, s_prime in s_transitions.items():
                 t_prime = t_transitions.get(a, None)
                 if t_prime is not None and (s_prime, t_prime) in current_set:
-                    break
+                    continue
                 else:
                     return True
 
             for a, t_prime in t_transitions.items():
                 s_prime = s_transitions.get(a, None)
                 if s_prime is not None and (s_prime, t_prime) in current_set:
-                    break
+                    continue
                 else:
                     return True
 
             return False
+
         result = greatest_fixpoint(set(itertools.product(range(len(dfa._idx_to_state)), range(len(dfa._idx_to_state)))),
                                    condition=greatest_fixpoint_condition)
 

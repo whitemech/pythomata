@@ -89,15 +89,6 @@ class NFA(object):
                     s[destination].append(sym)
                     g.edge(str(state), str(destination), label=str(sym))
 
-            # for n in s:
-            #     labels = list(map(str, sorted(s[n], key=lambda x: len(str(x)))))
-            #     label_string = ""
-            #     for l in labels:
-            #         if len(label_string) + len(l) + len(", ") > LABEL_MAX_LENGTH:
-            #             label_string += "\n"
-            #         label_string += l + ", "
-            #     label_string = label_string[:-2]
-            #     g.edge(str(state), str(n), label=label_string)
 
         if title:
             g.attr(label=title)
@@ -113,38 +104,22 @@ class NFA(object):
         """
 
         nfa = self
-        new_accepting_states = nfa._accepting_states
 
-        new_states = {}
-        # new_states = {macro_state for macro_state in powerset(nfa._states)}
+        new_states = {macro_state for macro_state in powerset(nfa._states)}
         initial_state = frozenset([nfa._initial_state])
-        # final_states = {q for q in new_states if len(q.intersection(new_accepting_states)) != 0}
-        final_states = {}
+        final_states = {q for q in new_states if len(q.intersection(nfa._accepting_states)) != 0}
         transition_function = {}
-
-        # queue = [initial_state]
-        #
-        # while len(queue) == 0:
-        #     cur_macrostate = queue.pop(0)
-        #
-        #     next_macrostate = set()
-        #     for state in cur_macrostate:
-        #         for action in nfa._transition_function[state]:
-        #             next_macrostate.add()
-
 
         for state_set in new_states:
             for action in nfa._alphabet:
 
-                next_state = set()
+                next_macrostate = set()
                 for s in state_set:
-                    for s_prime in nfa._idx_transition_function.get(s, {}).get(action, []):
-                        next_state.add(s_prime)
+                    for next_state in nfa._transition_function.get(s, {}).get(action, set()):
+                        next_macrostate.add(next_state)
 
-                # next_states = set(s_prime for s in state_set for s_prime in nfa.transition_function.get(s, {}).get(action, []))
-
-                next_state = frozenset(next_state)
-                transition_function.setdefault(state_set, {})[action] = next_state
+                next_macrostate = frozenset(next_macrostate)
+                transition_function.setdefault(state_set, {})[action] = next_macrostate
 
         return DFA(new_states, set(nfa._alphabet), initial_state, set(final_states), transition_function)
 
@@ -171,9 +146,3 @@ class NFA(object):
             and self._initial_state == other._initial_state \
             and self._accepting_states == other._accepting_states \
             and self._transition_function == other._transition_function
-
-
-class EmptyNFA(NFA):
-
-    def __init__(self):
-        super().__init__({"0"}, set(), "0", set(), {})
