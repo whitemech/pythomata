@@ -27,7 +27,7 @@ setup(
     long_description=readme + '\n\n' + history,
     packages=find_packages(include=['pythomata*']),
     include_package_data=True,
-    install_requires=["pydot", "graphviz", "pyparsing"],
+    install_requires=["graphviz"],
     license="MIT license",
     zip_safe=False,
     keywords='pythomata',
