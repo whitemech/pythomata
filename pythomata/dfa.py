@@ -212,7 +212,7 @@ class DFA(object):
 
         idx_new_states = result
         if self._idx_initial_state not in idx_new_states:
-            return EmptyDFA()
+            return EmptyDFA(alphabet=set(self._alphabet))
 
         new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
         new_transition_function = {}
@@ -325,5 +325,5 @@ class DFA(object):
 
 class EmptyDFA(DFA):
 
-    def __init__(self):
-        super().__init__({"0"}, set(), "0", set(), {})
+    def __init__(self, alphabet: Set[Symbol] = None):
+        super().__init__({"0"}, alphabet if alphabet is not None else set(), "0", set(), {})
