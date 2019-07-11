@@ -5,11 +5,13 @@ from copy import copy, deepcopy
 from typing import List, Set, Tuple, Iterable, Optional, FrozenSet
 
 import graphviz
+import queue
 
 from pythomata._internal_utils import _check_initial_state_in_states, \
     _check_accepting_states_in_states, _check_transition_function_is_valid_wrt_states_and_alphabet, \
     _check_reserved_state_names_not_used, _check_reserved_symbol_names_not_used, _generate_sink_name, \
-    _check_at_least_one_state, greatest_fixpoint, least_fixpoint, _extract_states_from_transition_function
+    _check_at_least_one_state, greatest_fixpoint, least_fixpoint, _extract_states_from_transition_function, \
+    _check_no_none_states
 from pythomata.base import State, TransitionFunction, Symbol
 
 
@@ -29,6 +31,27 @@ class DFA(object):
         self._transition_function = transition_function  # type: TransitionFunction
 
         self._build_indexes()
+
+
+    @property
+    def states(self) -> FrozenSet[State]:
+        return self._states
+
+    @property
+    def alphabet(self) -> FrozenSet[Symbol]:
+        return self._alphabet
+
+    @property
+    def initial_state(self) -> State:
+        return self._initial_state
+
+    @property
+    def accepting_states(self) -> FrozenSet[State]:
+        return self._accepting_states
+
+    @property
+    def transition_function(self):
+        return self._transition_function
 
     @staticmethod
     def from_transitions(initial_state, accepting_states, transition_function):
@@ -52,6 +75,7 @@ class DFA(object):
                      accepting_states: Set[State],
                      transition_function: TransitionFunction):
         _check_at_least_one_state(states)
+        _check_no_none_states(states)
         _check_reserved_state_names_not_used(states)
         _check_reserved_symbol_names_not_used(alphabet)
         _check_initial_state_in_states(initial_state, states)
@@ -233,24 +257,23 @@ class DFA(object):
         return dfa
 
     def accepts(self, word: List[Symbol]):
-        assert all(char in self._alphabet for char in word)
+        current_state = self._initial_state
 
-        current_state = self._idx_initial_state
-
-        for char in map(lambda x: self._symbol_to_idx[x], word):
-            if current_state not in self._idx_transition_function \
-               or char not in self._idx_transition_function[current_state]:
+        for char in word:
+            if current_state not in self._transition_function\
+               or char not in self._transition_function[current_state]:
                 return False
             else:
-                current_state = self._idx_transition_function[current_state][char]
-        return current_state in self._idx_accepting_states
+                current_state = self._transition_function[current_state][char]
+                
+        return current_state in self._accepting_states
 
     def to_dot(self, path: str, title: Optional[str] = None):
         """
         Print the automaton to a dot file
 
         :param path: the path where to save the file.
-        :param title:
+        :param title: the title of the DFA
         :return:
         """
         g = graphviz.Digraph(format='svg')
@@ -312,6 +335,43 @@ class DFA(object):
 
         return res
 
+    def renumbering(self) -> 'DFA':
+        """Deterministically renumber all the states."""
+
+        idx = 0 
+        visited_states = {self._idx_initial_state}
+        q = queue.Queue()
+
+        old_state_to_number = {}
+
+        q.put(self._idx_initial_state)
+        while not q.empty():
+            current_state = q.get()
+            old_state_to_number[current_state] = idx
+            idx += 1
+            
+            try:
+                next_actions = sorted(self._idx_transition_function[current_state])
+            except Exception:
+                next_actions = sorted(self._idx_transition_function[current_state], key=lambda x: hash(x))
+                
+            for action in next_actions:
+                next_state = self._idx_transition_function[current_state][action]
+                if next_state not in visited_states:
+                    visited_states.add(next_state)
+                    q.put(next_state)
+        
+        new_states = set(range(len(old_state_to_number)))
+        new_initial_state = old_state_to_number[self._idx_initial_state]
+        new_accepting_states = {old_state_to_number[x] for x in self._idx_accepting_states}
+        new_transition_function = {
+            old_state_to_number[start]: {
+                self._idx_to_symbol[symbol]: old_state_to_number[end] for symbol, end in self._idx_transition_function[start].items()
+            } for start in self._idx_transition_function
+        }
+        
+        return DFA(new_states, self._alphabet, new_initial_state, new_accepting_states, new_transition_function)
+
     def __eq__(self, other):
         if not isinstance(other, DFA):
             return False
@@ -327,3 +387,4 @@ class EmptyDFA(DFA):
 
     def __init__(self, alphabet: Set[Symbol] = None):
         super().__init__({"0"}, alphabet if alphabet is not None else set(), "0", set(), {})
+
