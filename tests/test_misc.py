@@ -36,24 +36,7 @@ class TestDFASimulator:
         simulator.reset()
         assert not simulator.is_true()
 
-        assert simulator.accepts(["a", "b"])
-
-    def test_raise_exception_when_step_with_unknown_symbol(self):
-        """Test that we raise an exception when we try to progress the simulator with a symbol that does not belong
-        to the alphabet of the DFA."""
-
-        dfa = DFA(
-            {"q0"},
-            {"a"},
-            "q0",
-            {"q0"},
-            {}
-        )
-
-        simulator = DFASimulator(dfa)
-
-        with pytest.raises(ValueError, match="Symbol 'b' not in the alphabet of the DFA."):
-            simulator.step("b")
+        assert simulator.dfa.accepts(["a", "b"])
 
 
 class TestSink:
