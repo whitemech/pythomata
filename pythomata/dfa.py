@@ -336,7 +336,10 @@ class DFA(object):
         return res
 
     def renumbering(self) -> 'DFA':
-        """Deterministically renumber all the states."""
+        """Deterministically renumber all the states.
+
+        :raises ValueError if the symbols of the transitions cannot be sorted uniquely
+        """
 
         idx = 0 
         visited_states = {self._idx_initial_state}
@@ -351,11 +354,12 @@ class DFA(object):
             idx += 1
             
             try:
-                next_actions = sorted(self._idx_transition_function[current_state])
-            except Exception:
-                next_actions = sorted(self._idx_transition_function[current_state], key=lambda x: hash(x))
-                
+                next_actions = sorted(self._idx_transition_function[current_state], key=lambda x: self._idx_to_symbol[x])
+            except TypeError:
+                raise TypeError("Cannot sort the transition symbols.")
+
             for action in next_actions:
+
                 next_state = self._idx_transition_function[current_state][action]
                 if next_state not in visited_states:
                     visited_states.add(next_state)
