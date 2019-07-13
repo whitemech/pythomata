@@ -392,3 +392,5 @@ class EmptyDFA(DFA):
     def __init__(self, alphabet: Set[Symbol] = None):
         super().__init__({"0"}, alphabet if alphabet is not None else set(), "0", set(), {})
 
+    def __eq__(self, other):
+        return type(self) == type(other) == EmptyDFA
