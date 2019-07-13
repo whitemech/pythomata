@@ -154,7 +154,7 @@ class TestDeterminize:
             }
         )
 
-        actual_dfa = nfa.determinize().trim().minimize()
+        actual_dfa = nfa.determinize().minimize().trim()
 
         assert not actual_dfa.accepts([])
         assert not actual_dfa.accepts(["a"])
