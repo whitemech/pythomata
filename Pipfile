@@ -19,6 +19,8 @@ hypothesis-pytest = "*"
 pydot = "*"
 graphviz = "*"
 pyparsing = "*"
+codecov = "*"
+tox-travis = "*"
 
 [requires]
 python_version = "3.7"

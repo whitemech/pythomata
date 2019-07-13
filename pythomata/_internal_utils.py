@@ -12,6 +12,11 @@ def _check_at_least_one_state(states: Set[State]):
         raise ValueError("The set of states cannot be empty.".format(pprint.pformat(states)))
 
 
+def _check_no_none_states(states: Set[State]):
+    if any(s is None for s in states):
+        raise ValueError("A state cannot be 'None'.".format(pprint.pformat(states)))
+
+
 def _check_initial_state_in_states(initial_state: State, states: Set[State]):
     if initial_state not in states:
         raise ValueError("Initial state {} not in the set of states.".format(pprint.pformat(initial_state)))
