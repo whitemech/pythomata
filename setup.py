@@ -6,10 +6,10 @@ import os
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -28,16 +28,15 @@ setup(
     packages=find_packages(include=['pythomata*']),
     include_package_data=True,
     install_requires=["graphviz"],
-    license="MIT license",
+    license=about["__license__"],
     zip_safe=False,
     keywords='pythomata',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: Apache License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
