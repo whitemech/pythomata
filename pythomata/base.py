@@ -12,7 +12,6 @@ NondeterministicTransitionFunction = Dict[State, Dict[Symbol, Set[State]]]
 
 
 class Sink(State):
-
     def __str__(self):
         return "sink"
 
