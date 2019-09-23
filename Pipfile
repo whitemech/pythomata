@@ -14,13 +14,12 @@ twine = "*"
 Sphinx = "*"
 hypothesis = "*"
 hypothesis-pytest = "*"
-
-[packages]
-pydot = "*"
-graphviz = "*"
-pyparsing = "*"
 codecov = "*"
 tox-travis = "*"
+mypy = "*"
+
+[packages]
+graphviz = "*"
 
 [requires]
 python_version = "3.7"
