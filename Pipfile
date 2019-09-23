@@ -17,6 +17,7 @@ hypothesis-pytest = "*"
 codecov = "*"
 tox-travis = "*"
 mypy = "*"
+black = "==19.3b0"
 
 [packages]
 graphviz = "*"

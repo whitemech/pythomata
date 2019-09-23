@@ -7,22 +7,34 @@ from typing import List, Set, Tuple, Iterable, Optional, FrozenSet
 import graphviz
 import queue
 
-from pythomata._internal_utils import _check_initial_state_in_states, \
-    _check_accepting_states_in_states, _check_transition_function_is_valid_wrt_states_and_alphabet, \
-    _check_reserved_state_names_not_used, _check_reserved_symbol_names_not_used, _generate_sink_name, \
-    _check_at_least_one_state, greatest_fixpoint, least_fixpoint, _extract_states_from_transition_function, \
-    _check_no_none_states
+from pythomata._internal_utils import (
+    _check_initial_state_in_states,
+    _check_accepting_states_in_states,
+    _check_transition_function_is_valid_wrt_states_and_alphabet,
+    _check_reserved_state_names_not_used,
+    _check_reserved_symbol_names_not_used,
+    _generate_sink_name,
+    _check_at_least_one_state,
+    greatest_fixpoint,
+    least_fixpoint,
+    _extract_states_from_transition_function,
+    _check_no_none_states,
+)
 from pythomata.base import State, TransitionFunction, Symbol
 
 
 class DFA(object):
-
-    def __init__(self, states: Set[State],
-                 alphabet: Set[Symbol],
-                 initial_state: State,
-                 accepting_states: Set[State],
-                 transition_function: TransitionFunction):
-        self._check_input(states, alphabet, initial_state, accepting_states, transition_function)
+    def __init__(
+        self,
+        states: Set[State],
+        alphabet: Set[Symbol],
+        initial_state: State,
+        accepting_states: Set[State],
+        transition_function: TransitionFunction,
+    ):
+        self._check_input(
+            states, alphabet, initial_state, accepting_states, transition_function
+        )
 
         self._states = frozenset(states)  # type: FrozenSet[State]
         self._alphabet = frozenset(alphabet)  # type: FrozenSet[Symbol]
@@ -31,7 +43,6 @@ class DFA(object):
         self._transition_function = transition_function  # type: TransitionFunction
 
         self._build_indexes()
-
 
     @property
     def states(self) -> FrozenSet[State]:
@@ -66,21 +77,28 @@ class DFA(object):
         """
         states, alphabet = _extract_states_from_transition_function(transition_function)
 
-        return DFA(states, alphabet, initial_state, accepting_states, transition_function)
+        return DFA(
+            states, alphabet, initial_state, accepting_states, transition_function
+        )
 
     @classmethod
-    def _check_input(cls, states: Set[State],
-                     alphabet: Set[Symbol],
-                     initial_state: State,
-                     accepting_states: Set[State],
-                     transition_function: TransitionFunction):
+    def _check_input(
+        cls,
+        states: Set[State],
+        alphabet: Set[Symbol],
+        initial_state: State,
+        accepting_states: Set[State],
+        transition_function: TransitionFunction,
+    ):
         _check_at_least_one_state(states)
         _check_no_none_states(states)
         _check_reserved_state_names_not_used(states)
         _check_reserved_symbol_names_not_used(alphabet)
         _check_initial_state_in_states(initial_state, states)
         _check_accepting_states_in_states(accepting_states, states)
-        _check_transition_function_is_valid_wrt_states_and_alphabet(transition_function, states, alphabet)
+        _check_transition_function_is_valid_wrt_states_and_alphabet(
+            transition_function, states, alphabet
+        )
 
     def _build_indexes(self):
         self._idx_to_state = list(self._states)
@@ -91,7 +109,9 @@ class DFA(object):
         # state -> action -> state
         self._idx_transition_function = {
             self._state_to_idx[state]: {
-                self._symbol_to_idx[symbol]: self._state_to_idx[self._transition_function[state][symbol]]
+                self._symbol_to_idx[symbol]: self._state_to_idx[
+                    self._transition_function[state][symbol]
+                ]
                 for symbol in self._transition_function.get(state, {})
             }
             for state in self._states
@@ -100,23 +120,29 @@ class DFA(object):
         # state -> (action, state)
         self._idx_delta_by_state = {}
         for s in self._idx_transition_function:
-            self._idx_delta_by_state[s] = set(list(self._idx_transition_function[s].items()))
+            self._idx_delta_by_state[s] = set(
+                list(self._idx_transition_function[s].items())
+            )
 
         self._idx_initial_state = self._state_to_idx[self._initial_state]
-        self._idx_accepting_states = frozenset(self._state_to_idx[s] for s in self._accepting_states)
+        self._idx_accepting_states = frozenset(
+            self._state_to_idx[s] for s in self._accepting_states
+        )
 
     def is_complete(self) -> bool:
         complete_number_of_transitions = len(self._states) * len(self._alphabet)
-        current_number_of_transitions = sum(len(self._transition_function[state]) for state in self._transition_function)
+        current_number_of_transitions = sum(
+            len(self._transition_function[state]) for state in self._transition_function
+        )
         return complete_number_of_transitions == current_number_of_transitions
 
-    def complete(self) -> 'DFA':
+    def complete(self) -> "DFA":
         if self.is_complete():
             return self
         else:
             return self._complete()
 
-    def _complete(self) -> 'DFA':
+    def _complete(self) -> "DFA":
         sink_state = _generate_sink_name(self._states)
         transitions = deepcopy(self._transition_function)
 
@@ -131,8 +157,13 @@ class DFA(object):
         for action in self._alphabet:
             transitions.setdefault(sink_state, {})[action] = sink_state
 
-        return DFA(set(self._states.union({sink_state})), set(self._alphabet), self._initial_state,
-                   set(self._accepting_states), dict(transitions))
+        return DFA(
+            set(self._states.union({sink_state})),
+            set(self._alphabet),
+            self._initial_state,
+            set(self._accepting_states),
+            dict(transitions),
+        )
 
     def minimize(self):
         dfa = self
@@ -143,9 +174,7 @@ class DFA(object):
             s, t = el
             s_is_final = s in dfa._idx_accepting_states
             t_is_final = t in dfa._idx_accepting_states
-            if s_is_final and not t_is_final\
-                or \
-               not s_is_final and t_is_final:
+            if s_is_final and not t_is_final or not s_is_final and t_is_final:
                 return True
 
             s_transitions = dfa._idx_transition_function.get(s, {})
@@ -167,15 +196,23 @@ class DFA(object):
 
             return False
 
-        result = greatest_fixpoint(set(itertools.product(range(len(dfa._idx_to_state)), range(len(dfa._idx_to_state)))),
-                                   condition=greatest_fixpoint_condition)
+        result = greatest_fixpoint(
+            set(
+                itertools.product(
+                    range(len(dfa._idx_to_state)), range(len(dfa._idx_to_state))
+                )
+            ),
+            condition=greatest_fixpoint_condition,
+        )
 
         state2equiv_class = {}
         for (s, t) in result:
             state2equiv_class.setdefault(s, set()).add(t)
         state2equiv_class = {k: frozenset(v) for k, v in state2equiv_class.items()}
         equivalence_classes = set(map(frozenset, state2equiv_class.values()))
-        equiv_class2new_state = dict((ec, i) for i, ec in enumerate(equivalence_classes))
+        equiv_class2new_state = dict(
+            (ec, i) for i, ec in enumerate(equivalence_classes)
+        )
 
         new_transition_function = {}
         for state in dfa._idx_delta_by_state:
@@ -183,19 +220,32 @@ class DFA(object):
             for action, next_state in dfa._idx_delta_by_state[state]:
                 new_next_state = equiv_class2new_state[state2equiv_class[next_state]]
 
-                new_transition_function.setdefault(new_state, {})[dfa._idx_to_symbol[action]] = new_next_state
+                new_transition_function.setdefault(new_state, {})[
+                    dfa._idx_to_symbol[action]
+                ] = new_next_state
 
         new_states = frozenset(equiv_class2new_state.values())
-        new_initial_state = equiv_class2new_state[state2equiv_class[dfa._idx_initial_state]]
-        new_final_states = frozenset(s for s in set(equiv_class2new_state[state2equiv_class[old_state]]
-                                                    for old_state in dfa._idx_accepting_states))
+        new_initial_state = equiv_class2new_state[
+            state2equiv_class[dfa._idx_initial_state]
+        ]
+        new_final_states = frozenset(
+            s
+            for s in set(
+                equiv_class2new_state[state2equiv_class[old_state]]
+                for old_state in dfa._idx_accepting_states
+            )
+        )
 
-        new_dfa = DFA(set(new_states), set(dfa._alphabet), new_initial_state,
-                      set(new_final_states), new_transition_function)
+        new_dfa = DFA(
+            set(new_states),
+            set(dfa._alphabet),
+            new_initial_state,
+            set(new_final_states),
+            new_transition_function,
+        )
         return new_dfa
 
     def reachable(self):
-
         def reachable_fixpoint_rule(current_set: Set) -> Iterable:
             result = set()
             for el in current_set:
@@ -211,13 +261,22 @@ class DFA(object):
             for a in self._idx_transition_function.get(s, {}):
                 next_state = self._idx_transition_function[s][a]
                 if next_state in idx_new_states:
-                    new_transition_function.setdefault(self._idx_to_state[s], {})[self._idx_to_symbol[a]] = \
-                        self._idx_to_state[next_state]
+                    new_transition_function.setdefault(self._idx_to_state[s], {})
+                    state = self._idx_to_state[s]
+                    new_transition_function[state][
+                        self._idx_to_symbol[a]
+                    ] = self._idx_to_state[next_state]
 
         new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
         new_final_states = new_states.intersection(self._accepting_states)
 
-        return DFA(new_states, set(self._alphabet), self._initial_state, new_final_states, new_transition_function)
+        return DFA(
+            new_states,
+            set(self._alphabet),
+            self._initial_state,
+            new_final_states,
+            new_transition_function,
+        )
 
     def coreachable(self):
         # least fixpoint
@@ -232,7 +291,9 @@ class DFA(object):
                         break
             return result
 
-        result = least_fixpoint(set(self._idx_accepting_states), coreachable_fixpoint_rule)
+        result = least_fixpoint(
+            set(self._idx_accepting_states), coreachable_fixpoint_rule
+        )
 
         idx_new_states = result
         if self._idx_initial_state not in idx_new_states:
@@ -244,10 +305,19 @@ class DFA(object):
             for a in self._idx_transition_function.get(s, {}):
                 next_state = self._idx_transition_function[s][a]
                 if next_state in idx_new_states:
-                    new_transition_function.setdefault(self._idx_to_state[s], {})[self._idx_to_symbol[a]] = \
-                        self._idx_to_state[next_state]
+                    new_transition_function.setdefault(self._idx_to_state[s], {})
+                    state = self._idx_to_state[s]
+                    new_transition_function[state][
+                        self._idx_to_symbol[a]
+                    ] = self._idx_to_state[next_state]
 
-        return DFA(new_states, set(self._alphabet), self._initial_state, set(self._accepting_states), new_transition_function)
+        return DFA(
+            new_states,
+            set(self._alphabet),
+            self._initial_state,
+            set(self._accepting_states),
+            new_transition_function,
+        )
 
     def trim(self):
         dfa = self
@@ -260,12 +330,14 @@ class DFA(object):
         current_state = self._initial_state
 
         for char in word:
-            if current_state not in self._transition_function\
-               or char not in self._transition_function[current_state]:
+            if (
+                current_state not in self._transition_function
+                or char not in self._transition_function[current_state]
+            ):
                 return False
             else:
                 current_state = self._transition_function[current_state][char]
-                
+
         return current_state in self._accepting_states
 
     def to_dot(self, path: str, title: Optional[str] = None):
@@ -276,37 +348,37 @@ class DFA(object):
         :param title: the title of the DFA
         :return:
         """
-        g = graphviz.Digraph(format='svg')
-        g.node('fake', style='invisible')
+        g = graphviz.Digraph(format="svg")
+        g.node("fake", style="invisible")
         for state in self._states:
             if state == self._initial_state:
                 if state in self._accepting_states:
-                    g.node(str(state), root='true',
-                           shape='doublecircle')
+                    g.node(str(state), root="true", shape="doublecircle")
                 else:
-                    g.node(str(state), root='true')
+                    g.node(str(state), root="true")
             elif state in self._accepting_states:
-                g.node(str(state), shape='doublecircle')
+                g.node(str(state), shape="doublecircle")
             else:
                 g.node(str(state))
 
-        g.edge('fake', str(self._initial_state), style='bold')
+        g.edge("fake", str(self._initial_state), style="bold")
         for start in self._transition_function:
             for symbol, end in self._transition_function[start].items():
-                g.edge(str(start),
-                       str(end),
-                       label=str(symbol))
+                g.edge(str(start), str(end), label=str(symbol))
 
         if title:
             g.attr(label=title)
-            g.attr(fontsize='20')
+            g.attr(fontsize="20")
 
         g.render(filename=path)
         return
 
     def levels_to_accepting_states(self) -> dict:
-        """Return a dict from states to level, i.e. the number of steps to reach any accepting state.
-        level = -1 if the state cannot reach any accepting state"""
+        """
+        Return a dict from states to level,
+        i.e. the number of steps to reach any accepting state.
+        level = -1 if the state cannot reach any accepting state
+        """
 
         res = {accepting_state: 0 for accepting_state in self._accepting_states}
         level = 0
@@ -335,13 +407,14 @@ class DFA(object):
 
         return res
 
-    def renumbering(self) -> 'DFA':
+    def renumbering(self) -> "DFA":
         """Deterministically renumber all the states.
 
-        :raises ValueError if the symbols of the transitions cannot be sorted uniquely
+        :raises ValueError: if the symbols of the transitions
+                          | cannot be sorted uniquely
         """
 
-        idx = 0 
+        idx = 0
         visited_states = {self._idx_initial_state}
         q = queue.Queue()
 
@@ -352,45 +425,60 @@ class DFA(object):
             current_state = q.get()
             old_state_to_number[current_state] = idx
             idx += 1
-            
+
             try:
-                next_actions = sorted(self._idx_transition_function[current_state], key=lambda x: self._idx_to_symbol[x])
+                next_actions = sorted(
+                    self._idx_transition_function[current_state],
+                    key=lambda x: self._idx_to_symbol[x],
+                )
             except TypeError:
                 raise TypeError("Cannot sort the transition symbols.")
 
             for action in next_actions:
-
-                next_state = self._idx_transition_function[current_state][action]
+                cur_tf = self._idx_transition_function[current_state]
+                next_state = cur_tf[action]
                 if next_state not in visited_states:
                     visited_states.add(next_state)
                     q.put(next_state)
-        
+
         new_states = set(range(len(old_state_to_number)))
         new_initial_state = old_state_to_number[self._idx_initial_state]
-        new_accepting_states = {old_state_to_number[x] for x in self._idx_accepting_states}
+        new_accepting_states = {
+            old_state_to_number[x] for x in self._idx_accepting_states
+        }
         new_transition_function = {
             old_state_to_number[start]: {
-                self._idx_to_symbol[symbol]: old_state_to_number[end] for symbol, end in self._idx_transition_function[start].items()
-            } for start in self._idx_transition_function
+                self._idx_to_symbol[symbol]: old_state_to_number[end]
+                for symbol, end in self._idx_transition_function[start].items()
+            }
+            for start in self._idx_transition_function
         }
-        
-        return DFA(new_states, self._alphabet, new_initial_state, new_accepting_states, new_transition_function)
+
+        return DFA(
+            new_states,
+            self._alphabet,
+            new_initial_state,
+            new_accepting_states,
+            new_transition_function,
+        )
 
     def __eq__(self, other):
         if not isinstance(other, DFA):
             return False
 
-        return self._states == other._states \
-            and self._alphabet == other._alphabet \
-            and self._initial_state == other._initial_state \
-            and self._accepting_states == other._accepting_states \
+        return (
+            self._states == other._states
+            and self._alphabet == other._alphabet
+            and self._initial_state == other._initial_state
+            and self._accepting_states == other._accepting_states
             and self._transition_function == other._transition_function
+        )
 
 
 class EmptyDFA(DFA):
-
     def __init__(self, alphabet: Set[Symbol] = None):
-        super().__init__({"0"}, alphabet if alphabet is not None else set(), "0", set(), {})
+        alphabet = alphabet if alphabet is not None else set()
+        super().__init__({"0"}, alphabet, "0", set(), {})
 
     def __eq__(self, other):
         return type(self) == type(other) == EmptyDFA

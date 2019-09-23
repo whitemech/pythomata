@@ -8,4 +8,3 @@ __author__ = "Marco Favorito"
 __author_email__ = "marco.favorito@gmail.com"
 __license__ = "Apache License"
 __copyright__ = "2018-2019 Marco Favorito"
-
