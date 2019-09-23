@@ -37,13 +37,13 @@ Install from `master` branch:
 - with `pip`:
 
 
-        pip3 install git+https://github.com/sapienza-rl/temprl.git
+        pip3 install git+https://github.com/marcofavorito/pythomata.git
 
 
 - or, clone the repository and install:
 
 
-        git clone htts://github.com/sapienza-rl/temprl.git
+        git clone htts://github.com/marcofavorito/pythomata.git
         cd temprl
         pip install .
 
