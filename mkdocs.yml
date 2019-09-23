@@ -1,0 +1,10 @@
+site_name: Pythomata
+nav:
+    - Home: index.md
+    - Credits: authors.md
+    - How to contribute: contributing.md
+
+theme: readthedocs
+markdown_extensions:
+    - markdown_include.include:
+        base_path: docs
