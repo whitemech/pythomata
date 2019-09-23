@@ -1,29 +1,40 @@
 dist: xenial   # required for Python >= 3.7
 language: python
-python:
-- "3.7"
-- "3.6"
+install: pip install -U tox-travis coveralls
 before_install:
   - wget http://ftp.it.debian.org/debian/pool/main/g/graphviz/graphviz_2.38.0-17_amd64.deb
   - sudo dpkg -i --force-all graphviz_2.38.0-17_amd64.deb
   - sudo apt-get install -f
   - sudo apt-get update
   - sudo apt-get install graphviz
-install:
-- pip install pipenv
-- pipenv install --dev
-script:
-- tox
-
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: MarcoFavorito
+  user: marcofavorito
   password:
-    secure: jpoaAAhBmaPKND8O4ohVF0U+JqkbzDSRTxsS/rVzrUvjolCuEzzEN/1iusruuUXhZR1XxRONl1qc1Oh6T6TnNir0Vi1o9vPgX2BcsHgFqxV0O7MeljOK8yryfcff1qnSCzOI/4zz5pudNIJM/CI8ymHhA+CQPHmmMy6a0k1r9uJvjqtuLsoSPpFSzaoCxLnJ4AJ7huKDJWm+nW2Q6M0+ZWWHy8AbQayzw9F+McCLV+2fRZoJrubQkRjoXQXJH9s0NwzHvuZMi3VjjPdrZvhvw/SNxSrqX82TCRHMgCXFj8nbDTHfkcBQ3VkB9AjoLpdgsvz/LF8TtM93PFKQmH6lyHZku5LFNVxeHhU7+Bme/8M285aL8EDkSY5+hyg9dGaQZdIDViUaqaUtzq+cfp0sL6mEBjrkNsShl1WTC0UNrzy/wAjHWIk5IvsAocDckg6LQuYLONcWq+wW05oH5MZhVm9Vq/zbBPyLPZvGIATtatugJtekIWojWH7PRUNjBFL+OIfGQZBSSTKbVatA3RCxFL1ilAo+mQKblL4daROSEu8aGPpR2qpDa7QYDYq4Cgb84h0fbAhhTIt81kf8Vh5xCGlika4kUKPDNGyKuoITjh3jOOxwo5T5v5d9qhY+6jNOsUQcuGTnrFSq7JdfRN6412lUvVqPTZY8dpPNuzL229Q=
+    secure: V4UaoY8zEc989vaI8n3CsKBjm/BdmEqPqq6C7Yhn9iKfwedhKgdNL0I8SvojR6EV4aUWaTGNISyweAkzaUvSNzJ+/wNTEK6ofRGH24H/UBOohafCqA5XdPzWDyoSv8/noOMqHUVeseApJdqDKLVkP8ZJCaiRA3YZ3So9PVznZRy5FiZcD+yeRe5H+9Ho2IXSuQAKSQC8Vv1iQVtdtNq5Gf/RWqGuWTCVDbSMgp++xxBr6OLohb2O4kecBF/PZX1QCwDlltD3Gb6ta4XBOLkoeLwsLThY91tVc/ARQrNFQNyM3ykhLORIUQcP6/Up3tu50C+fjywKY/F1tYZqqq8Wg/tHMM9vgsxRwNwwbidkNrxlfrwnCD/7iLfte8LZH033GsVBFAZtlRNA5e8oAEQHx/SCS6yhoxTgQtWYK6WYFX42cqYSPeYAbu2tF+wOaXxB6dox2CCpYSzRGtzdkY//WfHQBBYvRKOGCjOjZR/PzfFj7yl0+IVg6ne/Jrb5WuoJhS/soFNWk3im+3tQCP7px4MCEb6ztT5HgNjs1Teqtu6IywllH7T2eDwdoT+qRrbFfQtfAFJqGuCjcazLowZUXhZjYqzH4TDUxFKDyz5e46i+4aFglzcenMUh1+ka1brGrNa8D1k4HXChDh4E57V44M9thnjrEcEFIuM98y5obVk=
   on:
     tags: true
     repo: marcofavorito/pythomata
     python: 3.7
+
+matrix:
+  include:
+    - python: 3.7
+      env: TOXENV=py37
+    - python: 3.7
+      env: TOXENV=flake8
+    - python: 3.7
+      env: TOXENV=mypy
+    - python: 3.7
+      env: TOXENV=docs
+
+    - python: 3.6
+      env: TOXENV=py36
+
+script:
+  - tox
+
 after_success:
-  - codecov
+  - coveralls
+

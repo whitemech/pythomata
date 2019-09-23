@@ -8,19 +8,22 @@ pytest = "*"
 bumpversion = "*"
 watchdog = "*"
 flake8 = "*"
+flake8-docstrings = "*"
 tox = "*"
 coverage = "*"
 twine = "*"
 Sphinx = "*"
 hypothesis = "*"
 hypothesis-pytest = "*"
-
-[packages]
-pydot = "*"
-graphviz = "*"
-pyparsing = "*"
 codecov = "*"
 tox-travis = "*"
+mypy = "*"
+black = "==19.3b0"
+mkdocs = "*"
+markdown-include = "*"
+
+[packages]
+graphviz = "*"
 
 [requires]
 python_version = "3.7"
