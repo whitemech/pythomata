@@ -25,6 +25,7 @@ setup(
     url=about['__url__'],
     author_email=about["__author_email__"],
     long_description=readme + '\n\n' + history,
+    long_description_content_type="text/markdown",
     packages=find_packages(include=['pythomata*']),
     include_package_data=True,
     install_requires=["graphviz"],
