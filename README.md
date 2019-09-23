@@ -103,7 +103,7 @@ dfa.minimize().trim().to_dot(filepath)
 
 The output in .svg format is the following:
 
-![](docs/img/my_awesome_automaton.svg)
+![](img/my_awesome_automaton.svg)
 
 
 ## Features
