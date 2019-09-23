@@ -2,7 +2,7 @@
 
 import itertools
 from copy import copy, deepcopy
-from typing import List, Set, Tuple, Iterable, Optional, FrozenSet
+from typing import List, Set, Tuple, Iterable, Optional, FrozenSet, Hashable, cast
 
 import graphviz
 import queue
@@ -149,7 +149,8 @@ class DFA(object):
         # for every missing transition, add a transition towards the sink state.
         for state in self._states:
             for action in self._alphabet:
-                end_state = self._transition_function.get(state, {}).get(action, None)
+                cur_transitions = self._transition_function.get(state, {})
+                end_state = cur_transitions.get(action, None)  # type: ignore
                 if end_state is None:
                     transitions.setdefault(state, {})[action] = sink_state
 
@@ -384,7 +385,7 @@ class DFA(object):
         level = 0
 
         # least fixpoint
-        z_current, z_next = set(), set()
+        z_current = set()  # type: Set[Hashable]
         z_next = set(self._accepting_states)
 
         while z_current != z_next:
@@ -416,7 +417,7 @@ class DFA(object):
 
         idx = 0
         visited_states = {self._idx_initial_state}
-        q = queue.Queue()
+        q = queue.Queue()  # type: queue.Queue
 
         old_state_to_number = {}
 
@@ -455,11 +456,11 @@ class DFA(object):
         }
 
         return DFA(
-            new_states,
-            self._alphabet,
+            cast(Set[Hashable], new_states),
+            set(self._alphabet),
             new_initial_state,
-            new_accepting_states,
-            new_transition_function,
+            cast(Set[Hashable], new_accepting_states),
+            cast(TransitionFunction, new_transition_function),
         )
 
     def __eq__(self, other):

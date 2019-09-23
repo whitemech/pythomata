@@ -13,7 +13,7 @@ from pythomata._internal_utils import (
     _check_nondet_transition_function_is_valid_wrt_states_and_alphabet,
     _extract_states_from_nondet_transition_function,
 )
-from pythomata.base import NondeterministicTransitionFunction, State, Symbol
+from pythomata.base import NondeterministicTransitionFunction, State, Symbol, TransitionFunction
 from pythomata.dfa import DFA
 from pythomata.utils import powerset
 
@@ -129,7 +129,7 @@ class NFA(object):
         final_states = {
             q for q in new_states if len(q.intersection(nfa._accepting_states)) != 0
         }
-        transition_function = {}
+        transition_function = {}  # type: TransitionFunction
 
         for state_set in new_states:
             for action in nfa._alphabet:
@@ -141,8 +141,7 @@ class NFA(object):
                     ):
                         next_macrostate.add(next_state)
 
-                next_macrostate = frozenset(next_macrostate)
-                transition_function.setdefault(state_set, {})[action] = next_macrostate
+                transition_function.setdefault(state_set, {})[action] = frozenset(next_macrostate)
 
         return DFA(
             new_states,
