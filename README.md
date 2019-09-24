@@ -4,7 +4,7 @@
 [![](https://img.shields.io/pypi/v/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
 [![](https://img.shields.io/travis/marcofavorito/pythomata.svg)](https://travis-ci.org/marcofavorito/pythomata)
 [![](https://img.shields.io/pypi/pyversions/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
-[![](https://readthedocs.org/projects/pythomata/badge/?version=latest)](https://pythomata.readthedocs.io/en/latest/?badge=latest)
+[![](https://img.shields.io/badge/docs-mkdocs-9cf)](https://www.mkdocs.org/)
 [![](https://img.shields.io/badge/status-development-orange.svg)](https://img.shields.io/badge/status-development-orange.svg)
 [![](https://coveralls.io/repos/github/marcofavorito/pythomata/badge.svg?branch=master)](https://coveralls.io/github/marcofavorito/pythomata?branch=master)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
