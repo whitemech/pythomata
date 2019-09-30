@@ -2,7 +2,7 @@
 """This module contains the implementation of the DFA object and related components."""
 import itertools
 from copy import copy, deepcopy
-from typing import List, Set, Tuple, Iterable, Optional, FrozenSet, Hashable, cast
+from typing import List, Set, Tuple, Iterable, Optional, FrozenSet, Hashable, cast, Dict
 
 import graphviz
 import queue
@@ -250,16 +250,16 @@ class DFA(object):
             condition=greatest_fixpoint_condition,
         )
 
-        state2equiv_class = {}
+        state2equiv_class = {}  # type: Dict[int, FrozenSet[int]]
         for (s, t) in result:
-            state2equiv_class.setdefault(s, set()).add(t)
-        state2equiv_class = {k: frozenset(v) for k, v in state2equiv_class.items()}
-        equivalence_classes = set(map(frozenset, state2equiv_class.values()))
+            state2equiv_class.setdefault(s, frozenset())
+            state2equiv_class[s] = state2equiv_class[s].union(frozenset({t}))
+        equivalence_classes = set(map(lambda x: frozenset(x), state2equiv_class.values()))
         equiv_class2new_state = dict(
             (ec, i) for i, ec in enumerate(equivalence_classes)
         )
 
-        new_transition_function = {}
+        new_transition_function = {}  # type: TransitionFunction
         for state in dfa._idx_delta_by_state:
             new_state = equiv_class2new_state[state2equiv_class[state]]
             for action, next_state in dfa._idx_delta_by_state[state]:
@@ -355,7 +355,7 @@ class DFA(object):
             return EmptyDFA(alphabet=set(self._alphabet))
 
         new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
-        new_transition_function = {}
+        new_transition_function = {}  # type: TransitionFunction
         for s in idx_new_states:
             for a in self._idx_transition_function.get(s, {}):
                 next_state = self._idx_transition_function[s][a]

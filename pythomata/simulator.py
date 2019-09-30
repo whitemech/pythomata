@@ -36,7 +36,7 @@ class DFASimulator(Simulator):
         :param dfa: the DFA.
         """
         self.dfa = dfa
-        self._cur_state = self.dfa.initial_state  # type: Optional[State]
+        self._cur_state = self.dfa.initial_state  # type: State
         self._is_failed = False  # type: bool
 
     @property
@@ -57,7 +57,7 @@ class DFASimulator(Simulator):
             or s not in self.dfa.transition_function[self._cur_state]
         ):
             self._is_failed = True
-            self._cur_state = None
+            self._cur_state = None  # type: ignore
         else:
             self._cur_state = self.dfa.transition_function[self._cur_state][s]
 

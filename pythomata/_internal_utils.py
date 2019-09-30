@@ -155,8 +155,8 @@ def _extract_states_from_transition_function(
 
 
 def _extract_states_from_nondet_transition_function(transition_function):
-    """Extract states from a non-deterministic transition function."""
     # type: (NondeterministicTransitionFunction) -> Tuple[Set[State], Alphabet]
+    """Extract states from a non-deterministic transition function."""
     states, alphabet = set(), set()
     for start_state in transition_function:
         states.add(start_state)
@@ -168,7 +168,7 @@ def _extract_states_from_nondet_transition_function(transition_function):
     return states, alphabet
 
 
-def least_fixpoint(starting_set: Set, step: Callable[[Set], Iterable]):
+def least_fixpoint(starting_set: Set, step: Callable[[Set], Iterable]) -> Set:
     """Do a least fixpoint algorithm."""
     z_current = None
     z_next = starting_set
@@ -178,10 +178,10 @@ def least_fixpoint(starting_set: Set, step: Callable[[Set], Iterable]):
         z_next = deepcopy(z_current)
         z_next = z_next.union(step(z_current))
 
-    return z_current
+    return z_current if z_current is not None else set()
 
 
-def greatest_fixpoint(starting_set: Set, condition: Callable[[Any, Set], bool]):
+def greatest_fixpoint(starting_set: Set, condition: Callable[[Any, Set], bool]) -> Set:
     """Do a greatest fixpoint algorithm."""
     z_current = None
     z_next = starting_set
@@ -194,4 +194,4 @@ def greatest_fixpoint(starting_set: Set, condition: Callable[[Any, Set], bool]):
             if condition(e, z_current):
                 z_next.remove(e)
 
-    return z_current
+    return z_current if z_current is not None else set()
