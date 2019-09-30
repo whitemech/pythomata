@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Internal utility functions, not supposed to be used by the users."""
 import pprint
 from copy import deepcopy
 from typing import FrozenSet, Set, Callable, Any, Iterable, Tuple
@@ -16,6 +17,7 @@ from pythomata.base import (
 
 
 def _check_at_least_one_state(states: Set[State]):
+    """Check that the set of states is not empty."""
     if len(states) == 0:
         raise ValueError(
             "The set of states cannot be empty.".format(pprint.pformat(states))
@@ -23,11 +25,13 @@ def _check_at_least_one_state(states: Set[State]):
 
 
 def _check_no_none_states(states: Set[State]):
+    """Check that the set of states does not contain a None."""
     if any(s is None for s in states):
         raise ValueError("A state cannot be 'None'.".format(pprint.pformat(states)))
 
 
 def _check_initial_state_in_states(initial_state: State, states: Set[State]):
+    """Check that the initial state is in the set of states."""
     if initial_state not in states:
         raise ValueError(
             "Initial state {} not in the set of states.".format(
@@ -37,6 +41,7 @@ def _check_initial_state_in_states(initial_state: State, states: Set[State]):
 
 
 def _check_accepting_states_in_states(accepting_states: Set[State], states: Set[State]):
+    """Check that all the accepting states are in the set of states."""
     if not states.issuperset(accepting_states):
         wrong_accepting_states = accepting_states.difference(states)
         raise ValueError(
@@ -49,6 +54,7 @@ def _check_accepting_states_in_states(accepting_states: Set[State], states: Set[
 def _check_transition_function_is_valid_wrt_states_and_alphabet(
     transition_function: TransitionFunction, states: Set[State], alphabet: Alphabet
 ):
+    """Check that a transition function is compatible with the set of states and the alphabet."""
     if len(transition_function) == 0:
         return
 
@@ -76,6 +82,7 @@ def _check_nondet_transition_function_is_valid_wrt_states_and_alphabet(
     states: Set[State],
     alphabet: Alphabet,
 ):
+    """Check that a non-det tr. function is compatible wrt the set of states and the alphabet."""
     if len(transition_function) == 0:
         return
 
@@ -99,6 +106,7 @@ def _check_nondet_transition_function_is_valid_wrt_states_and_alphabet(
 
 
 def _check_reserved_state_names_not_used(states: Set[State]):
+    """Check that the reserved names for states are not used."""
     if not all(
         reserved_name not in states for reserved_name in FORBIDDEN_STATE_SYMBOLS
     ):
@@ -110,6 +118,7 @@ def _check_reserved_state_names_not_used(states: Set[State]):
 
 
 def _check_reserved_symbol_names_not_used(alphabet: Set[Symbol]):
+    """Check that the reserved symbol names are not used in the alphabet."""
     if not all(
         reserved_symbol_name not in alphabet
         for reserved_symbol_name in FORBIDDEN_ALPHABET_SYMBOLS
@@ -122,6 +131,7 @@ def _check_reserved_symbol_names_not_used(alphabet: Set[Symbol]):
 
 
 def _generate_sink_name(states: FrozenSet[State]):
+    """Generate a sink name."""
     sink_name = SINK
     while True:
         if sink_name not in states:
@@ -132,6 +142,7 @@ def _generate_sink_name(states: FrozenSet[State]):
 def _extract_states_from_transition_function(
     transition_function: TransitionFunction
 ) -> Tuple[Set[State], Alphabet]:
+    """Extract states from a transition function."""
     states, alphabet = set(), set()
     for start_state in transition_function:
         states.add(start_state)
@@ -145,6 +156,7 @@ def _extract_states_from_transition_function(
 
 def _extract_states_from_nondet_transition_function(transition_function):
     # type: (NondeterministicTransitionFunction) -> Tuple[Set[State], Alphabet]
+    """Extract states from a non-deterministic transition function."""
     states, alphabet = set(), set()
     for start_state in transition_function:
         states.add(start_state)
@@ -156,7 +168,8 @@ def _extract_states_from_nondet_transition_function(transition_function):
     return states, alphabet
 
 
-def least_fixpoint(starting_set: Set, step: Callable[[Set], Iterable]):
+def least_fixpoint(starting_set: Set, step: Callable[[Set], Iterable]) -> Set:
+    """Do a least fixpoint algorithm."""
     z_current = None
     z_next = starting_set
 
@@ -165,10 +178,11 @@ def least_fixpoint(starting_set: Set, step: Callable[[Set], Iterable]):
         z_next = deepcopy(z_current)
         z_next = z_next.union(step(z_current))
 
-    return z_current
+    return z_current if z_current is not None else set()
 
 
-def greatest_fixpoint(starting_set: Set, condition: Callable[[Any, Set], bool]):
+def greatest_fixpoint(starting_set: Set, condition: Callable[[Any, Set], bool]) -> Set:
+    """Do a greatest fixpoint algorithm."""
     z_current = None
     z_next = starting_set
 
@@ -180,4 +194,4 @@ def greatest_fixpoint(starting_set: Set, condition: Callable[[Any, Set], bool]):
             if condition(e, z_current):
                 z_next.remove(e)
 
-    return z_current
+    return z_current if z_current is not None else set()

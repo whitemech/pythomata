@@ -5,22 +5,21 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
-bumpversion = "*"
-watchdog = "*"
 flake8 = "*"
 flake8-docstrings = "*"
 tox = "*"
+tox-travis = "*"
 coverage = "*"
 twine = "*"
-Sphinx = "*"
 hypothesis = "*"
 hypothesis-pytest = "*"
-codecov = "*"
-tox-travis = "*"
 mypy = "*"
 black = "==19.3b0"
 mkdocs = "*"
 markdown-include = "*"
+coveralls = "*"
+tox-pipenv = "*"
+pytest-cov = "*"
 
 [packages]
 graphviz = "*"

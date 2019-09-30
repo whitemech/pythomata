@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""This module contains the implementation of the DFA object and related components."""
 import itertools
 from copy import copy, deepcopy
-from typing import List, Set, Tuple, Iterable, Optional, FrozenSet, Hashable, cast
+from typing import List, Set, Tuple, Iterable, Optional, FrozenSet, Hashable, cast, Dict
 
 import graphviz
 import queue
@@ -24,6 +24,8 @@ from pythomata.base import State, TransitionFunction, Symbol
 
 
 class DFA(object):
+    """This class implements a DFA."""
+
     def __init__(
         self,
         states: Set[State],
@@ -32,6 +34,15 @@ class DFA(object):
         accepting_states: Set[State],
         transition_function: TransitionFunction,
     ):
+        """
+        Initialize a DFA.
+
+        :param states: the set of states.
+        :param alphabet: the alphabet
+        :param initial_state: the initial state
+        :param accepting_states: the set of accepting states
+        :param transition_function: the transition function
+        """
         self._check_input(
             states, alphabet, initial_state, accepting_states, transition_function
         )
@@ -46,22 +57,27 @@ class DFA(object):
 
     @property
     def states(self) -> FrozenSet[State]:
+        """Get the set of states.."""
         return self._states
 
     @property
     def alphabet(self) -> FrozenSet[Symbol]:
+        """Get the alphabet."""
         return self._alphabet
 
     @property
     def initial_state(self) -> State:
+        """Get the initial state."""
         return self._initial_state
 
     @property
     def accepting_states(self) -> FrozenSet[State]:
+        """Get the set of accepting states."""
         return self._accepting_states
 
     @property
-    def transition_function(self):
+    def transition_function(self) -> TransitionFunction:
+        """Get the transition function."""
         return self._transition_function
 
     @staticmethod
@@ -90,6 +106,12 @@ class DFA(object):
         accepting_states: Set[State],
         transition_function: TransitionFunction,
     ):
+        """
+        Check the consistency of the constructor parameters.
+
+        :return: None
+        :raises ValueError: if some consistency check fails.
+        """
         _check_at_least_one_state(states)
         _check_no_none_states(states)
         _check_reserved_state_names_not_used(states)
@@ -101,6 +123,7 @@ class DFA(object):
         )
 
     def _build_indexes(self):
+        """Build indexes for several components of the object."""
         self._idx_to_state = list(self._states)
         self._state_to_idx = dict(map(reversed, enumerate(self._idx_to_state)))
         self._idx_to_symbol = list(self._alphabet)
@@ -130,6 +153,11 @@ class DFA(object):
         )
 
     def is_complete(self) -> bool:
+        """
+        Check whether the automaton is complete.
+
+        :return: True if the automaton is complete, False otherwise.
+        """
         complete_number_of_transitions = len(self._states) * len(self._alphabet)
         current_number_of_transitions = sum(
             len(self._transition_function[state]) for state in self._transition_function
@@ -137,12 +165,23 @@ class DFA(object):
         return complete_number_of_transitions == current_number_of_transitions
 
     def complete(self) -> "DFA":
+        """
+        Complete the DFA.
+
+        :return: the completed DFA, if it's not already complete.
+               | Otherwise, return the caller instance.
+        """
         if self.is_complete():
             return self
         else:
             return self._complete()
 
     def _complete(self) -> "DFA":
+        """
+        Complete the DFA.
+
+        :return: the completed DFA.
+        """
         sink_state = _generate_sink_name(self._states)
         transitions = deepcopy(self._transition_function)
 
@@ -166,7 +205,12 @@ class DFA(object):
             dict(transitions),
         )
 
-    def minimize(self):
+    def minimize(self) -> 'DFA':
+        """
+        Minimize the DFA.
+
+        :return: the minimized DFA.
+        """
         dfa = self
         dfa = dfa.complete()
 
@@ -206,16 +250,16 @@ class DFA(object):
             condition=greatest_fixpoint_condition,
         )
 
-        state2equiv_class = {}
+        state2equiv_class = {}  # type: Dict[int, FrozenSet[int]]
         for (s, t) in result:
-            state2equiv_class.setdefault(s, set()).add(t)
-        state2equiv_class = {k: frozenset(v) for k, v in state2equiv_class.items()}
-        equivalence_classes = set(map(frozenset, state2equiv_class.values()))
+            state2equiv_class.setdefault(s, frozenset())
+            state2equiv_class[s] = state2equiv_class[s].union(frozenset({t}))
+        equivalence_classes = set(map(lambda x: frozenset(x), state2equiv_class.values()))
         equiv_class2new_state = dict(
             (ec, i) for i, ec in enumerate(equivalence_classes)
         )
 
-        new_transition_function = {}
+        new_transition_function = {}  # type: TransitionFunction
         for state in dfa._idx_delta_by_state:
             new_state = equiv_class2new_state[state2equiv_class[state]]
             for action, next_state in dfa._idx_delta_by_state[state]:
@@ -247,6 +291,11 @@ class DFA(object):
         return new_dfa
 
     def reachable(self):
+        """
+        Get the equivalent reachable automaton.
+
+        :return: the reachable DFA.
+        """
         def reachable_fixpoint_rule(current_set: Set) -> Iterable:
             result = set()
             for el in current_set:
@@ -279,7 +328,12 @@ class DFA(object):
             new_transition_function,
         )
 
-    def coreachable(self):
+    def coreachable(self) -> 'DFA':
+        """
+        Get the equivalent co-reachable automaton.
+
+        :return: the co-reachable DFA.
+        """
         # least fixpoint
 
         def coreachable_fixpoint_rule(current_set: Set) -> Iterable:
@@ -301,7 +355,7 @@ class DFA(object):
             return EmptyDFA(alphabet=set(self._alphabet))
 
         new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
-        new_transition_function = {}
+        new_transition_function = {}  # type: TransitionFunction
         for s in idx_new_states:
             for a in self._idx_transition_function.get(s, {}):
                 next_state = self._idx_transition_function[s][a]
@@ -320,14 +374,25 @@ class DFA(object):
             new_transition_function,
         )
 
-    def trim(self):
+    def trim(self) -> 'DFA':
+        """
+        Trim the automaton.
+
+        :return: the trimmed DFA.
+        """
         dfa = self
         dfa = dfa.complete()
         dfa = dfa.reachable()
         dfa = dfa.coreachable()
         return dfa
 
-    def accepts(self, word: List[Symbol]):
+    def accepts(self, word: List[Symbol]) -> bool:
+        """
+        Check if the automaton accepts a word.
+
+        :param word: the list of symbols.
+        :return: True if the word is accepted by the automaton, False otherwise.
+        """
         current_state = self._initial_state
 
         for char in word:
@@ -341,13 +406,13 @@ class DFA(object):
 
         return current_state in self._accepting_states
 
-    def to_dot(self, path: str, title: Optional[str] = None):
+    def to_dot(self, path: str, title: Optional[str] = None) -> None:
         """
-        Print the automaton to a dot file
+        Print the automaton to a dot file and a svg file.
 
         :param path: the path where to save the file.
         :param title: the title of the DFA
-        :return:
+        :return: None
         """
         g = graphviz.Digraph(format="svg")
         g.node("fake", style="invisible")
@@ -376,11 +441,11 @@ class DFA(object):
 
     def levels_to_accepting_states(self) -> dict:
         """
-        Return a dict from states to level,
+        Return a dict from states to level.
+
         i.e. the number of steps to reach any accepting state.
         level = -1 if the state cannot reach any accepting state
         """
-
         res = {accepting_state: 0 for accepting_state in self._accepting_states}
         level = 0
 
@@ -414,7 +479,6 @@ class DFA(object):
         :raises ValueError: if the symbols of the transitions
                           | cannot be sorted uniquely
         """
-
         idx = 0
         visited_states = {self._idx_initial_state}
         q = queue.Queue()  # type: queue.Queue
@@ -464,6 +528,7 @@ class DFA(object):
         )
 
     def __eq__(self, other):
+        """Check equality with another object."""
         if not isinstance(other, DFA):
             return False
 
@@ -477,9 +542,13 @@ class DFA(object):
 
 
 class EmptyDFA(DFA):
+    """Implementation of an empty DFA."""
+
     def __init__(self, alphabet: Set[Symbol] = None):
+        """Initialize an empty DFA."""
         alphabet = alphabet if alphabet is not None else set()
         super().__init__({"0"}, alphabet, "0", set(), {})
 
     def __eq__(self, other):
+        """Check equality with another object."""
         return type(self) == type(other) == EmptyDFA
