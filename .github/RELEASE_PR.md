@@ -12,6 +12,7 @@ _Put an `x` in the boxes that apply._
 
 - [ ] I have read the [CONTRIBUTING](../master/CONTRIBUTING.rst) doc
 - [ ] I am making a pull request against the `master` branch (left side), from `develop`
+- [ ] I've updated the dependencies versions in `Pipfile` to the latest, wherever is possible.
 - [ ] Lint and unit tests pass locally
 - [ ] I built the documentation and updated it with the latest changes
 - [ ] I've added an item in `HISTORY.md` for this release
