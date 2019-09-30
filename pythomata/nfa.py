@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""This module contains the implementation of the NFA object and related components."""
 from collections import defaultdict
 from typing import Set, FrozenSet
 
@@ -19,6 +20,8 @@ from pythomata.utils import powerset
 
 
 class NFA(object):
+    """This class implements a NFA."""
+
     def __init__(
         self,
         states: Set[State],
@@ -27,6 +30,15 @@ class NFA(object):
         accepting_states: Set[State],
         transition_function: NondeterministicTransitionFunction,
     ):
+        """
+        Initialize a NFA.
+
+        :param states: the set of states.
+        :param alphabet: the alphabet
+        :param initial_state: the initial state
+        :param accepting_states: the set of accepting states
+        :param transition_function: the transition function
+        """
         self._check_input(
             states, alphabet, initial_state, accepting_states, transition_function
         )
@@ -85,6 +97,13 @@ class NFA(object):
         )
 
     def to_dot(self, path, title=None):
+        """
+        Print the automaton to a dot file and a svg file.
+
+        :param path: the path where to save the file.
+        :param title: the title of the DFA
+        :return: None
+        """
         g = graphviz.Digraph(format="svg")
 
         fakes = []
@@ -117,11 +136,11 @@ class NFA(object):
         g.render(filename=path)
 
     def determinize(self) -> DFA:
-        """Determinize the NFA
+        """
+        Do determinize the NFA.
 
         :return: the DFA equivalent to the DFA.
         """
-
         nfa = self
 
         new_states = {macro_state for macro_state in powerset(nfa._states)}
@@ -171,6 +190,7 @@ class NFA(object):
         )
 
     def __eq__(self, other):
+        """Check the equality with another object."""
         if not isinstance(other, NFA):
             return False
         return (

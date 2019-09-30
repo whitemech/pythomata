@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Metadata of the package."""
 
 __title__ = "pythomata"
 __description__ = "A Python package implementing automata."

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""This module contains implements utilities to execute a finite automaton."""
 from abc import ABC, abstractmethod
 from typing import Any, Optional
 
@@ -6,6 +7,8 @@ from pythomata.dfa import DFA, Symbol, State
 
 
 class Simulator(ABC):
+    """An interface for a simulator of finite automata."""
+
     @abstractmethod
     def step(self, s: Symbol) -> Any:
         """Make a transition, updating the current state of the simulator."""
@@ -39,13 +42,15 @@ class DFASimulator(Simulator):
     @property
     def cur_state(self) -> Optional[State]:
         """
-        The current state of the simulator.
+        Get the current state of the simulator.
+
         :return: the index corresponding to the automaton state.
                | If None, then the simulation is in a failure state.
         """
         return self._cur_state
 
     def step(self, s: Symbol):
+        """Do a simulation step."""
         if (
             self.is_failed()
             or s not in self.dfa.alphabet
@@ -57,11 +62,14 @@ class DFASimulator(Simulator):
             self._cur_state = self.dfa.transition_function[self._cur_state][s]
 
     def is_true(self):
+        """Check whether the simulator is in an accepting state."""
         return not self.is_failed() and self._cur_state in self.dfa.accepting_states
 
     def is_failed(self) -> bool:
+        """Check whether the simulator is in a failed state."""
         return self._is_failed
 
     def reset(self):
+        """Reset the simulator."""
         self._is_failed = False
         self._cur_state = self.dfa.initial_state
