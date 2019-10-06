@@ -32,21 +32,20 @@ Otherwise check the installation guide from the [official site](https://www.grap
 
 ## Install
 
-Install from `master` branch:
+- from [PyPI](https://pypi.org/project/pythomata/):
 
-- with `pip`:
+      pip install pythomata
 
+- or, from source (`master` branch):
 
-        pip3 install git+https://github.com/marcofavorito/pythomata.git
+      pip install git+https://github.com/marcofavorito/pythomata.git
 
 
 - or, clone the repository and install:
 
-
-        git clone htts://github.com/marcofavorito/pythomata.git
-        cd temprl
-        pip install .
-
+      git clone htts://github.com/marcofavorito/pythomata.git
+      cd pythomata
+      pip install .
 
 
 ## How to use
