@@ -18,7 +18,7 @@ _Put an `x` in the boxes that apply._
 - [ ] I've added an item in `HISTORY.md` for this release
 - [ ] I bumped the version number in the `__version__.py` file.
 - [ ] I published the latest version on TestPyPI and checked that the following command work:
-       ```pip install pythomata==<version-number> --index-url https://testpypi.org/simple --force --no-cache-dir --no-deps```
+       ```pip install pythomata==<version-number> --index-url https://test.pypi.org/simple --force --no-cache-dir --no-deps```
 - [ ] After merging the PR, I'll publish the build also on PyPI. Then, I'll make sure the following
       command will work:
       ```pip install pythomata==<version_number> --force --no-cache-dir --no-deps```  
