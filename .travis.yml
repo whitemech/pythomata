@@ -7,16 +7,6 @@ before_install:
   - sudo apt-get install -f
   - sudo apt-get update
   - sudo apt-get install graphviz
-deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  user: marcofavorito
-  password:
-    secure: V4UaoY8zEc989vaI8n3CsKBjm/BdmEqPqq6C7Yhn9iKfwedhKgdNL0I8SvojR6EV4aUWaTGNISyweAkzaUvSNzJ+/wNTEK6ofRGH24H/UBOohafCqA5XdPzWDyoSv8/noOMqHUVeseApJdqDKLVkP8ZJCaiRA3YZ3So9PVznZRy5FiZcD+yeRe5H+9Ho2IXSuQAKSQC8Vv1iQVtdtNq5Gf/RWqGuWTCVDbSMgp++xxBr6OLohb2O4kecBF/PZX1QCwDlltD3Gb6ta4XBOLkoeLwsLThY91tVc/ARQrNFQNyM3ykhLORIUQcP6/Up3tu50C+fjywKY/F1tYZqqq8Wg/tHMM9vgsxRwNwwbidkNrxlfrwnCD/7iLfte8LZH033GsVBFAZtlRNA5e8oAEQHx/SCS6yhoxTgQtWYK6WYFX42cqYSPeYAbu2tF+wOaXxB6dox2CCpYSzRGtzdkY//WfHQBBYvRKOGCjOjZR/PzfFj7yl0+IVg6ne/Jrb5WuoJhS/soFNWk3im+3tQCP7px4MCEb6ztT5HgNjs1Teqtu6IywllH7T2eDwdoT+qRrbFfQtfAFJqGuCjcazLowZUXhZjYqzH4TDUxFKDyz5e46i+4aFglzcenMUh1+ka1brGrNa8D1k4HXChDh4E57V44M9thnjrEcEFIuM98y5obVk=
-  on:
-    tags: true
-    repo: marcofavorito/pythomata
-    python: 3.7
 
 matrix:
   include:
