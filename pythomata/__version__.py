@@ -3,9 +3,9 @@
 
 __title__ = "pythomata"
 __description__ = "A Python package implementing automata."
-__url__ = "https://github.com/marcofavorito/pythomata.git"
+__url__ = "https://github.com/logics4ai-sapienza/pythomata.git"
 __version__ = "0.2.0"
-__author__ = "Marco Favorito"
-__author_email__ = "marco.favorito@gmail.com"
+__author__ = "Marco Favorito, Francesco Fuggitti"
+__author_email__ = "marco.favorito@gmail.com, francesco.fuggitti@gmail.com"
 __license__ = "Apache License"
-__copyright__ = "2018-2019 Marco Favorito"
+__copyright__ = "2018-2019 Marco Favorito, Francesco Fuggitti"
