@@ -2,11 +2,11 @@
 
 
 [![](https://img.shields.io/pypi/v/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
-[![](https://img.shields.io/travis/marcofavorito/pythomata.svg)](https://travis-ci.org/marcofavorito/pythomata)
+[![](https://img.shields.io/travis/logics4ai-sapienza/pythomata.svg)](https://travis-ci.org/logics4ai-sapienza/pythomata)
 [![](https://img.shields.io/pypi/pyversions/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
 [![](https://img.shields.io/badge/docs-mkdocs-9cf)](https://www.mkdocs.org/)
 [![](https://img.shields.io/badge/status-development-orange.svg)](https://img.shields.io/badge/status-development-orange.svg)
-[![](https://coveralls.io/repos/github/marcofavorito/pythomata/badge.svg?branch=master)](https://coveralls.io/github/marcofavorito/pythomata?branch=master)
+[![](https://coveralls.io/repos/github/logics4ai-sapienza/pythomata/badge.svg?branch=master)](https://coveralls.io/github/logics4ai-sapienza/pythomata?branch=master)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
 [![](https://img.shields.io/badge/mypy-checked-blue)](https://img.shields.io/badge/mypy-checked-blue)
 [![](https://img.shields.io/badge/license-Apache%202-lightgrey)](https://img.shields.io/badge/license-Apache%202-lightgrey)
@@ -15,7 +15,7 @@ Python implementation of automata theory.
 
 
 * Free software: Apache 2.0
-* Documentation: https://marcofavorito.github.io/pythomata.
+* Documentation: https://logics4ai-sapienza.github.io/pythomata.
 
 ## Dependencies
 
@@ -38,12 +38,12 @@ Otherwise check the installation guide from the [official site](https://www.grap
 
 - or, from source (`master` branch):
 
-      pip install git+https://github.com/marcofavorito/pythomata.git
+      pip install git+https://github.com/logics4ai-sapienza/pythomata.git
 
 
 - or, clone the repository and install:
 
-      git clone htts://github.com/marcofavorito/pythomata.git
+      git clone htts://github.com/logics4ai-sapienza/pythomata.git
       cd pythomata
       pip install .
 
@@ -71,7 +71,7 @@ transition_function = {
         "c" : "s3"
     }
 }
-dfa = DFA(states, alphabet, initial_state, accepting_states, transition_function)  
+dfa = DFA(states, alphabet, initial_state, accepting_states, transition_function)
 ```
 
 * Test word acceptance:
@@ -130,7 +130,7 @@ To build the docs:
 
 
     mkdocs build
-    
+
 
 To view documentation in a browser
 
