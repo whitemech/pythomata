@@ -20,6 +20,7 @@ markdown-include = "*"
 coveralls = "*"
 tox-pipenv = "*"
 pytest-cov = "*"
+ipython = "*"
 
 [packages]
 graphviz = "*"
