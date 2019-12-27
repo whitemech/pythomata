@@ -1,8 +1,7 @@
 """This module provides many popular alphabets."""
-from collections import Collection
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Collection
 
-from pythomata.core import SymbolType, Alphabet
+from pythomata.v3.core import SymbolType, Alphabet
 
 
 class ArrayAlphabet(Alphabet[SymbolType]):
@@ -58,6 +57,9 @@ class ArrayAlphabet(Alphabet[SymbolType]):
         """
         return len(self.symbols)
 
+    def __iter__(self):
+        return iter(self.symbols)
+
 
 class MapAlphabet(Alphabet[SymbolType]):
     """An alphabet implemented with a mapping."""
@@ -95,6 +97,9 @@ class MapAlphabet(Alphabet[SymbolType]):
         :return: the size of the alphabet.
         """
         return len(self.symbols)
+
+    def __iter__(self):
+        return iter(self.symbols)
 
 
 def from_array(symbols: Collection[SymbolType]):
