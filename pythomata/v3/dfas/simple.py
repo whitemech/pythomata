@@ -1,8 +1,8 @@
 import pprint
-from typing import Set, Dict, Tuple
+from typing import Set, Dict, Tuple, Optional
 
 from pythomata.v3.alphabets import MapAlphabet
-from pythomata.v3.core import Alphabet, DFA, StateType, SymbolType, TransitionType
+from pythomata.v3.core import Alphabet, DFA, StateType, SymbolType
 
 
 class SimpleDFA(DFA[StateType, SymbolType, StateType]):
@@ -11,6 +11,9 @@ class SimpleDFA(DFA[StateType, SymbolType, StateType]):
 
     It is a naive implementation where all the components of the DFA are
     stored explicitly.
+
+    If the DFA is not complete (i.e. the transition function is partial),
+    the successor state is None in those cases where the transition is not specified.
     """
 
     def __init__(
@@ -54,15 +57,14 @@ class SimpleDFA(DFA[StateType, SymbolType, StateType]):
     def initial_state(self) -> StateType:
         return self._initial_state
 
-    def get_transition(self, state: StateType, symbol: SymbolType) -> StateType:
-        # TODO assuming complete transition function
-        return self.transition_function[state][symbol]
+    def get_transition(self, state: StateType, symbol: SymbolType) -> Optional[StateType]:
+        return self.transition_function.get(state, {}).get(symbol, None)
 
     def get_transition_successor(self, transition: StateType) -> StateType:
         """
         Get the successor of the transition.
 
-        In the simple implementation, the transition is the successor state itself.
+        In the simple DFA implementation, the transition is the successor state itself.
         """
         return transition
 

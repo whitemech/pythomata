@@ -1,5 +1,5 @@
 """This module provides many popular alphabets."""
-from typing import List, Dict, Tuple, Collection
+from typing import List, Dict, Tuple, Collection, Iterable
 
 from pythomata.v3.core import SymbolType, Alphabet
 
@@ -64,7 +64,7 @@ class ArrayAlphabet(Alphabet[SymbolType]):
 class MapAlphabet(Alphabet[SymbolType]):
     """An alphabet implemented with a mapping."""
 
-    def __init__(self, symbols: List[SymbolType]):
+    def __init__(self, symbols: Iterable[SymbolType]):
         """Initialize the array alphabet."""
         self.symbols = tuple(symbols)  # type: Tuple[SymbolType]
         self.symbol_to_index = dict(map(reversed, enumerate(symbols)))  # type: Dict[int, SymbolType]
