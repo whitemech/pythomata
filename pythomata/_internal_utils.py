@@ -20,14 +20,14 @@ def _check_at_least_one_state(states: Set[State]):
     """Check that the set of states is not empty."""
     if len(states) == 0:
         raise ValueError(
-            "The set of states cannot be empty.".format(pprint.pformat(states))
+            "The set of states cannot be empty. Found {} instead.".format(pprint.pformat(states))
         )
 
 
 def _check_no_none_states(states: Set[State]):
     """Check that the set of states does not contain a None."""
     if any(s is None for s in states):
-        raise ValueError("A state cannot be 'None'.".format(pprint.pformat(states)))
+        raise ValueError("A state cannot be 'None'.")
 
 
 def _check_initial_state_in_states(initial_state: State, states: Set[State]):

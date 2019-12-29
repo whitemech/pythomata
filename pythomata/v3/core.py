@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 """The core module."""
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, Set, Optional
+from typing import List, TypeVar, Generic, Set
 
 StateType = TypeVar('StateType')
 SymbolType = TypeVar('SymbolType')
@@ -112,7 +113,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType, TransitionType], ABC):
         :return: the set of successor states.
         :raises ValueError: if the state does not belong to the automaton.
         """
-        result = set()
+        result = set()  # type: Set[StateType]
         transitions = self.get_transitions(state, symbol)
         if len(transitions) == 0:
             return result
@@ -190,7 +191,8 @@ class FiniteAutomaton(Generic[StateType, SymbolType, TransitionType], ABC):
     #     """
     #
     # @abstractmethod
-    # def create_transition(self, successor: StateType, transition_property: TransitionProperty) -> TransitionType:
+    # def create_transition(self, successor: StateType, transition_property: TransitionProperty) ->
+    # TransitionType:
     #     """
     #     Create a new transition.
     #
@@ -252,8 +254,16 @@ class DFA(FiniteAutomaton[StateType, SymbolType, TransitionType], ABC):
         """Get the (unique) transition that can be triggered by the given input symbol."""
 
     def get_transitions(self, state: StateType, symbol: SymbolType) -> Set[TransitionType]:
+        """
+        Get the transitions that can be triggered by the given input symbol.
+
+        :param state: the source state.
+        :param symbol: the input symbol.
+        :return: the transitions triggered by the given input.
+        """
         return {self.get_transition(state, symbol)}
 
     @property
     def initial_states(self) -> Set[StateType]:
+        """Get the set of initial states."""
         return {self.initial_state}

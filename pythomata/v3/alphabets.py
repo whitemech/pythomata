@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 """This module provides many popular alphabets."""
-from typing import List, Dict, Tuple, Collection, Iterable
+from typing import List, Tuple, Iterable
 
 from pythomata.v3.core import SymbolType, Alphabet
 
@@ -9,7 +10,7 @@ class ArrayAlphabet(Alphabet[SymbolType]):
 
     def __init__(self, symbols: List[SymbolType]):
         """Initialize the array alphabet."""
-        self.symbols = tuple(symbols)  # type: Tuple[SymbolType]
+        self.symbols = tuple(symbols)  # type: Tuple[SymbolType, ...]
 
     def get_symbol(self, index: int) -> SymbolType:
         """
@@ -57,7 +58,8 @@ class ArrayAlphabet(Alphabet[SymbolType]):
         """
         return len(self.symbols)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterable[SymbolType]:
+        """Iterate over the alphabet."""
         return iter(self.symbols)
 
 
@@ -66,8 +68,8 @@ class MapAlphabet(Alphabet[SymbolType]):
 
     def __init__(self, symbols: Iterable[SymbolType]):
         """Initialize the array alphabet."""
-        self.symbols = tuple(symbols)  # type: Tuple[SymbolType]
-        self.symbol_to_index = dict(map(reversed, enumerate(symbols)))  # type: Dict[int, SymbolType]
+        self.symbols = tuple(symbols)  # type: Tuple[SymbolType, ...]
+        self.symbol_to_index = dict(map(reversed, enumerate(symbols)))  # type: ignore
 
     def get_symbol(self, index: int) -> SymbolType:
         """
@@ -99,10 +101,10 @@ class MapAlphabet(Alphabet[SymbolType]):
         return len(self.symbols)
 
     def __iter__(self):
+        """Iterate over the alphabet."""
         return iter(self.symbols)
 
 
-def from_array(symbols: Collection[SymbolType]):
+def from_array(symbols: Iterable[SymbolType]) -> Alphabet:
     """Get an alphabet from arrays."""
-    return ArrayAlphabet(symbols)
-
+    return ArrayAlphabet(list(symbols))

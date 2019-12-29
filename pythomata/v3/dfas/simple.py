@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+"""This module contains the implemenation of a 'simple' DFA."""
 import pprint
-from typing import Set, Dict, Tuple, Optional
+from typing import Set, Dict, Tuple
 
 from pythomata.v3.alphabets import MapAlphabet
 from pythomata.v3.core import Alphabet, DFA, StateType, SymbolType
@@ -55,9 +57,11 @@ class SimpleDFA(DFA[StateType, SymbolType, StateType]):
 
     @property
     def initial_state(self) -> StateType:
+        """Get the initial state."""
         return self._initial_state
 
-    def get_transition(self, state: StateType, symbol: SymbolType) -> Optional[StateType]:
+    def get_transition(self, state: StateType, symbol: SymbolType) -> StateType:
+        """Get the transition."""
         return self.transition_function.get(state, {}).get(symbol, None)
 
     def get_transition_successor(self, transition: StateType) -> StateType:
@@ -70,10 +74,12 @@ class SimpleDFA(DFA[StateType, SymbolType, StateType]):
 
     @property
     def states(self) -> Set[StateType]:
+        """Get the set of states."""
         return self._states
 
     @property
     def final_states(self) -> Set[StateType]:
+        """Get the set of final states."""
         return self._accepting_states
 
     @classmethod
@@ -117,14 +123,14 @@ def _check_at_least_one_state(states: Set[StateType]):
     """Check that the set of states is not empty."""
     if len(states) == 0:
         raise ValueError(
-            "The set of states cannot be empty.".format(pprint.pformat(states))
+            "The set of states cannot be empty. Found {} instead.".format(pprint.pformat(states))
         )
 
 
 def _check_no_none_states(states: Set[StateType]):
     """Check that the set of states does not contain a None."""
     if any(s is None for s in states):
-        raise ValueError("A state cannot be 'None'.".format(pprint.pformat(states)))
+        raise ValueError("A state cannot be 'None'.")
 
 
 def _check_initial_state_in_states(initial_state: StateType, states: Set[StateType]):
@@ -157,7 +163,7 @@ def _check_transition_function_is_valid_wrt_states_and_alphabet(
 
     extracted_states, extracted_alphabet = _extract_states_from_transition_function(
         transition_function
-    )
+    )  # type: Set[StateType], Alphabet
     if not all(s in states for s in extracted_states):
         raise ValueError(
             "Transition function not valid: "
