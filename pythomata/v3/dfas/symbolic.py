@@ -16,7 +16,11 @@ PropInt = Dict[Union[str, Symbol], bool]
 
 
 class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
-    """A symbolic automaton."""
+    """
+    A symbolic automaton.
+
+    By default, the
+    """
 
     def __init__(self):
         """Initialize a Symbolic automaton."""
@@ -45,7 +49,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             raise ValueError("Symbol {} is not valid.".format(symbol))
         successors = set()
         transition_iterator = self._transition_function.get(state, {}).items()
-        [successors.add(successor) for successor, guard in transition_iterator if guard.subs(symbol)]
+        [successors.add(successor) for successor, guard in transition_iterator if guard.subs(symbol) == True]
         return successors
 
     def create_state(self) -> int:
@@ -75,12 +79,11 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                 pass
 
     def add_transition(self, state1: int, guard: BooleanFunction, state2: int) -> None:
-        guard.subs()
         assert state1 in self.states
         assert state2 in self.states
         other_guard = self._transition_function.get(state1, {}).get(state2, None)
         if other_guard is None:
-            self._transition_function[state1][state2] = guard
+            self._transition_function.setdefault(state1, {})[state2] = guard
         else:
             # take the OR of the two guards.
             self._transition_function[state1][state2] = simplify(other_guard | guard)
