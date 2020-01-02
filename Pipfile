@@ -24,6 +24,7 @@ ipython = "*"
 
 [packages]
 graphviz = "*"
+sympy = "*"
 
 [requires]
 python_version = "3.7"

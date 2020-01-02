@@ -28,7 +28,7 @@ setup(
     long_description_content_type="text/markdown",
     packages=find_packages(include=['pythomata*']),
     include_package_data=True,
-    install_requires=["graphviz"],
+    install_requires=["graphviz", "sympy"],
     license=about["__license__"],
     zip_safe=False,
     keywords='pythomata',

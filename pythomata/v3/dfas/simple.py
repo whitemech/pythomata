@@ -7,7 +7,7 @@ from pythomata.v3.alphabets import MapAlphabet
 from pythomata.v3.core import Alphabet, DFA, StateType, SymbolType
 
 
-class SimpleDFA(DFA[StateType, SymbolType, StateType]):
+class SimpleDFA(DFA[StateType, SymbolType]):
     """
     Implementation of a simple DFA.
 
@@ -60,17 +60,9 @@ class SimpleDFA(DFA[StateType, SymbolType, StateType]):
         """Get the initial state."""
         return self._initial_state
 
-    def get_transition(self, state: StateType, symbol: SymbolType) -> StateType:
+    def get_successor(self, state: StateType, symbol: SymbolType) -> StateType:
         """Get the transition."""
         return self.transition_function.get(state, {}).get(symbol, None)
-
-    def get_transition_successor(self, transition: StateType) -> StateType:
-        """
-        Get the successor of the transition.
-
-        In the simple DFA implementation, the transition is the successor state itself.
-        """
-        return transition
 
     @property
     def states(self) -> Set[StateType]:

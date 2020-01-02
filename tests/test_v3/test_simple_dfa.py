@@ -69,30 +69,6 @@ class TestSimpleDFA:
             2: {'a': 0, 'b': 1, 'c': 2}
         }
 
-    def test_get_transition(self):
-        """Test get transition."""
-        assert self.dfa.get_transition(0, 'a') == 0
-        assert self.dfa.get_transition(0, 'b') == 1
-        assert self.dfa.get_transition(0, 'c') == 2
-        assert self.dfa.get_transition(1, 'a') == 0
-        assert self.dfa.get_transition(1, 'b') == 1
-        assert self.dfa.get_transition(1, 'c') == 2
-        assert self.dfa.get_transition(2, 'a') == 0
-        assert self.dfa.get_transition(2, 'b') == 1
-        assert self.dfa.get_transition(2, 'c') == 2
-
-    def test_get_transitions(self):
-        """Test get transition."""
-        assert self.dfa.get_transitions(0, 'a') == {0}
-        assert self.dfa.get_transitions(0, 'b') == {1}
-        assert self.dfa.get_transitions(0, 'c') == {2}
-        assert self.dfa.get_transitions(1, 'a') == {0}
-        assert self.dfa.get_transitions(1, 'b') == {1}
-        assert self.dfa.get_transitions(1, 'c') == {2}
-        assert self.dfa.get_transitions(2, 'a') == {0}
-        assert self.dfa.get_transitions(2, 'b') == {1}
-        assert self.dfa.get_transitions(2, 'c') == {2}
-
     def test_get_successors(self):
         """Test get successors."""
         assert self.dfa.get_successors(0, 'a') == {0}
@@ -108,12 +84,6 @@ class TestSimpleDFA:
     def test_successor_with_non_alphabet_symbol(self):
         """Test the 'get_successors' with a non-alphabet symbol."""
         assert self.dfa.get_successors(0, 'd') == {None}
-
-    def test_get_transition_successor(self):
-        """Test get transition successor."""
-        assert self.dfa.get_transition_successor(0) == 0
-        assert self.dfa.get_transition_successor(1) == 1
-        assert self.dfa.get_transition_successor(2) == 2
 
     def test_is_accepting(self):
         """Test is_accepting."""
@@ -162,31 +132,6 @@ class TestPartialSimpleDFA:
             2: {'c': 2}
         }
 
-
-    def test_get_transition(self):
-        """Test get transition."""
-        assert self.dfa.get_transition(0, 'a') == 0
-        assert self.dfa.get_transition(0, 'b') == 1
-        assert self.dfa.get_transition(0, 'c') is None
-        assert self.dfa.get_transition(1, 'a') is None
-        assert self.dfa.get_transition(1, 'b') == 1
-        assert self.dfa.get_transition(1, 'c') == 2
-        assert self.dfa.get_transition(2, 'a') is None
-        assert self.dfa.get_transition(2, 'b') is None
-        assert self.dfa.get_transition(2, 'c') == 2
-
-    def test_get_transitions(self):
-        """Test get transition."""
-        assert self.dfa.get_transitions(0, 'a') == {0}
-        assert self.dfa.get_transitions(0, 'b') == {1}
-        assert self.dfa.get_transitions(0, 'c') == {None}
-        assert self.dfa.get_transitions(1, 'a') == {None}
-        assert self.dfa.get_transitions(1, 'b') == {1}
-        assert self.dfa.get_transitions(1, 'c') == {2}
-        assert self.dfa.get_transitions(2, 'a') == {None}
-        assert self.dfa.get_transitions(2, 'b') == {None}
-        assert self.dfa.get_transitions(2, 'c') == {2}
-
     def test_get_successors(self):
         """Test get successors."""
         assert self.dfa.get_successors(0, 'a') == {0}
@@ -199,11 +144,6 @@ class TestPartialSimpleDFA:
         assert self.dfa.get_successors(2, 'b') == {None}
         assert self.dfa.get_successors(2, 'c') == {2}
 
-    def test_get_transition_successor(self):
-        """Test get transition successor."""
-        assert self.dfa.get_transition_successor(0) == 0
-        assert self.dfa.get_transition_successor(1) == 1
-        assert self.dfa.get_transition_successor(2) == 2
 
 class TestCheckConsistency:
     """Test suite to check the input is validated as expected."""
