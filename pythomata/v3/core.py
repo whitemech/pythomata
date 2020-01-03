@@ -149,3 +149,15 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
     def get_successors(self, state: StateType, symbol: SymbolType) -> Set[StateType]:
         """Get the successors."""
         return {self.get_successor(state, symbol)}
+
+
+class AutomataOperations(Generic[StateType, SymbolType], ABC):
+    """An interface for automata operations."""
+
+    @abstractmethod
+    def determinize(self) -> DFA[StateType, SymbolType]:
+        """Determinize the automaton."""
+
+    @abstractmethod
+    def minimize(self) -> FiniteAutomaton[StateType, SymbolType]:
+        """Minimize the automaton."""

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import itertools
+
 import pytest
 from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
@@ -193,3 +195,34 @@ class TestSymbolicAutomatonUniversalLanguage:
     def test_is_accepting(self):
         """Test is_accepting."""
         assert self.automaton.is_accepting(0)
+
+
+class TestDeterminize:
+    """Test 'determinize' of a symbolic automaton."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the tests up."""
+        cls.automaton = SymbolicAutomaton()
+        new_state_1 = cls.automaton.create_state()
+        new_state_2 = cls.automaton.create_state()
+        cls.automaton.set_final_state(new_state_1, True)
+        cls.automaton.add_transition(0, "x | y", new_state_1)
+        cls.automaton.add_transition(0, "x | z", new_state_2)
+
+        cls.determinized = cls.automaton.determinize()
+
+    def test_get_successors(self):
+        """Test get successors of determinized automaton."""
+        assert self.automaton.get_successors(0, {"x": True}) == {1, 2}
+        # we cannot assert the actual result since the state name is not deterministic.
+        assert len(self.determinized.get_successors(0, {"x": True})) == 1
+
+    @pytest.mark.parametrize("trace", [
+        [],
+        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=1),
+        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=2)
+    ])
+    def test_accepts(self, trace):
+        """Test equivalence of acceptance between the two automata."""
+        assert self.automaton.accepts(trace) == self.determinized.accepts(trace)

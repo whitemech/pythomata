@@ -24,7 +24,7 @@ class SimpleDFA(DFA[StateType, SymbolType]):
         alphabet: Alphabet,
         initial_state: StateType,
         accepting_states: Set[StateType],
-        transition_function: Dict,
+        transition_function: Dict[StateType, Dict[SymbolType, StateType]],
     ):
         """
         Initialize a DFA.

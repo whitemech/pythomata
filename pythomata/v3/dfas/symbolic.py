@@ -4,23 +4,28 @@ An implementation of a symbolic automaton.
 
 For further details, see:
 - Applications of Symbolic Finite Automata, https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/ciaa13.pdf
+- Symbolic Automata Constraint Solving, https://link.springer.com/chapter/10.1007%2F978-3-642-16242-8_45
+- Rex: Symbolic Regular Expression Explorer, https://www.microsoft.com/en-us/research/wp-content/uploads/2010/04/rex-ICST.pdf
 """
-from typing import Set, Dict, Union, Any
+import itertools
+import operator
+from functools import reduce
+from typing import Set, Dict, Union, Any, cast
 
+import graphviz
+import sympy
 from sympy import Symbol, simplify
-from sympy.logic.boolalg import BooleanFunction
+from sympy.logic.boolalg import BooleanFunction, And, Not
+from sympy.parsing.sympy_parser import parse_expr
 
-from pythomata.v3.core import FiniteAutomaton, StateType
+from pythomata.utils import iter_powerset
+from pythomata.v3.core import FiniteAutomaton, StateType, AutomataOperations, DFA, SymbolType
 
 PropInt = Dict[Union[str, Symbol], bool]
 
 
 class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
-    """
-    A symbolic automaton.
-
-    By default, the
-    """
+    """A symbolic automaton."""
 
     def __init__(self):
         """Initialize a Symbolic automaton."""
@@ -57,15 +62,13 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         self._n_states += 1
         return new_state
 
-    def remove_state(self, state: int) -> None:
-        if state == 0:
-            raise ValueError("Cannot remove state {}".format(state))
-        if state not in self.states:
-            raise ValueError("State {} not found.".format(state))
-
-        self._transition_function.pop(state, None)
-        [self._transition_function[s].pop(state, None) for s in self._transition_function]
-        self._n_states -= 1
+    # def remove_state(self, state: int) -> None:
+    #     if state not in self.states:
+    #         raise ValueError("State {} not found.".format(state))
+    #
+    #     self._transition_function.pop(state, None)
+    #     [self._transition_function[s].pop(state, None) for s in self._transition_function]
+    #     self._n_states -= 1
 
     def set_final_state(self, state: int, is_final: bool) -> None:
         if state not in self.states:
@@ -78,9 +81,21 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             except KeyError:
                 pass
 
-    def add_transition(self, state1: int, guard: BooleanFunction, state2: int) -> None:
+    def add_transition(self, state1: int, guard: Union[BooleanFunction, str], state2: int) -> None:
+        """
+        Add a transition.
+
+        :param state1: the start state of the transition.
+        :param guard: the guard of the transition.
+                      it can be either a sympy.logic.boolalg.BooleanFunction object
+                      or a string that can be parsed with sympy.parsing.sympy_parser.parse_expr.
+        :param state2:
+        :return:
+        """
         assert state1 in self.states
         assert state2 in self.states
+        if isinstance(guard, str):
+            guard = simplify(parse_expr(guard))
         other_guard = self._transition_function.get(state1, {}).get(state2, None)
         if other_guard is None:
             self._transition_function.setdefault(state1, {})[state2] = guard
@@ -97,3 +112,89 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         except AssertionError:
             return False
         return True
+
+    def determinize(self) -> 'SymbolicAutomaton[int, PropInt]':
+        """Determinize."""
+        frozen_initial_states = frozenset(self.initial_states)
+        stack = [frozen_initial_states]
+        visited = {frozen_initial_states}
+        final_macro_states = {frozen_initial_states} if frozen_initial_states.intersection(self.final_states) != set() else set()
+        moves = set()
+
+        # given an iterable of transitions (i.e. triples (source, guard, destination),
+        # get the guard
+        getguard = lambda x: map(operator.itemgetter(1), x)
+        # given ... (as before)
+        # get the target
+        gettarget = lambda x: map(operator.itemgetter(2), x)
+
+        while len(stack) > 0:
+            macro_source = stack.pop()
+            transitions = set([(source, guard, dest)
+                               for source in macro_source
+                               for dest, guard in self._transition_function.get(source, {}).items()])
+            for transitions_subset in map(frozenset, iter_powerset(transitions)):
+                if len(transitions_subset) == 0: continue
+                transitions_subset_negated = transitions.difference(transitions_subset)
+                phi_positive = And(*getguard(transitions_subset))
+                phi_negative = And(*map(Not, getguard(transitions_subset_negated)))
+                phi = phi_positive & phi_negative
+                if sympy.satisfiable(phi) is not False:
+                    macro_dest = frozenset(gettarget(transitions_subset))
+                    moves.add((macro_source, phi, macro_dest))
+                    if macro_dest not in visited:
+                        visited.add(macro_dest)
+                        final_macro_states.add(macro_dest) if macro_dest.intersection(self.final_states) != set() else None
+                        stack.append(macro_dest)
+
+        return self._from_transitions(visited, frozen_initial_states, frozenset(final_macro_states), moves)
+
+    def minimize(self) -> FiniteAutomaton[int, PropInt]:
+        """Minimize."""
+
+    @classmethod
+    def _from_transitions(cls, states, initial_state, final_states, transitions):
+        automaton = SymbolicAutomaton()
+        state_to_indices = {initial_state: 0}
+        indices_to_state = {0: initial_state}
+
+        for s in states:
+            if s == initial_state: continue
+            new_index = automaton.create_state()
+            automaton.set_final_state(new_index, s in final_states)
+            state_to_indices[s] = new_index
+            indices_to_state[new_index] = s
+
+        for (source, guard, destination) in transitions:
+            source_index = state_to_indices[source]
+            dest_index = state_to_indices[destination]
+            automaton.add_transition(source_index, guard, dest_index)
+
+        return automaton
+
+    def to_graphviz(self, title: str = "") -> graphviz.Digraph:
+        """Convert to graphviz.Digraph object."""
+        g = graphviz.Digraph(format="svg")
+        g.node("fake", style="invisible")
+        for state in self.states:
+            if state in self.initial_states:
+                if state in self.final_states:
+                    g.node(str(state), root="true", shape="doublecircle")
+                else:
+                    g.node(str(state), root="true")
+            elif state in self.final_states:
+                g.node(str(state), shape="doublecircle")
+            else:
+                g.node(str(state))
+
+        for i in self.initial_states:
+            g.edge("fake", str(i), style="bold")
+        for start in self._transition_function:
+            for end, guard in self._transition_function[start].items():
+                g.edge(str(start), str(end), label=str(guard))
+
+        if title:
+            g.attr(label=title)
+            g.attr(fontsize="20")
+
+        return g
