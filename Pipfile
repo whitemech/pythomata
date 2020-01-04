@@ -20,9 +20,11 @@ markdown-include = "*"
 coveralls = "*"
 tox-pipenv = "*"
 pytest-cov = "*"
+ipython = "*"
 
 [packages]
 graphviz = "*"
+sympy = "*"
 
 [requires]
 python_version = "3.7"

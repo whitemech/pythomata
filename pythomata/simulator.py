@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """This module contains implements utilities to execute a finite automaton."""
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Generic, Set
 
-from pythomata.dfa import DFA, Symbol, State
+from pythomata.core import StateType, SymbolType, FiniteAutomaton
 
 
-class Simulator(ABC):
+class AbstractSimulator(Generic[StateType, SymbolType], ABC):
     """An interface for a simulator of finite automata."""
 
     @abstractmethod
-    def step(self, s: Symbol) -> Any:
+    def step(self, s: SymbolType) -> StateType:
         """Make a transition, updating the current state of the simulator."""
 
     @abstractmethod
@@ -22,54 +22,53 @@ class Simulator(ABC):
         """Check if the simulator is failed (i.e. in an undefined state)."""
 
     @abstractmethod
-    def reset(self) -> Any:
+    def reset(self) -> StateType:
         """Reset the state of the simulator to its initial state."""
 
 
-class DFASimulator(Simulator):
+class AutomatonSimulator(AbstractSimulator[Set[StateType], SymbolType]):
     """A DFA simulator."""
 
-    def __init__(self, dfa: DFA):
+    def __init__(self, automaton: FiniteAutomaton):
         """
-        Initialize a simulator for a DFA.
+        Initialize a simulator for a finite automaton.
 
-        :param dfa: the DFA.
+        :param automaton: the automaton.
         """
-        self.dfa = dfa
-        self._cur_state = self.dfa.initial_state  # type: State
-        self._is_failed = False  # type: bool
+        self._automaton = automaton
+        self._current_states = self._automaton.initial_states  # type: Set[StateType]
 
     @property
-    def cur_state(self) -> Optional[State]:
+    def automaton(self) -> FiniteAutomaton:
+        """Get the automaton."""
+        return self._automaton
+
+    @property
+    def cur_state(self) -> Set[StateType]:
         """
-        Get the current state of the simulator.
+        Get the current states of the simulator.
 
         :return: the index corresponding to the automaton state.
                | If None, then the simulation is in a failure state.
         """
-        return self._cur_state
+        return self._current_states
 
-    def step(self, s: Symbol):
+    def step(self, symbol: SymbolType) -> Set[StateType]:
         """Do a simulation step."""
-        if (
-            self.is_failed()
-            or s not in self.dfa.alphabet
-            or s not in self.dfa.transition_function[self._cur_state]
-        ):
-            self._is_failed = True
-            self._cur_state = None  # type: ignore
-        else:
-            self._cur_state = self.dfa.transition_function[self._cur_state][s]
+        next_macro_state = set()  # type: Set[StateType]
+        for state in self.cur_state:
+            next_macro_state = next_macro_state.union(self.automaton.get_successors(state, symbol))
+        return next_macro_state
 
     def is_true(self):
         """Check whether the simulator is in an accepting state."""
-        return not self.is_failed() and self._cur_state in self.dfa.accepting_states
+        return not self.is_failed() and any(s in self.automaton.final_states for s in self.cur_state)
 
     def is_failed(self) -> bool:
         """Check whether the simulator is in a failed state."""
-        return self._is_failed
+        return self.cur_state == set()
 
-    def reset(self):
+    def reset(self) -> Set[StateType]:
         """Reset the simulator."""
-        self._is_failed = False
-        self._cur_state = self.dfa.initial_state
+        self._current_states = self.automaton.initial_states
+        return self.cur_state

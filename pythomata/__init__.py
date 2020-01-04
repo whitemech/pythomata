@@ -9,3 +9,7 @@ from pythomata.__version__ import (
     __license__,
     __copyright__,
 )
+
+
+from .impl.simple import SimpleDFA
+from .impl.symbolic import SymbolicAutomaton, PropInt

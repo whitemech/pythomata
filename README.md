@@ -89,7 +89,7 @@ dfa.accepts(word[:-1])   # False
 * Operations such as minimization and trimming:
 
 ```python
-dfa_minimized = dfa.minimize()
+dfa_minimized = dfa.minimize
 dfa_trimmed = dfa.trim()
 ```
 
@@ -97,7 +97,7 @@ dfa_trimmed = dfa.trim()
 
 ```python
 filepath = "./my_awesome_automaton"
-dfa.minimize().trim().to_dot(filepath)
+dfa.minimize.trim().to_dot(filepath)
 ```
 
 The output in .svg format is the following:
