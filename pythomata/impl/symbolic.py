@@ -3,14 +3,15 @@
 An implementation of a symbolic automaton.
 
 For further details, see:
-- Applications of Symbolic Finite Automata, https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/ciaa13.pdf
-- Symbolic Automata Constraint Solving, https://link.springer.com/chapter/10.1007%2F978-3-642-16242-8_45
-- Rex: Symbolic Regular Expression Explorer, https://www.microsoft.com/en-us/research/wp-content/uploads/2010/04/rex-ICST.pdf
+- Applications of Symbolic Finite Automata
+  https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/ciaa13.pdf
+- Symbolic Automata Constraint Solving
+  https://link.springer.com/chapter/10.1007%2F978-3-642-16242-8_45
+- Rex: Symbolic Regular Expression Explorer
+  https://www.microsoft.com/en-us/research/wp-content/uploads/2010/04/rex-ICST.pdf
 """
-import itertools
 import operator
-from functools import reduce
-from typing import Set, Dict, Union, Any, cast
+from typing import Set, Dict, Union, Any, Optional, FrozenSet
 
 import graphviz
 import sympy
@@ -18,8 +19,8 @@ from sympy import Symbol, simplify
 from sympy.logic.boolalg import BooleanFunction, And, Not
 from sympy.parsing.sympy_parser import parse_expr
 
+from pythomata.core import FiniteAutomaton
 from pythomata.utils import iter_powerset
-from pythomata.v3.core import FiniteAutomaton, StateType, AutomataOperations, DFA, SymbolType
 
 PropInt = Dict[Union[str, Symbol], bool]
 
@@ -37,27 +38,34 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
 
     @property
     def states(self) -> Set[int]:
+        """Get the states."""
         return set(range(0, self._n_states))
 
     @property
     def final_states(self) -> Set[int]:
+        """Get the final states."""
         return self._final_states
 
     @property
-    def initial_states(self) -> Set[StateType]:
+    def initial_states(self) -> Set[int]:
+        """Get the initial states."""
         return self._initial_states
 
     def get_successors(self, state: int, symbol: PropInt) -> Set[int]:
+        """Get the successor states.."""
         if state not in self.states:
             raise ValueError("State not in set of states.")
         if not self._is_valid_symbol(symbol):
             raise ValueError("Symbol {} is not valid.".format(symbol))
         successors = set()
         transition_iterator = self._transition_function.get(state, {}).items()
-        [successors.add(successor) for successor, guard in transition_iterator if guard.subs(symbol) == True]
+        for successor, guard in transition_iterator:
+            if guard.subs(symbol) == True:  # noqa: E712
+                successors.add(successor)
         return successors
 
     def create_state(self) -> int:
+        """Create a new state."""
         new_state = self._n_states
         self._n_states += 1
         return new_state
@@ -71,6 +79,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
     #     self._n_states -= 1
 
     def set_final_state(self, state: int, is_final: bool) -> None:
+        """Set a state to be final."""
         if state not in self.states:
             raise ValueError("State {} not found.".format(state))
         if is_final:
@@ -113,20 +122,24 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             return False
         return True
 
-    def determinize(self) -> 'SymbolicAutomaton[int, PropInt]':
-        """Determinize."""
-        frozen_initial_states = frozenset(self.initial_states)
+    def determinize(self) -> 'SymbolicAutomaton':
+        """Do determinize."""
+        frozen_initial_states = frozenset(self.initial_states)  # type: FrozenSet[int]
         stack = [frozen_initial_states]
         visited = {frozen_initial_states}
-        final_macro_states = {frozen_initial_states} if frozen_initial_states.intersection(self.final_states) != set() else set()
+        final_macro_states = {frozen_initial_states} if frozen_initial_states.intersection(
+            self.final_states) != set() else set()  # type: Set[FrozenSet[int]]
         moves = set()
 
         # given an iterable of transitions (i.e. triples (source, guard, destination),
         # get the guard
-        getguard = lambda x: map(operator.itemgetter(1), x)
+        def getguard(x):
+            return map(operator.itemgetter(1), x)
+
         # given ... (as before)
         # get the target
-        gettarget = lambda x: map(operator.itemgetter(2), x)
+        def gettarget(x):
+            return map(operator.itemgetter(2), x)
 
         while len(stack) > 0:
             macro_source = stack.pop()
@@ -134,18 +147,20 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                                for source in macro_source
                                for dest, guard in self._transition_function.get(source, {}).items()])
             for transitions_subset in map(frozenset, iter_powerset(transitions)):
-                if len(transitions_subset) == 0: continue
+                if len(transitions_subset) == 0:
+                    continue
                 transitions_subset_negated = transitions.difference(transitions_subset)
                 phi_positive = And(*getguard(transitions_subset))
                 phi_negative = And(*map(Not, getguard(transitions_subset_negated)))
                 phi = phi_positive & phi_negative
                 if sympy.satisfiable(phi) is not False:
-                    macro_dest = frozenset(gettarget(transitions_subset))
+                    macro_dest = frozenset(gettarget(transitions_subset))  # type: FrozenSet[int]
                     moves.add((macro_source, phi, macro_dest))
                     if macro_dest not in visited:
                         visited.add(macro_dest)
-                        final_macro_states.add(macro_dest) if macro_dest.intersection(self.final_states) != set() else None
                         stack.append(macro_dest)
+                        if macro_dest.intersection(self.final_states) != set():
+                            final_macro_states.add(macro_dest)
 
         return self._from_transitions(visited, frozen_initial_states, frozenset(final_macro_states), moves)
 
@@ -159,7 +174,8 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         indices_to_state = {0: initial_state}
 
         for s in states:
-            if s == initial_state: continue
+            if s == initial_state:
+                continue
             new_index = automaton.create_state()
             automaton.set_final_state(new_index, s in final_states)
             state_to_indices[s] = new_index
@@ -172,7 +188,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
 
         return automaton
 
-    def to_graphviz(self, title: str = "") -> graphviz.Digraph:
+    def to_graphviz(self, title: Optional[str] = None) -> graphviz.Digraph:
         """Convert to graphviz.Digraph object."""
         g = graphviz.Digraph(format="svg")
         g.node("fake", style="invisible")
@@ -193,7 +209,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             for end, guard in self._transition_function[start].items():
                 g.edge(str(start), str(end), label=str(guard))
 
-        if title:
+        if title is not None:
             g.attr(label=title)
             g.attr(fontsize="20")
 

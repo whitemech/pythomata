@@ -1,5 +1,5 @@
 """This module contains tests for alphabets."""
-from pythomata.v3.alphabets import ArrayAlphabet, VectorizedAlphabet
+from pythomata.alphabets import ArrayAlphabet, VectorizedAlphabet
 
 
 class TestVectorizedAlphabet:

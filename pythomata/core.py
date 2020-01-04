@@ -2,7 +2,7 @@
 """The core module."""
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, Set
+from typing import List, TypeVar, Generic, Set, Optional
 
 StateType = TypeVar('StateType')
 SymbolType = TypeVar('SymbolType')
@@ -58,6 +58,14 @@ class Alphabet(Generic[SymbolType], ABC):
     @abstractmethod
     def __iter__(self):
         """Iterate over the number of symbols."""
+
+    def __len__(self):
+        """Return the size of the alphabet."""
+        return self.size
+
+    def __eq__(self, other) -> bool:
+        """Check that two alphabet are equal."""
+        return isinstance(other, Alphabet) and set(self) == set(other)
 
 
 class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
@@ -138,8 +146,12 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
         """Get the (unique) initial state."""
 
     @abstractmethod
-    def get_successor(self, state: StateType, symbol: SymbolType) -> StateType:
-        """Get the (unique) successor."""
+    def get_successor(self, state: StateType, symbol: SymbolType) -> Optional[StateType]:
+        """
+        Get the (unique) successor.
+
+        If not defined, return None.
+        """
 
     @property
     def initial_states(self) -> Set[StateType]:
@@ -148,15 +160,17 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
 
     def get_successors(self, state: StateType, symbol: SymbolType) -> Set[StateType]:
         """Get the successors."""
-        return {self.get_successor(state, symbol)}
+        successor = self.get_successor(state, symbol)
+        return {successor} if successor is not None else set()
 
 
+# not used yet
 class AutomataOperations(Generic[StateType, SymbolType], ABC):
     """An interface for automata operations."""
 
     @abstractmethod
     def determinize(self) -> DFA[StateType, SymbolType]:
-        """Determinize the automaton."""
+        """Make the automaton deterministic."""
 
     @abstractmethod
     def minimize(self) -> FiniteAutomaton[StateType, SymbolType]:

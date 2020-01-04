@@ -5,7 +5,7 @@ import pytest
 from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
 
-from pythomata.v3.dfas.symbolic import SymbolicAutomaton
+from pythomata import SymbolicAutomaton
 
 
 class TestSymbolicAutomatonEmptyLanguage:

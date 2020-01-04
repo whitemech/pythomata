@@ -3,7 +3,7 @@
 import itertools
 from typing import List, Tuple, Iterable, Iterator, Generic
 
-from pythomata.v3.core import SymbolType, Alphabet
+from pythomata.core import Alphabet, SymbolType
 
 IndexNotFound = ValueError("No symbol for that index.")
 SymbolNotFound = ValueError("No symbol for that index.")
@@ -125,7 +125,7 @@ class RangeIntAlphabet(Alphabet[int]):
 
     def __init__(self, stop: int, start: int = 0, step: int = 1):
         """
-        Initialize the range (start included, end NOT included.)
+        Initialize the range (start included, end NOT included).
 
         :param start: the start of the range (included)
         :param stop: the end of the range (excluded)
@@ -170,6 +170,8 @@ class VectorizedAlphabet(Generic[SymbolType], Alphabet[Tuple[SymbolType, ...]]):
 
     def __init__(self, alphabet: Alphabet[SymbolType], n: int):
         """
+        Initialize the vectorized alphabet.
+
         :param alphabet: the alphabet.
         :param n: the number of desired dimensions.
         :return: the vectorized alphabet.
@@ -203,9 +205,11 @@ class VectorizedAlphabet(Generic[SymbolType], Alphabet[Tuple[SymbolType, ...]]):
 
     @property
     def size(self) -> int:
+        """Get the size of the alphabet."""
         return self._alphabet.size ** self.n
 
     def __iter__(self) -> Iterator[Tuple[SymbolType, ...]]:
+        """Iterate over the alphabet."""
         index_vector_iterable = itertools.product(range(self.size), repeat=self.n)
         return map(lambda x: tuple([self._alphabet.get_symbol(idx) for idx in x]), index_vector_iterable)
 
@@ -248,14 +252,18 @@ class SymbolicAlphabet(Alphabet[str]):
         self._inner_alphabet = VectorizedAlphabet(ArrayAlphabet[str](['0', '1']), nb_propositions)
 
     def get_symbol(self, index: int) -> str:
+        """Get a symbol given its index."""
         return "".join(self._inner_alphabet.get_symbol(index))
 
     def get_symbol_index(self, symbol: str) -> int:
+        """Get the index of a symbol."""
         return self._inner_alphabet.get_symbol_index(tuple(symbol))
 
     @property
     def size(self) -> int:
+        """Get the size of the alphabet."""
         return self._inner_alphabet.size
 
     def __iter__(self):
+        """Iterate over the alphabet."""
         return iter(self._inner_alphabet)
