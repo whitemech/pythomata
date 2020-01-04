@@ -1,8 +1,7 @@
 dist: bionic
 language: python
 install: pip install -U tox-travis coveralls
-before_install:
-  - sudo apt-get install graphviz
+before_install: []
 
 matrix:
   include:
