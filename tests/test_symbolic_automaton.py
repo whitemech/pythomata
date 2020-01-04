@@ -24,11 +24,11 @@ class TestSymbolicAutomatonEmptyLanguage:
 
     def test_states(self):
         """Test the set of states is correct."""
-        assert self.automaton.states == {0}
+        assert self.automaton.states == set()
 
     def test_initial_states(self):
         """Test initial states."""
-        assert self.automaton.initial_states == {0}
+        assert self.automaton.initial_states == set()
 
     def test_final_states(self):
         """Test initial states."""
@@ -36,20 +36,7 @@ class TestSymbolicAutomatonEmptyLanguage:
 
     def test_size(self):
         """Test size."""
-        assert self.automaton.size == 1
-
-    def test_get_successors(self):
-        """Test get successors."""
-        assert self.automaton.get_successors(0, {}) == set()
-
-    def test_successor_with_non_alphabet_symbol(self):
-        """Test the 'get_successors' with a non-alphabet symbol."""
-        with pytest.raises(ValueError, match="Symbol wrong_symbol is not valid."):
-            self.automaton.get_successors(0, 'wrong_symbol')
-
-    def test_is_accepting(self):
-        """Test is_accepting."""
-        assert not self.automaton.is_accepting(0)
+        assert self.automaton.size == 0
 
 
 class TestSymbolicAutomatonEmptyStringLanguage:
@@ -59,6 +46,8 @@ class TestSymbolicAutomatonEmptyStringLanguage:
     def setup_class(cls):
         """Set the test up."""
         cls.automaton = SymbolicAutomaton()
+        cls.automaton.create_state()
+        cls.automaton.set_initial_state(0, True)
         cls.automaton.set_final_state(0, True)
 
     def test_accepts(self):
@@ -103,12 +92,13 @@ class TestSymbolicAutomatonSingletonLanguage:
     def setup_class(cls):
         """Set the test up."""
         cls.automaton = SymbolicAutomaton()
-        new_state = cls.automaton.create_state()
-        assert new_state == 1
-        cls.automaton.set_final_state(new_state, True)
+        state_0 = cls.automaton.create_state()
+        state_1 = cls.automaton.create_state()
+        cls.automaton.set_initial_state(state_0, True)
+        cls.automaton.set_final_state(state_1, True)
 
         a = Symbol("a")
-        cls.automaton.add_transition(0, a, new_state)
+        cls.automaton.add_transition(state_0, a, state_1)
 
     def test_accepts(self):
         """Test the accepts work as expected."""
@@ -156,8 +146,10 @@ class TestSymbolicAutomatonUniversalLanguage:
     def setup_class(cls):
         """Set the test up."""
         cls.automaton = SymbolicAutomaton()
-        cls.automaton.set_final_state(0, True)
-        cls.automaton.add_transition(0, BooleanTrue(), 0)
+        state_0 = cls.automaton.create_state()
+        cls.automaton.set_initial_state(state_0, True)
+        cls.automaton.set_final_state(state_0, True)
+        cls.automaton.add_transition(state_0, BooleanTrue(), state_0)
 
     def test_accepts(self):
         """Test the accepts work as expected."""
@@ -204,19 +196,27 @@ class TestDeterminize:
     def setup_class(cls):
         """Set the tests up."""
         cls.automaton = SymbolicAutomaton()
-        new_state_1 = cls.automaton.create_state()
-        new_state_2 = cls.automaton.create_state()
-        cls.automaton.set_final_state(new_state_1, True)
-        cls.automaton.add_transition(0, "x | y", new_state_1)
-        cls.automaton.add_transition(0, "x | z", new_state_2)
+        state_0 = cls.automaton.create_state()
+        state_1 = cls.automaton.create_state()
+        state_2 = cls.automaton.create_state()
+        cls.automaton.set_initial_state(state_0, True)
+        cls.automaton.set_final_state(state_1, True)
+        cls.automaton.add_transition(state_0, "x | y", state_1)
+        cls.automaton.add_transition(state_0, "x | z", state_2)
 
         cls.determinized = cls.automaton.determinize()
 
+    def test_size(self):
+        """Test the size of the determinized automaton."""
+        return self.determinized.size == 4
+
     def test_get_successors(self):
         """Test get successors of determinized automaton."""
-        assert self.automaton.get_successors(0, {"x": True}) == {1, 2}
         # we cannot assert the actual result since the state name is not deterministic.
-        assert len(self.determinized.get_successors(0, {"x": True})) == 1
+        assert len(self.determinized.initial_states) == 1
+        initial_state = next(iter(self.determinized.initial_states))
+        assert len(self.automaton.get_successors(0, {"x": True})) == 2
+        assert len(self.determinized.get_successors(initial_state, {"x": True})) == 1
 
     @pytest.mark.parametrize("trace", [
         [],
@@ -226,3 +226,67 @@ class TestDeterminize:
     def test_accepts(self, trace):
         """Test equivalence of acceptance between the two automata."""
         assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
+
+
+class TestComplete:
+    """Test the 'complete' method of a symbolic automaton."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the tests up."""
+        cls.automaton = SymbolicAutomaton()
+        state_0 = cls.automaton.create_state()
+        state_1 = cls.automaton.create_state()
+        state_2 = cls.automaton.create_state()
+        cls.automaton.set_initial_state(state_0, True)
+        cls.automaton.set_final_state(state_1, True)
+        cls.automaton.add_transition(state_0, "x | y", state_1)
+        cls.automaton.add_transition(state_0, "x | z", state_2)
+
+        cls.completed = cls.automaton.complete()
+
+    def test_size(self):
+        """Test the size of the determinized automaton."""
+        return self.completed.size == 4
+
+    def test_initial_states(self):
+        """Test initial states."""
+        assert self.completed.initial_states == {0}
+
+    def test_get_successors(self):
+        """Test get successors of completed automaton."""
+        assert self.completed.get_successors(0, {"x": True}) == {1, 2}
+        assert self.completed.get_successors(0, {"x": False}) == {3}
+
+        assert self.completed.get_successors(1, {"x": True}) == {3}
+        assert self.completed.get_successors(1, {"x": False}) == {3}
+
+        assert self.completed.get_successors(2, {"x": True}) == {3}
+        assert self.completed.get_successors(2, {"x": False}) == {3}
+
+        assert self.completed.get_successors(3, {"x": True}) == {3}
+        assert self.completed.get_successors(3, {"x": False}) == {3}
+
+    @pytest.mark.parametrize("trace", [
+        [],
+        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=1),
+        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=2)
+    ])
+    def test_accepts(self, trace):
+        """Test equivalence of acceptance between the two automata."""
+        assert self.automaton.accepts(trace) == self.completed.accepts(trace)
+
+
+def test_to_graphviz():
+    """Test 'to_graphviz' method."""
+
+    automaton = SymbolicAutomaton()
+    state_0 = automaton.create_state()
+    state_1 = automaton.create_state()
+    state_2 = automaton.create_state()
+    automaton.set_initial_state(state_0, True)
+    automaton.set_final_state(state_1, True)
+    automaton.add_transition(state_0, "x | y", state_1)
+    automaton.add_transition(state_0, "x | z", state_2)
+
+    automaton.to_graphviz(title="test dfa (initial state final)")
