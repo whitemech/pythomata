@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import itertools
 
-import pytest
+from hypothesis import given
 from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
 
 from pythomata import SymbolicAutomaton
+from .strategies import words
 
 
 class TestSymbolicAutomatonEmptyLanguage:
@@ -218,11 +218,7 @@ class TestDeterminize:
         assert len(self.automaton.get_successors(0, {"x": True})) == 2
         assert len(self.determinized.get_successors(initial_state, {"x": True})) == 1
 
-    @pytest.mark.parametrize("trace", [
-        [],
-        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=1),
-        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=2)
-    ])
+    @given(words(list("xyz"), min_size=0, max_size=2))
     def test_accepts(self, trace):
         """Test equivalence of acceptance between the two automata."""
         assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
@@ -267,14 +263,55 @@ class TestComplete:
         assert self.completed.get_successors(3, {"x": True}) == {3}
         assert self.completed.get_successors(3, {"x": False}) == {3}
 
-    @pytest.mark.parametrize("trace", [
-        [],
-        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=1),
-        *itertools.product(map(lambda x: dict(zip("xyz", x)), itertools.product([True, False], repeat=3)), repeat=2)
-    ])
+    def test_is_complete(self):
+        """Test is complete."""
+        assert not self.automaton.is_complete()
+        assert self.completed.is_complete()
+
+    @given(words(list("xyz"), min_size=0, max_size=2))
     def test_accepts(self, trace):
         """Test equivalence of acceptance between the two automata."""
         assert self.automaton.accepts(trace) == self.completed.accepts(trace)
+
+
+class TestMinimize:
+
+    @classmethod
+    def setup_class(cls):
+        """Set the tests up."""
+        cls.automaton = SymbolicAutomaton()
+        automaton = cls.automaton
+        q0 = automaton.create_state()
+        q1 = automaton.create_state()
+        q2 = automaton.create_state()
+        q3 = automaton.create_state()
+        q4 = automaton.create_state()
+
+        automaton.set_initial_state(q0, True)
+        automaton.set_final_state(q3, True)
+        automaton.set_final_state(q4, True)
+
+        automaton.add_transition(q0, "a", q1)
+        automaton.add_transition(q0, "b", q2)
+        automaton.add_transition(q1, "c", q3)
+        automaton.add_transition(q2, "c", q3)
+        automaton.add_transition(q3, "c", q4)
+        automaton.add_transition(q4, "c", q4)
+
+        cls.minimized = automaton.minimize()
+
+    def test_states(self):
+        # the renaming of the states is non deterministic, so we need to compare every substructure.
+        assert self.minimized.size == 4
+
+    @given(words(list("abc"), min_size=0, max_size=5))
+    def test_accepts(self, trace):
+        """Test equivalence of acceptance between the two automata."""
+        assert self.automaton.accepts(trace) == self.minimized.accepts(trace)
+
+    def test_minimized_is_complete(self):
+        """Test that every minimized DFA is complete."""
+        assert self.minimized.is_complete()
 
 
 def test_to_graphviz():

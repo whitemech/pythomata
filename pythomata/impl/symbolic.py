@@ -10,6 +10,7 @@ For further details, see:
 - Rex: Symbolic Regular Expression Explorer
   https://www.microsoft.com/en-us/research/wp-content/uploads/2010/04/rex-ICST.pdf
 """
+import itertools
 import operator
 from typing import Set, Dict, Union, Any, Optional, FrozenSet, Tuple
 
@@ -19,6 +20,7 @@ from sympy import Symbol, simplify, satisfiable, And, Not, Or
 from sympy.logic.boolalg import BooleanFunction, BooleanTrue, BooleanFalse
 from sympy.parsing.sympy_parser import parse_expr
 
+from pythomata._internal_utils import greatest_fixpoint
 from pythomata.core import FiniteAutomaton, SymbolType
 from pythomata.utils import iter_powerset
 
@@ -36,6 +38,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         self._state_counter = 0
 
         self._transition_function = {}  # type: Dict[int, Dict[int, BooleanFunction]]
+        self._deterministic = None  # type: Optional[bool]
 
     @property
     def states(self) -> Set[int]:
@@ -51,6 +54,14 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
     def initial_states(self) -> Set[int]:
         """Get the initial states."""
         return self._initial_states
+
+    @property
+    def is_deterministic(self) -> Optional[bool]:
+        """Check if the automaton is deterministic.
+
+        :return True if the automaton is deterministic, False if it is not, and None if we don't know.
+        """
+        return self._deterministic
 
     def get_successors(self, state: int, symbol: PropInt) -> Set[int]:
         """Get the successor states.."""
@@ -129,6 +140,8 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             # take the OR of the two guards.
             self._transition_function[state1][state2] = simplify(other_guard | guard)
 
+        self._deterministic = None
+
     def _is_valid_symbol(self, symbol: Any) -> bool:
         """Return true if the given symbol is valid, false otherwise."""
         try:
@@ -160,8 +173,29 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             transitions.add((sink_state, BooleanTrue(), sink_state))
         return SymbolicAutomaton._from_transitions(states, initial_states, final_states, transitions)
 
+    def is_complete(self) -> bool:
+        """
+        Check whether the automaton is complete.
+
+        :return: True if the automaton is complete, False otherwise.
+        """
+        # all the state must have an outgoing transition.
+        if not all(state in self._transition_function.keys() for state in self.states):
+            return False
+
+        for source in self._transition_function:
+            guards = self._transition_function[source].values()
+            negated_guards = Not(Or(*guards))
+            if satisfiable(negated_guards):
+                return False
+
+        return True
+
     def determinize(self) -> 'SymbolicAutomaton':
         """Do determinize."""
+        if self._deterministic:
+            return self
+
         frozen_initial_states = frozenset(self.initial_states)  # type: FrozenSet[int]
         stack = [frozen_initial_states]
         visited = {frozen_initial_states}
@@ -200,16 +234,66 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                         if macro_dest.intersection(self.final_states) != set():
                             final_macro_states.add(macro_dest)
 
-        return self._from_transitions(visited, {frozen_initial_states}, set(final_macro_states), moves)
+        return self._from_transitions(visited, {frozen_initial_states}, set(final_macro_states), moves,
+                                      deterministic=True)
 
-    def minimize(self) -> FiniteAutomaton[int, PropInt]:
+    def minimize(self) -> 'SymbolicAutomaton':
         """Minimize."""
+        dfa = self.determinize().complete()
+        equivalence_relation = set.union(
+            {(p, q) for p, q in itertools.product(dfa.final_states, repeat=2)},
+            {(p, q) for p, q in itertools.product(dfa.states.difference(dfa.final_states), repeat=2)}
+        )
+
+        def greatest_fixpoint_condition(el: Tuple[int, int], current_set: Set):
+            """Condition to say whether the pair must be removed from the bisimulation relation."""
+            # unpack the two states
+            s_source, t_source = el
+            for (s_dest, s_guard) in dfa._transition_function.get(s_source, {}).items():
+                for (t_dest, t_guard) in dfa._transition_function.get(t_source, {}).items():
+                    if t_dest != s_dest \
+                            and (s_dest, t_dest) not in current_set \
+                            and satisfiable(And(s_guard, t_guard)) is not False:
+                        return True
+
+        # TODO to improve.
+        result = greatest_fixpoint(equivalence_relation, condition=greatest_fixpoint_condition)
+        state2class = {}  # type: Dict[int, FrozenSet[int]]
+        for a, b in result:
+            union = state2class.get(a, {a}).union(state2class.get(b, {b}))
+            for element in union:
+                state2class[element] = union
+
+        state2class = {k: frozenset(v) for k, v in state2class.items()}
+        equivalence_classes = set(map(lambda x: frozenset(x), state2class.values()))
+        class2newstate = dict((ec, i) for i, ec in enumerate(equivalence_classes))
+
+        new_states = set(class2newstate.values())
+        old_initial_state = next(iter(dfa.initial_states))  # since "dfa" is determinized, there's just one
+        initial_states = {class2newstate[state2class[old_initial_state]]}
+        final_states = {class2newstate[state2class[final_state]] for final_state in dfa.final_states}
+        transitions = set()
+
+        for old_source in dfa._transition_function:
+            for old_dest, guard in dfa._transition_function[old_source].items():
+                new_source = class2newstate[state2class[old_source]]
+                new_dest = class2newstate[state2class[old_dest]]
+                transitions.add((new_source, guard, new_dest))
+
+        return SymbolicAutomaton._from_transitions(
+            new_states,
+            initial_states,
+            final_states,
+            transitions,
+            deterministic=True
+        )
 
     @classmethod
     def _from_transitions(cls, states: Set[Any],
                           initial_states: Set[Any],
                           final_states: Set[Any],
-                          transitions: Set[Tuple[Any, SymbolType, Any]]):
+                          transitions: Set[Tuple[Any, SymbolType, Any]],
+                          deterministic: Optional[bool] = None):
         automaton = SymbolicAutomaton()
         state_to_indices = {}
         indices_to_state = {}
@@ -226,6 +310,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             dest_index = state_to_indices[destination]
             automaton.add_transition(source_index, guard, dest_index)
 
+        automaton._deterministic = deterministic
         return automaton
 
     def to_graphviz(self, title: Optional[str] = None) -> graphviz.Digraph:
