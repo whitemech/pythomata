@@ -258,13 +258,13 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
 
         # TODO to improve.
         result = greatest_fixpoint(equivalence_relation, condition=greatest_fixpoint_condition)
-        state2class = {}  # type: Dict[int, FrozenSet[int]]
+        _state2class = {}  # type: Dict[int, Set[int]]
         for a, b in result:
-            union = state2class.get(a, {a}).union(state2class.get(b, {b}))
+            union = _state2class.get(a, {a}).union(_state2class.get(b, {b}))
             for element in union:
-                state2class[element] = union
+                _state2class[element] = union
 
-        state2class = {k: frozenset(v) for k, v in state2class.items()}
+        state2class = {k: frozenset(v) for k, v in _state2class.items()}  # type: Dict[int, FrozenSet[int]]
         equivalence_classes = set(map(lambda x: frozenset(x), state2class.values()))
         class2newstate = dict((ec, i) for i, ec in enumerate(equivalence_classes))
 
