@@ -19,7 +19,7 @@ from sympy import Symbol, simplify, satisfiable, And, Not, Or
 from sympy.logic.boolalg import BooleanFunction, BooleanTrue, BooleanFalse
 from sympy.parsing.sympy_parser import parse_expr
 
-from pythomata.core import FiniteAutomaton, StateType, SymbolType
+from pythomata.core import FiniteAutomaton, SymbolType
 from pythomata.utils import iter_powerset
 
 PropInt = Dict[Union[str, Symbol], bool]
@@ -75,6 +75,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         return new_state
 
     def remove_state(self, state: int) -> None:
+        """Remove a state."""
         if state not in self.states:
             raise ValueError("State {} not found.".format(state))
 
@@ -146,7 +147,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         transitions = set()
         sink_state = None
         for source in states:
-            transitions_from_source =  self._transition_function.get(source, {})
+            transitions_from_source = self._transition_function.get(source, {})
             transitions.update(set(map(lambda x: (source, x[1], x[0]), transitions_from_source.items())))
             guards = transitions_from_source.values()
             guards_negation = simplify(Not(Or(*guards)))
@@ -199,16 +200,16 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                         if macro_dest.intersection(self.final_states) != set():
                             final_macro_states.add(macro_dest)
 
-        return self._from_transitions(visited, {frozen_initial_states}, frozenset(final_macro_states), moves)
+        return self._from_transitions(visited, {frozen_initial_states}, set(final_macro_states), moves)
 
     def minimize(self) -> FiniteAutomaton[int, PropInt]:
         """Minimize."""
 
     @classmethod
-    def _from_transitions(cls, states: StateType,
-                          initial_states: Set[StateType],
-                          final_states: Set[StateType],
-                          transitions: Set[Tuple[StateType, SymbolType, StateType]]):
+    def _from_transitions(cls, states: Set[Any],
+                          initial_states: Set[Any],
+                          final_states: Set[Any],
+                          transitions: Set[Tuple[Any, SymbolType, Any]]):
         automaton = SymbolicAutomaton()
         state_to_indices = {}
         indices_to_state = {}
