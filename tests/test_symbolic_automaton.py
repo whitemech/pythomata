@@ -225,9 +225,11 @@ class TestDeterminize:
 
 
 class TestDeterminize2:
+    """Test determinize."""
 
     @classmethod
     def setup_class(cls):
+        """Set the test up."""
         A, B, C = sympy.symbols("A B C")
         aut = SymbolicAutomaton()
         aut.create_state()
