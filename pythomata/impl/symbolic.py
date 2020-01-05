@@ -135,7 +135,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             guard = simplify(parse_expr(guard))
         other_guard = self._transition_function.get(state1, {}).get(state2, None)
         if other_guard is None:
-            self._transition_function.setdefault(state1, {})[state2] = guard
+            self._transition_function.setdefault(state1, {})[state2] = simplify(guard)
         else:
             # take the OR of the two guards.
             self._transition_function[state1][state2] = simplify(other_guard | guard)
