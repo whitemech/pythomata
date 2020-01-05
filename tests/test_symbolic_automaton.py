@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import sympy
 from hypothesis import given
 from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
@@ -219,6 +219,36 @@ class TestDeterminize:
         assert len(self.determinized.get_successors(initial_state, {"x": True})) == 1
 
     @given(words(list("xyz"), min_size=0, max_size=2))
+    def test_accepts(self, trace):
+        """Test equivalence of acceptance between the two automata."""
+        assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
+
+
+class TestDeterminize2:
+    """Test determinize."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        A, B, C = sympy.symbols("A B C")
+        aut = SymbolicAutomaton()
+        aut.create_state()
+        aut.create_state()
+        aut.create_state()
+        aut.create_state()
+        aut.set_initial_state(3, True)
+        aut.set_final_state(0, True)
+        aut.set_final_state(1, True)
+
+        trfun = {3: {0: A | ~B, 2: B & ~A}, 0: {1: BooleanTrue()}, 2: {2: BooleanTrue()}, 1: {1: BooleanTrue()}}
+        for s in trfun:
+            for d, guard in trfun[s].items():
+                aut.add_transition(s, guard, d)
+
+        cls.automaton = aut
+        cls.determinized = aut.determinize()
+
+    @given(words(list("ABC"), min_size=0, max_size=2))
     def test_accepts(self, trace):
         """Test equivalence of acceptance between the two automata."""
         assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
