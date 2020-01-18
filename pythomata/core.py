@@ -2,14 +2,14 @@
 """The core module."""
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, AbstractSet, Optional, Tuple, Dict
+from typing import List, TypeVar, Generic, AbstractSet, Optional, Tuple, Dict, Any
 
 import graphviz
 
 StateType = TypeVar("StateType")
 SymbolType = TypeVar("SymbolType")
 GuardType = TypeVar("GuardType")
-TransitionType = Tuple[GuardType, StateType]
+TransitionType = Tuple[StateType, GuardType, StateType]
 
 
 class Alphabet(Generic[SymbolType], ABC):
@@ -75,6 +75,11 @@ class Alphabet(Generic[SymbolType], ABC):
 class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
     """This is an interface for any finite state automaton (DFAs, NFAs...)."""
 
+    def __init__(self):
+        """Initialize the finite automaton."""
+        self._state_attributes = {}  # type: Dict[StateType, Dict[str, Any]]
+        self._transition_attributes = {}  # type: Dict[TransitionType, Dict[str, Any]]
+
     @property
     @abstractmethod
     def states(self) -> AbstractSet[StateType]:
@@ -106,6 +111,76 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :return: the set of successor states.
         :raises ValueError: if the state does not belong to the automaton, or the symbol is not correct.
         """
+
+    def get_transitions_from(
+        self, state: StateType
+    ) -> AbstractSet[TransitionType]:
+        """
+        Get the outgoing transitions from a state.
+
+        A transition is a triple (source_state, guard, destination_state).
+
+        For some implementations, this method might make no sense.
+
+        :param state: the source state.
+        :return: the set of transitions object associated with that triple.
+        :raises ValueError: if the state does not belong to the automaton.
+        """
+        raise NotImplementedError
+
+    def get_transitions(self) -> AbstractSet[TransitionType]:
+        """
+        Get all the transitions.
+
+        :return: the set of transitions.
+        """
+        transitions = set()
+        for state in self.states:
+            for guard, end_state in self.get_transitions_from(state):
+                transitions.add((state, guard, end_state))
+        return transitions
+
+    def get_state_attribute(self, state: StateType, attr_name: str) -> Optional[Any]:
+        """
+        Get a state attribute.
+
+        :param state: the state.
+        :param attr_name: the attribute name.
+        :return: the attribute value.
+        """
+        return self._state_attributes.get(state, {}).get(attr_name, None)
+
+    def set_state_attribute(self, state: StateType, attr_name: str, attr_value: Any) -> None:
+        """
+        Set a state attribute.
+
+        :param state: the state.
+        :param attr_name: the attribute name.
+        :param attr_value: the attribute value.
+        :return: the attribute value.
+        """
+        self._state_attributes.get(state, {})[attr_name] = attr_value
+
+    def get_transition_attribute(self, transition: TransitionType, attr_name: str) -> Optional[Any]:
+        """
+        Get a transition attribute.
+
+        :param transition: the transition.
+        :param attr_name: the attribute name.
+        :return: the attribute value.
+        """
+        return self._state_attributes.get(transition, {}).get(attr_name, None)
+
+    def set_transition_attribute(self, transition: TransitionType, attr_name: str, attr_value: Any) -> None:
+        """
+        Set a transition attribute.
+
+        :param transition: the transition.
+        :param attr_name: the attribute name.
+        :param attr_value: the attribute value.
+        :return: the attribute value.
+        """
+        self._state_attributes.get(transition, {})[attr_name] = attr_value
 
     @property
     def size(self) -> int:
@@ -181,24 +256,6 @@ class Rendering(
 ):
     """The automaton class that implements this interface can use rendering functionalities."""
 
-    @abstractmethod
-    def get_transitions(
-        self, state: StateType
-    ) -> Optional[AbstractSet[TransitionType]]:
-        """
-        Get the outgoing transitions from a state.
-
-        A transition is a tuple (guard, destination_state).
-        This method is mainly used for automata rendering purposes.
-        Please implement this method properly if you'd like to use the
-        default conversion to Graphviz.Digraph object. Otherwise, override the 'to_graphviz' method.
-
-        :param state: the starting state.
-        :return: the set of transitions object associated with that triple.
-                 None if it is not possible to compute such set.
-        :raises ValueError: if the state does not belong to the automaton.
-        """
-
     def to_graphviz(self) -> graphviz.Digraph:
         """
         Convert to graphviz.Digraph object.
@@ -222,12 +279,8 @@ class Rendering(
         for i in self.initial_states:
             g.edge("fake", str(i), style="bold")
 
-        for start in self.states:
-            transitions = self.get_transitions(start)
-            if transitions is None:
-                raise ValueError("Error when building the Dot graph.")
-            for (guard, end) in self.get_transitions(start):
-                g.edge(str(start), str(end), label=str(guard))
+        for (start, guard, end) in self.get_transitions():
+            g.edge(str(start), str(end), label=str(guard))
 
         return g
 

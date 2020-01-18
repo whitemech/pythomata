@@ -544,7 +544,7 @@ class SimpleDFA(
 
         return g
 
-    def get_transitions(
+    def get_transitions_from(
         self, state: StateType
     ) -> Optional[AbstractSet[TransitionType]]:
         """
@@ -745,7 +745,7 @@ class SimpleNFA(
             states, alphabet, initial_state, accepting_states, transition_function
         )
 
-    def get_transitions(
+    def get_transitions_from(
         self, state: StateType
     ) -> Optional[AbstractSet[TransitionType]]:
         """

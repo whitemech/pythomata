@@ -359,7 +359,7 @@ class SymbolicAutomaton(
         automaton._deterministic = deterministic
         return automaton
 
-    def get_transitions(
+    def get_transitions_from(
         self, state: StateType
     ) -> Optional[AbstractSet[TransitionType]]:
         """
