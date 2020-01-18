@@ -465,7 +465,7 @@ class TestSimulator:
         assert not simulator.is_started
         assert simulator.cur_state == initial_state == self.dfa.initial_states
 
-    @given(propositional_words(list("abcd"), min_size=0, max_size=5))
+    @given(propositional_words(list("abcd"), min_size=0, max_size=4))
     def test_accepts(self, word):
         """Test the behaviour of the method 'accepts'."""
         simulator = AutomatonSimulator(self.dfa)
