@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This module contains implements utilities to execute a finite automaton."""
 from abc import ABC, abstractmethod
+from functools import reduce
 from typing import Generic, Set, AbstractSet, Sequence
 
 from pythomata.core import StateType, SymbolType, FiniteAutomaton
@@ -36,7 +37,12 @@ class AbstractSimulator(Generic[StateType, SymbolType], ABC):
 
 
 class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
-    """An automaton simulator."""
+    """
+    A concrete simulator for automaton.
+
+    This class implements useful methods to simulate a behaviour of an automaton.
+    It keeps the state
+    """
 
     def __init__(self, automaton: FiniteAutomaton):
         """
@@ -78,6 +84,7 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
             next_macro_state = next_macro_state.union(
                 self.automaton.get_successors(state, symbol)
             )
+        self._current_states = next_macro_state
         return next_macro_state
 
     def is_true(self):
@@ -100,6 +107,8 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
         """Check whether the subword is accepted from the current state of the simulator."""
         current_states = self.cur_state  # type: AbstractSet[StateType]
         for symbol in subword:
-            current_states = self.automaton.get_successors(current_states, symbol)
+            current_states = reduce(set.union,
+                                    [self.automaton.get_successors(s, symbol) for s in current_states],
+                                    set())
 
         return any(state in self.automaton.final_states for state in current_states)

@@ -5,7 +5,7 @@ from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
 
 from pythomata import SymbolicAutomaton
-from .strategies import words
+from .strategies import propositional_words
 
 
 class TestSymbolicAutomatonEmptyLanguage:
@@ -218,10 +218,10 @@ class TestDeterminize:
         assert len(self.automaton.get_successors(0, {"x": True})) == 2
         assert len(self.determinized.get_successors(initial_state, {"x": True})) == 1
 
-    @given(words(list("xyz"), min_size=0, max_size=2))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("xyz"), min_size=0, max_size=2))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
+        assert self.automaton.accepts(word) == self.determinized.accepts(word)
 
 
 class TestDeterminize2:
@@ -253,10 +253,10 @@ class TestDeterminize2:
         cls.automaton = aut
         cls.determinized = aut.determinize()
 
-    @given(words(list("ABC"), min_size=0, max_size=2))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("ABC"), min_size=0, max_size=2))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
+        assert self.automaton.accepts(word) == self.determinized.accepts(word)
 
 
 class TestComplete:
@@ -303,10 +303,10 @@ class TestComplete:
         assert not self.automaton.is_complete()
         assert self.completed.is_complete()
 
-    @given(words(list("xyz"), min_size=0, max_size=2))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("xyz"), min_size=0, max_size=2))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.completed.accepts(trace)
+        assert self.automaton.accepts(word) == self.completed.accepts(word)
 
 
 class TestMinimize:
@@ -338,10 +338,10 @@ class TestMinimize:
         # the renaming of the states is non deterministic, so we need to compare every substructure.
         assert self.minimized.size == 4
 
-    @given(words(list("abc"), min_size=0, max_size=5))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("abc"), min_size=0, max_size=5))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.minimized.accepts(trace)
+        assert self.automaton.accepts(word) == self.minimized.accepts(word)
 
     def test_minimized_is_complete(self):
         """Test that every minimized DFA is complete."""

@@ -2,6 +2,7 @@
 """The core module."""
 
 from abc import ABC, abstractmethod
+from functools import reduce, partial
 from typing import (
     TypeVar,
     Generic,
@@ -224,7 +225,11 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         """
         current_states = self.initial_states
         for symbol in word:
-            next_current_states = set()  # type: Set[StateType]
+            next_current_states = reduce(
+                set.union,
+                map(lambda x: self.get_successors(x, symbol), current_states),
+                set()
+            )
             for state in current_states:
                 next_current_states.update(self.get_successors(state, symbol))
             current_states = next_current_states

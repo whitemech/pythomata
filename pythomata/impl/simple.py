@@ -11,12 +11,9 @@ from typing import (
     FrozenSet,
     Iterable,
     cast,
-    Optional,
     AbstractSet,
     Generic,
 )
-
-import graphviz
 
 from pythomata._internal_utils import greatest_fixpoint, least_fixpoint
 from pythomata.alphabets import MapAlphabet
@@ -517,33 +514,6 @@ class SimpleDFA(
             cast(Set[SimpleDFA], new_accepting_states),
             cast(Dict[StateType, Dict[SymbolType, StateType]], new_transition_function),
         )
-
-    def to_graphviz(self, title: Optional[str] = None) -> graphviz.Digraph:
-        """Convert to graphviz.Digraph object."""
-        g = graphviz.Digraph(format="svg")
-        g.node("fake", style="invisible")
-        for state in self.states:
-            if state in self.initial_states:
-                if state in self.final_states:
-                    g.node(str(state), root="true", shape="doublecircle")
-                else:
-                    g.node(str(state), root="true")
-            elif state in self.final_states:
-                g.node(str(state), shape="doublecircle")
-            else:
-                g.node(str(state))
-
-        for i in self.initial_states:
-            g.edge("fake", str(i), style="bold")
-        for start in self.transition_function:
-            for symbol, end in self._transition_function[start].items():
-                g.edge(str(start), str(end), label=str(symbol))
-
-        if title is not None:
-            g.attr(label=title)
-            g.attr(fontsize="20")
-
-        return g
 
     def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
         """
