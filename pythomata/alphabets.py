@@ -188,7 +188,7 @@ class VectorizedAlphabet(Generic[SymbolType], Alphabet[Tuple[SymbolType, ...]]):
             new_index = reminder_index // (self._alphabet.size ** i)
             new_symbol = self._alphabet.get_symbol(new_index)
             symbol_vector.append(new_symbol)
-            reminder_index %= (self._alphabet.size ** i)
+            reminder_index %= self._alphabet.size ** i
             i -= 1
         return tuple(symbol_vector)
 
@@ -211,7 +211,10 @@ class VectorizedAlphabet(Generic[SymbolType], Alphabet[Tuple[SymbolType, ...]]):
     def __iter__(self) -> Iterator[Tuple[SymbolType, ...]]:
         """Iterate over the alphabet."""
         index_vector_iterable = itertools.product(range(self.size), repeat=self.n)
-        return map(lambda x: tuple([self._alphabet.get_symbol(idx) for idx in x]), index_vector_iterable)
+        return map(
+            lambda x: tuple([self._alphabet.get_symbol(idx) for idx in x]),
+            index_vector_iterable,
+        )
 
 
 class SymbolicAlphabet(Alphabet[str]):
@@ -249,7 +252,9 @@ class SymbolicAlphabet(Alphabet[str]):
         :param nb_propositions: the number of propositions.
         """
         self.nb_propositions = nb_propositions
-        self._inner_alphabet = VectorizedAlphabet(ArrayAlphabet[str](['0', '1']), nb_propositions)
+        self._inner_alphabet = VectorizedAlphabet(
+            ArrayAlphabet[str](["0", "1"]), nb_propositions
+        )
 
     def get_symbol(self, index: int) -> str:
         """Get a symbol given its index."""

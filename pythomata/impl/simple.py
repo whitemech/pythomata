@@ -4,17 +4,39 @@ import itertools
 import pprint
 import queue
 from copy import deepcopy, copy
-from typing import Set, Dict, Tuple, FrozenSet, Iterable, cast, Optional
+from typing import (
+    Set,
+    Dict,
+    Tuple,
+    FrozenSet,
+    Iterable,
+    cast,
+    Optional,
+    AbstractSet,
+    Generic,
+)
 
 import graphviz
 
 from pythomata._internal_utils import greatest_fixpoint, least_fixpoint
 from pythomata.alphabets import MapAlphabet
-from pythomata.core import StateType, SymbolType, Alphabet, DFA, FiniteAutomaton
+from pythomata.core import (
+    StateType,
+    SymbolType,
+    Alphabet,
+    DFA,
+    FiniteAutomaton,
+    Rendering,
+    TransitionType,
+)
 from pythomata.utils import powerset
 
 
-class SimpleDFA(DFA[StateType, SymbolType]):
+class SimpleDFA(
+    Generic[StateType, SymbolType],
+    DFA[StateType, SymbolType],
+    Rendering[StateType, SymbolType, SymbolType],
+):
     """
     Implementation of a simple DFA.
 
@@ -161,7 +183,8 @@ class SimpleDFA(DFA[StateType, SymbolType]):
         :return: the DFA.
         """
         states, alphabet = _extract_states_from_transition_function(
-            transition_function)  # type: Set[StateType], Alphabet[SymbolType]
+            transition_function
+        )  # type: Set[StateType], Alphabet[SymbolType]
 
         return SimpleDFA(
             states, alphabet, initial_state, accepting_states, transition_function
@@ -220,7 +243,7 @@ class SimpleDFA(DFA[StateType, SymbolType]):
             transitions,
         )
 
-    def minimize(self) -> 'SimpleDFA':
+    def minimize(self) -> "SimpleDFA":
         """
         Minimize the DFA.
 
@@ -269,7 +292,9 @@ class SimpleDFA(DFA[StateType, SymbolType]):
         for (s, t) in result:
             state2equiv_class.setdefault(s, frozenset())
             state2equiv_class[s] = state2equiv_class[s].union(frozenset({t}))
-        equivalence_classes = set(map(lambda x: frozenset(x), state2equiv_class.values()))
+        equivalence_classes = set(
+            map(lambda x: frozenset(x), state2equiv_class.values())
+        )
         equiv_class2new_state = dict(
             (ec, i) for i, ec in enumerate(equivalence_classes)
         )
@@ -344,7 +369,7 @@ class SimpleDFA(DFA[StateType, SymbolType]):
             new_transition_function,
         )
 
-    def coreachable(self) -> 'SimpleDFA':
+    def coreachable(self) -> "SimpleDFA":
         """
         Get the equivalent co-reachable automaton.
 
@@ -371,7 +396,9 @@ class SimpleDFA(DFA[StateType, SymbolType]):
             return EmptyDFA(alphabet=self.alphabet)
 
         new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
-        new_transition_function = {}  # type: Dict[StateType, Dict[SymbolType, StateType]]
+        new_transition_function = (
+            {}
+        )  # type: Dict[StateType, Dict[SymbolType, StateType]]
         for s in idx_new_states:
             for a in self._idx_transition_function.get(s, {}):
                 next_state = self._idx_transition_function[s][a]
@@ -390,7 +417,7 @@ class SimpleDFA(DFA[StateType, SymbolType]):
             new_transition_function,
         )
 
-    def trim(self) -> 'SimpleDFA':
+    def trim(self) -> "SimpleDFA":
         """
         Trim the automaton.
 
@@ -517,6 +544,26 @@ class SimpleDFA(DFA[StateType, SymbolType]):
 
         return g
 
+    def get_transitions(
+        self, state: StateType
+    ) -> Optional[AbstractSet[TransitionType]]:
+        """
+        Get the outgoing transitions from a state.
+
+        :param state: the starting state.
+        :return: the set of transitions object associated with that triple.
+                 None if it is not possible to compute such set.
+        :raises ValueError: if the state does not belong to the automaton.
+        """
+        if state not in self.states:
+            raise ValueError("The state does not belong to the automaton.")
+
+        transitions = set()
+        for guard, end in self._transition_function.get(state, {}).items():
+            transitions.add((guard, end))
+
+        return transitions
+
 
 class EmptyDFA(SimpleDFA):
     """Implementation of an empty DFA."""
@@ -530,7 +577,11 @@ class EmptyDFA(SimpleDFA):
         return type(self) == type(other) == EmptyDFA
 
 
-class SimpleNFA(FiniteAutomaton[StateType, SymbolType]):
+class SimpleNFA(
+    Generic[StateType, SymbolType],
+    Rendering[StateType, SymbolType, SymbolType],
+    FiniteAutomaton[StateType, SymbolType],
+):
     """This class implements a NFA."""
 
     def __init__(
@@ -557,7 +608,9 @@ class SimpleNFA(FiniteAutomaton[StateType, SymbolType]):
         self._states = frozenset(states)  # type: FrozenSet[StateType]
         self._alphabet = alphabet  # type: Alphabet[SymbolType]
         self._initial_state = initial_state  # type: StateType
-        self._accepting_states = frozenset(accepting_states)  # type: FrozenSet[StateType]
+        self._accepting_states = frozenset(
+            accepting_states
+        )  # type: FrozenSet[StateType]
         self._transition_function = (
             transition_function
         )  # type: Dict[StateType, Dict[SymbolType, Set[StateType]]]
@@ -634,34 +687,6 @@ class SimpleNFA(FiniteAutomaton[StateType, SymbolType]):
         """Get the successors states."""
         return self._transition_function.get(state, {}).get(symbol, set())
 
-    def to_graphviz(self, title: Optional[str] = None) -> graphviz.Digraph:
-        """Convert to graphviz.Digraph object."""
-        g = graphviz.Digraph(format="svg")
-        g.node("fake", style="invisible")
-        for state in self.states:
-            if state in self.initial_states:
-                if state in self.final_states:
-                    g.node(str(state), root="true", shape="doublecircle")
-                else:
-                    g.node(str(state), root="true")
-            elif state in self.final_states:
-                g.node(str(state), shape="doublecircle")
-            else:
-                g.node(str(state))
-
-        for i in self.initial_states:
-            g.edge("fake", str(i), style="bold")
-        for start in self.transition_function:
-            for symbol, states in self._transition_function[start].items():
-                for end in states:
-                    g.edge(str(start), str(end), label=str(symbol))
-
-        if title is not None:
-            g.attr(label=title)
-            g.attr(fontsize="20")
-
-        return g
-
     def determinize(self) -> DFA:
         """
         Do determinize the NFA.
@@ -675,7 +700,9 @@ class SimpleNFA(FiniteAutomaton[StateType, SymbolType]):
         final_states = {
             q for q in new_states if len(q.intersection(nfa._accepting_states)) != 0
         }
-        transition_function = {}  # type: Dict[FrozenSet[StateType], Dict[SymbolType, FrozenSet[StateType]]]
+        transition_function = (
+            {}
+        )  # type: Dict[FrozenSet[StateType], Dict[SymbolType, FrozenSet[StateType]]]
 
         for state_set in new_states:
             for action in nfa.alphabet:
@@ -687,7 +714,9 @@ class SimpleNFA(FiniteAutomaton[StateType, SymbolType]):
                     ):
                         next_macrostate.add(next_state)
 
-                transition_function.setdefault(state_set, {})[action] = frozenset(next_macrostate)
+                transition_function.setdefault(state_set, {})[action] = frozenset(
+                    next_macrostate
+                )
 
         return SimpleDFA(
             new_states,
@@ -716,6 +745,27 @@ class SimpleNFA(FiniteAutomaton[StateType, SymbolType]):
             states, alphabet, initial_state, accepting_states, transition_function
         )
 
+    def get_transitions(
+        self, state: StateType
+    ) -> Optional[AbstractSet[TransitionType]]:
+        """
+        Get the outgoing transitions from a state.
+
+        :param state: the starting state.
+        :return: the set of transitions object associated with that triple.
+                 None if it is not possible to compute such set.
+        :raises ValueError: if the state does not belong to the automaton.
+        """
+        if state not in self.states:
+            raise ValueError("The state does not belong to the automaton.")
+
+        transitions = set()  # type: Set[TransitionType]
+        for guard, end_states in self._transition_function.get(state, {}).items():
+            for end_state in end_states:
+                transitions.add((guard, end_state))
+
+        return transitions
+
     def __eq__(self, other):
         """Check the equality with another object."""
         if not isinstance(other, SimpleNFA):
@@ -733,7 +783,9 @@ def _check_at_least_one_state(states: Set[StateType]):
     """Check that the set of states is not empty."""
     if len(states) == 0:
         raise ValueError(
-            "The set of states cannot be empty. Found {} instead.".format(pprint.pformat(states))
+            "The set of states cannot be empty. Found {} instead.".format(
+                pprint.pformat(states)
+            )
         )
 
 
@@ -753,7 +805,9 @@ def _check_initial_state_in_states(initial_state: StateType, states: Set[StateTy
         )
 
 
-def _check_accepting_states_in_states(accepting_states: Set[StateType], states: Set[StateType]):
+def _check_accepting_states_in_states(
+    accepting_states: Set[StateType], states: Set[StateType]
+):
     """Check that all the accepting states are in the set of states."""
     if not states.issuperset(accepting_states):
         wrong_accepting_states = accepting_states.difference(states)
@@ -791,9 +845,7 @@ def _check_transition_function_is_valid_wrt_states_and_alphabet(
 
 
 def _check_nondet_transition_function_is_valid_wrt_states_and_alphabet(
-    transition_function: Dict,
-    states: Set[StateType],
-    alphabet: Alphabet[SymbolType],
+    transition_function: Dict, states: Set[StateType], alphabet: Alphabet[SymbolType]
 ):
     """Check that a non-det tr. function is compatible wrt the set of states and the alphabet."""
     if len(transition_function) == 0:
@@ -811,8 +863,7 @@ def _check_nondet_transition_function_is_valid_wrt_states_and_alphabet(
         )
     if not all(s in alphabet for s in extracted_alphabet):
         raise ValueError(
-            "Transition function not valid: "
-            "some symbols are not in the alphabet."
+            "Transition function not valid: " "some symbols are not in the alphabet."
         )
 
 

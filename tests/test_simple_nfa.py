@@ -162,7 +162,7 @@ class TestToGraphviz:
             {}
         )
 
-        nfa.to_graphviz(title="test dfa (initial state final)")
+        nfa.to_graphviz()
 
         nfa = SimpleNFA(
             {"q0", "q1", "q2", "q3", "q4", "q5"},
@@ -176,5 +176,4 @@ class TestToGraphviz:
              "q4": {"a": {"q3"}, "b": {"q5"}}}
         )
 
-        nfa.to_graphviz(title="test dfa")
-
+        nfa.to_graphviz()

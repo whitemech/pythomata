@@ -2,10 +2,14 @@
 """The core module."""
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, Set, Optional
+from typing import List, TypeVar, Generic, AbstractSet, Optional, Tuple, Dict
 
-StateType = TypeVar('StateType')
-SymbolType = TypeVar('SymbolType')
+import graphviz
+
+StateType = TypeVar("StateType")
+SymbolType = TypeVar("SymbolType")
+GuardType = TypeVar("GuardType")
+TransitionType = Tuple[GuardType, StateType]
 
 
 class Alphabet(Generic[SymbolType], ABC):
@@ -73,7 +77,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
 
     @property
     @abstractmethod
-    def states(self) -> Set[StateType]:
+    def states(self) -> AbstractSet[StateType]:
         """
         Get the set of states.
 
@@ -82,16 +86,18 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
 
     @property
     @abstractmethod
-    def initial_states(self) -> Set[StateType]:
+    def initial_states(self) -> AbstractSet[StateType]:
         """Get the set of initial states."""
 
     @property
     @abstractmethod
-    def final_states(self) -> Set[StateType]:
+    def final_states(self) -> AbstractSet[StateType]:
         """Get the set of final states."""
 
     @abstractmethod
-    def get_successors(self, state: StateType, symbol: SymbolType) -> Set[StateType]:
+    def get_successors(
+        self, state: StateType, symbol: SymbolType
+    ) -> AbstractSet[StateType]:
         """
         Get the successors of the state in input when reading a symbol.
 
@@ -137,7 +143,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         return any(self.is_accepting(state) for state in current_states)
 
 
-class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType], ABC):
+class DFA(FiniteAutomaton[StateType, SymbolType], Generic[StateType, SymbolType], ABC):
     """An interface for a deterministic finite state automaton."""
 
     @property
@@ -146,7 +152,9 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
         """Get the (unique) initial state."""
 
     @abstractmethod
-    def get_successor(self, state: StateType, symbol: SymbolType) -> Optional[StateType]:
+    def get_successor(
+        self, state: StateType, symbol: SymbolType
+    ) -> Optional[StateType]:
         """
         Get the (unique) successor.
 
@@ -154,14 +162,74 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
         """
 
     @property
-    def initial_states(self) -> Set[StateType]:
+    def initial_states(self) -> AbstractSet[StateType]:
         """Get the set of initial states."""
         return {self.initial_state}
 
-    def get_successors(self, state: StateType, symbol: SymbolType) -> Set[StateType]:
+    def get_successors(
+        self, state: StateType, symbol: SymbolType
+    ) -> AbstractSet[StateType]:
         """Get the successors."""
         successor = self.get_successor(state, symbol)
         return {successor} if successor is not None else set()
+
+
+class Rendering(
+    FiniteAutomaton[StateType, SymbolType],
+    Generic[StateType, SymbolType, GuardType],
+    ABC,
+):
+    """The automaton class that implements this interface can use rendering functionalities."""
+
+    @abstractmethod
+    def get_transitions(
+        self, state: StateType
+    ) -> Optional[AbstractSet[TransitionType]]:
+        """
+        Get the outgoing transitions from a state.
+
+        A transition is a tuple (guard, destination_state).
+        This method is mainly used for automata rendering purposes.
+        Please implement this method properly if you'd like to use the
+        default conversion to Graphviz.Digraph object. Otherwise, override the 'to_graphviz' method.
+
+        :param state: the starting state.
+        :return: the set of transitions object associated with that triple.
+                 None if it is not possible to compute such set.
+        :raises ValueError: if the state does not belong to the automaton.
+        """
+
+    def to_graphviz(self) -> graphviz.Digraph:
+        """
+        Convert to graphviz.Digraph object.
+
+        :return: the graphviz.Digraph object.
+        :raises ValueError: if it was not possible to compute the graph.
+        """
+        g = graphviz.Digraph(format="svg")
+        g.node("fake", style="invisible")
+        for state in self.states:
+            if state in self.initial_states:
+                if state in self.final_states:
+                    g.node(str(state), root="true", shape="doublecircle")
+                else:
+                    g.node(str(state), root="true")
+            elif state in self.final_states:
+                g.node(str(state), shape="doublecircle")
+            else:
+                g.node(str(state))
+
+        for i in self.initial_states:
+            g.edge("fake", str(i), style="bold")
+
+        for start in self.states:
+            transitions = self.get_transitions(start)
+            if transitions is None:
+                raise ValueError("Error when building the Dot graph.")
+            for (guard, end) in self.get_transitions(start):
+                g.edge(str(start), str(end), label=str(guard))
+
+        return g
 
 
 # not used yet
