@@ -3,7 +3,7 @@
 
 __title__ = "pythomata"
 __description__ = "A Python package implementing automata."
-__url__ = "https://github.com/logics4ai-sapienza/pythomata.git"
+__url__ = "https://github.com/whitemech/pythomata.git"
 __version__ = "0.2.0"
 __author__ = "Marco Favorito, Francesco Fuggitti"
 __author_email__ = "marco.favorito@gmail.com, francesco.fuggitti@gmail.com"

@@ -19,7 +19,7 @@ class TestSimpleDFA:
         """Set the test up."""
         cls.dfa = SimpleDFA(
             {0, 1, 2},
-            MapAlphabet(["a", "b", "c"]),
+            ["a", "b", "c"],
             0,
             {2},
             {
