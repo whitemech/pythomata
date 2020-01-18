@@ -57,8 +57,6 @@
     
         <ul>
         
-            <li><a class="toctree-l3" href="#dependencies">Dependencies</a></li>
-        
             <li><a class="toctree-l3" href="#install">Install</a></li>
         
             <li><a class="toctree-l3" href="#how-to-use">How to use</a></li>
@@ -121,48 +119,42 @@
               
                 <h1 id="pythomata">Pythomata</h1>
 <p><a href="https://pypi.python.org/pypi/pythomata"><img alt="" src="https://img.shields.io/pypi/v/pythomata.svg" /></a>
-<a href="https://travis-ci.org/marcofavorito/pythomata"><img alt="" src="https://img.shields.io/travis/marcofavorito/pythomata.svg" /></a>
+<a href="https://travis-ci.org/whitemech/pythomata"><img alt="" src="https://img.shields.io/travis/whitemech/pythomata.svg" /></a>
 <a href="https://pypi.python.org/pypi/pythomata"><img alt="" src="https://img.shields.io/pypi/pyversions/pythomata.svg" /></a>
-<a href="https://pythomata.readthedocs.io/en/latest/?badge=latest"><img alt="" src="https://readthedocs.org/projects/pythomata/badge/?version=latest" /></a>
+<a href="https://www.mkdocs.org/"><img alt="" src="https://img.shields.io/badge/docs-mkdocs-9cf" /></a>
 <a href="https://img.shields.io/badge/status-development-orange.svg"><img alt="" src="https://img.shields.io/badge/status-development-orange.svg" /></a>
-<a href="https://coveralls.io/github/marcofavorito/pythomata?branch=master"><img alt="" src="https://coveralls.io/repos/github/marcofavorito/pythomata/badge.svg?branch=master" /></a>
+<a href="https://coveralls.io/github/whitemech/pythomata?branch=master"><img alt="" src="https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master" /></a>
 <a href="https://img.shields.io/badge/flake8-checked-blueviolet"><img alt="" src="https://img.shields.io/badge/flake8-checked-blueviolet" /></a>
 <a href="https://img.shields.io/badge/mypy-checked-blue"><img alt="" src="https://img.shields.io/badge/mypy-checked-blue" /></a>
 <a href="https://img.shields.io/badge/license-Apache%202-lightgrey"><img alt="" src="https://img.shields.io/badge/license-Apache%202-lightgrey" /></a></p>
 <p>Python implementation of automata theory.</p>
 <ul>
 <li>Free software: Apache 2.0</li>
-<li>Documentation: https://marcofavorito.github.io/pythomata.</li>
+<li>Documentation: https://whitemech.github.io/pythomata.</li>
 </ul>
-<h2 id="dependencies">Dependencies</h2>
-<h3 id="graphviz">Graphviz</h3>
-<p>For Debian systems, the following commands should work:</p>
-<pre><code>$ wget http://ftp.it.debian.org/debian/pool/main/g/graphviz/graphviz_2.38.0-17_amd64.deb
-$ sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
-$ sudo apt-get install -f
-</code></pre>
-<p>Otherwise check the installation guide from the <a href="https://www.graphviz.org/download/">official site</a>.</p>
 <h2 id="install">Install</h2>
-<p>Install from <code>master</code> branch:</p>
 <ul>
 <li>
-<p>with <code>pip</code>:</p>
-<pre><code>pip3 install git+https://github.com/sapienza-rl/temprl.git
-</code></pre>
+<p>from <a href="https://pypi.org/project/pythomata/">PyPI</a>:</p>
+<p>pip install pythomata
+  pip install pythomata=0.3.0a  # for the pre-release.</p>
+</li>
+<li>
+<p>or, from source (<code>master</code> branch):</p>
+<p>pip install git+https://github.com/whitemech/pythomata.git</p>
 </li>
 <li>
 <p>or, clone the repository and install:</p>
-<pre><code>git clone htts://github.com/sapienza-rl/temprl.git
-cd temprl
-pip install .
-</code></pre>
+<p>git clone htts://github.com/whitemech/pythomata.git
+  cd pythomata
+  pip install .</p>
 </li>
 </ul>
 <h2 id="how-to-use">How to use</h2>
 <ul>
 <li>Define an automaton:</li>
 </ul>
-<pre><code class="python">from pythomata.dfa import DFA
+<pre><code class="python">from pythomata import SimpleDFA
 alphabet = {&quot;a&quot;, &quot;b&quot;, &quot;c&quot;}
 states = {&quot;s1&quot;, &quot;s2&quot;, &quot;s3&quot;}
 initial_state = &quot;s1&quot;
@@ -180,15 +172,14 @@ transition_function = {
         &quot;c&quot; : &quot;s3&quot;
     }
 }
-dfa = DFA(states, alphabet, initial_state, accepting_states, transition_function)  
+dfa = SimpleDFA(states, alphabet, initial_state, accepting_states, transition_function)
 </code></pre>
 
 <ul>
 <li>Test word acceptance:</li>
 </ul>
 <pre><code class="python"># a word is a list of symbols
-word = [b, b, b, a, b, c]
-
+word = &quot;bbbac&quot;
 dfa.accepts(word)        # True
 
 # without the last symbol c, the final state is not reached
@@ -203,20 +194,30 @@ dfa_trimmed = dfa.trim()
 </code></pre>
 
 <ul>
-<li>Print the automata:</li>
+<li>Translate into a <a href="https://graphviz.readthedocs.io/en/stable/api.html#graphviz.Digraph"><code>graphviz.Digraph</code></a>
+  instance:</li>
 </ul>
-<pre><code class="python">filepath = &quot;./my_awesome_automaton&quot;
-dfa.minimize().trim().to_dot(filepath)
+<pre><code class="python">graph = dfa.minimize().trim().to_graphviz()
 </code></pre>
 
-<p>The output in .svg format is the following:</p>
-<p><img alt="" src="img/my_awesome_automaton.svg" /></p>
+<p>To print the automaton:</p>
+<pre><code>graph.render(&quot;path_to_file.svg&quot;)
+</code></pre>
+
+<p>For that you will need to install Graphviz.
+Please look at their <a href="https://graphviz.gitlab.io/download/">download page</a>
+for detailed instructions depending on your system.</p>
+<p>The output looks like the following:</p>
+<p align="center">
+  <img width="150" height="300" src="./images/my_awesome_automaton.svg" />
+</p>
+
 <h2 id="features">Features</h2>
 <ul>
 <li>Basic DFA and NFA support;</li>
 <li>Algorithms for DFA minimization and trimming;</li>
 <li>Algorithm for NFA determinization;</li>
-<li>Print automata in SVG format.</li>
+<li>Translate automata into Graphviz objects.</li>
 </ul>
 <h2 id="tests">Tests</h2>
 <p>To run the tests:</p>
@@ -234,7 +235,7 @@ dfa.minimize().trim().to_dot(filepath)
 </code></pre>
 <p>and then go to <a href="http://localhost:8000">http://localhost:8000</a></p>
 <h2 id="license">License</h2>
-<p>Copyright 2018-2019 Marco Favorito</p>
+<p>Copyright 2018-2020 <a href="https://whitemech.github.io">WhiteMech</a></p>
               
             </div>
           </div>
@@ -283,5 +284,5 @@ dfa.minimize().trim().to_dot(filepath)
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-09-23 14:03:10
+Build Date UTC : 2020-01-18 20:06:59
 -->
