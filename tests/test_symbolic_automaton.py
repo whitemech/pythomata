@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+from functools import reduce
+
 import sympy
 from hypothesis import given
 from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
 
 from pythomata import SymbolicAutomaton
+from pythomata.simulator import AutomatonSimulator
 from .strategies import propositional_words
 
 
@@ -361,3 +364,114 @@ def test_to_graphviz():
     automaton.add_transition(state_0, "x | z", state_2)
 
     automaton.to_graphviz()
+
+
+class TestSimulator:
+    """Test the simulator with a SimpleDFA"""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        cls.dfa = SymbolicAutomaton()
+        automaton = cls.dfa
+        q0 = automaton.create_state()
+        q1 = automaton.create_state()
+        q2 = automaton.create_state()
+
+        automaton.set_initial_state(q0, True)
+        automaton.set_final_state(q2, True)
+
+        automaton.add_transition(q0, "a", q0)
+        automaton.add_transition(q0, "b", q1)
+        automaton.add_transition(q0, "c", q2)
+
+        automaton.add_transition(q1, "a", q0)
+        automaton.add_transition(q1, "b", q1)
+        automaton.add_transition(q1, "c", q2)
+
+        automaton.add_transition(q2, "a", q0)
+        automaton.add_transition(q2, "b", q1)
+        automaton.add_transition(q2, "c", q2)
+
+        # dummy state and transitions to make it non-deterministic
+        q3 = automaton.create_state()
+        automaton.add_transition(q0, "a", q3)
+        automaton.add_transition(q1, "b", q3)
+        automaton.add_transition(q2, "c", q3)
+        automaton.add_transition(q3, "a", q0)
+        automaton.add_transition(q3, "b", q1)
+        automaton.add_transition(q3, "c", q2)
+
+    def test_initialization(self):
+        """Test the initialization of a simulator."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert simulator.automaton == self.dfa
+        assert simulator.cur_state == self.dfa.initial_states
+        assert not simulator.is_started
+
+    @given(propositional_words(list("abcd"), min_size=0, max_size=5))
+    def test_step(self, word):
+        """Test the behaviour of the method 'step'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        for symbol in word:
+            previous_states = simulator.cur_state
+            current_states = simulator.step(symbol)
+            expected_current_states = reduce(set.union,
+                                             [self.dfa.get_successors(s, symbol) for s in previous_states],
+                                             set())
+            assert simulator.cur_state == current_states == expected_current_states
+
+    def test_is_true(self):
+        """Test the behaviour of the method 'is_true'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert not simulator.is_true()
+        simulator.step({"a": True})
+        assert not simulator.is_true()
+        simulator.step({"b": True})
+        assert not simulator.is_true()
+        simulator.step({"c": True})
+        assert simulator.is_true()
+
+    def test_is_failed(self):
+        """Test the behaviour of the method 'is_failed'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert not simulator.is_failed()
+        simulator.step({"a": True})
+        assert not simulator.is_failed()
+        simulator.step({"b": True})
+        assert not simulator.is_failed()
+        simulator.step({"c": True})
+        assert not simulator.is_failed()
+        simulator.step({"d": True})
+        assert simulator.is_failed()
+
+    @given(propositional_words(list("abcd"), min_size=0, max_size=3))
+    def test_reset(self, word):
+        """Test the behaviour of the method 'reset'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert not simulator.is_started
+        assert simulator.cur_state == self.dfa.initial_states
+
+        for symbol in word:
+            simulator.step(symbol)
+            assert simulator.is_started
+
+        initial_state = simulator.reset()
+        assert not simulator.is_started
+        assert simulator.cur_state == initial_state == self.dfa.initial_states
+
+    @given(propositional_words(list("abcd"), min_size=0, max_size=5))
+    def test_accepts(self, word):
+        """Test the behaviour of the method 'accepts'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert simulator.accepts(word) == self.dfa.accepts(word)
+
+        for index, symbol in enumerate(word):
+            simulator.step(symbol)
+            assert simulator.accepts(word[index:]) == self.dfa.accepts(word)
