@@ -240,7 +240,12 @@ class TestDeterminize2:
         aut.set_final_state(0, True)
         aut.set_final_state(1, True)
 
-        trfun = {3: {0: A | ~B, 2: B & ~A}, 0: {1: BooleanTrue()}, 2: {2: BooleanTrue()}, 1: {1: BooleanTrue()}}
+        trfun = {
+            3: {0: A | ~B, 2: B & ~A},
+            0: {1: BooleanTrue()},
+            2: {2: BooleanTrue()},
+            1: {1: BooleanTrue()},
+        }
         for s in trfun:
             for d, guard in trfun[s].items():
                 aut.add_transition(s, guard, d)
@@ -305,7 +310,6 @@ class TestComplete:
 
 
 class TestMinimize:
-
     @classmethod
     def setup_class(cls):
         """Set the tests up."""

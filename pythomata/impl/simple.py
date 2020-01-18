@@ -64,6 +64,7 @@ class SimpleDFA(
         :param final_states: the set of accepting states
         :param transition_function: the transition function
         """
+        super().__init__()
         self._check_input(
             states, alphabet, initial_state, final_states, transition_function
         )
@@ -544,9 +545,7 @@ class SimpleDFA(
 
         return g
 
-    def get_transitions_from(
-        self, state: StateType
-    ) -> Optional[AbstractSet[TransitionType]]:
+    def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
         """
         Get the outgoing transitions from a state.
 
@@ -558,9 +557,9 @@ class SimpleDFA(
         if state not in self.states:
             raise ValueError("The state does not belong to the automaton.")
 
-        transitions = set()
+        transitions = set()  # type: Set[TransitionType]
         for guard, end in self._transition_function.get(state, {}).items():
-            transitions.add((guard, end))
+            transitions.add((state, guard, end))
 
         return transitions
 
@@ -601,6 +600,7 @@ class SimpleNFA(
         :param accepting_states: the set of accepting states
         :param transition_function: the transition function
         """
+        super().__init__()
         self._check_input(
             states, alphabet, initial_state, accepting_states, transition_function
         )
@@ -687,7 +687,7 @@ class SimpleNFA(
         """Get the successors states."""
         return self._transition_function.get(state, {}).get(symbol, set())
 
-    def determinize(self) -> DFA:
+    def determinize(self) -> FiniteAutomaton:
         """
         Do determinize the NFA.
 
@@ -745,9 +745,7 @@ class SimpleNFA(
             states, alphabet, initial_state, accepting_states, transition_function
         )
 
-    def get_transitions_from(
-        self, state: StateType
-    ) -> Optional[AbstractSet[TransitionType]]:
+    def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
         """
         Get the outgoing transitions from a state.
 
@@ -762,7 +760,7 @@ class SimpleNFA(
         transitions = set()  # type: Set[TransitionType]
         for guard, end_states in self._transition_function.get(state, {}).items():
             for end_state in end_states:
-                transitions.add((guard, end_state))
+                transitions.add((state, guard, end_state))
 
         return transitions
 

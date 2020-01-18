@@ -20,21 +20,14 @@ from sympy.logic.boolalg import BooleanFunction, BooleanTrue, BooleanFalse
 from sympy.parsing.sympy_parser import parse_expr
 
 from pythomata._internal_utils import greatest_fixpoint
-from pythomata.core import (
-    FiniteAutomaton,
-    SymbolType,
-    StateType,
-    TransitionType,
-    Rendering,
-)
+from pythomata.core import FiniteAutomaton, SymbolType, Rendering
 from pythomata.utils import iter_powerset
 
 PropInt = Dict[Union[str, Symbol], bool]
 
 
 class SymbolicAutomaton(
-    Rendering[int, PropInt, BooleanFunction],
-    FiniteAutomaton[int, PropInt]
+    Rendering[int, PropInt, BooleanFunction], FiniteAutomaton[int, PropInt]
 ):
     """A symbolic automaton."""
 
@@ -275,8 +268,8 @@ class SymbolicAutomaton(
             {
                 (p, q)
                 for p, q in itertools.product(
-                dfa.states.difference(dfa.final_states), repeat=2
-            )
+                    dfa.states.difference(dfa.final_states), repeat=2
+                )
             },
         )
 
@@ -360,8 +353,8 @@ class SymbolicAutomaton(
         return automaton
 
     def get_transitions_from(
-        self, state: StateType
-    ) -> Optional[AbstractSet[TransitionType]]:
+        self, state: int
+    ) -> AbstractSet[Tuple[int, BooleanFunction, int]]:
         """
         Get the outgoing transitions from a state.
 
@@ -375,6 +368,6 @@ class SymbolicAutomaton(
 
         transitions = set()
         for end, guard in self._transition_function.get(state, {}).items():
-            transitions.add((guard, end))
+            transitions.add((state, guard, end))
 
         return transitions
