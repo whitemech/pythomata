@@ -4,16 +4,7 @@ import itertools
 import pprint
 import queue
 from copy import deepcopy, copy
-from typing import (
-    Set,
-    Dict,
-    Tuple,
-    FrozenSet,
-    Iterable,
-    cast,
-    AbstractSet,
-    Generic,
-)
+from typing import Set, Dict, Tuple, FrozenSet, Iterable, cast, AbstractSet, Generic
 
 from pythomata._internal_utils import greatest_fixpoint, least_fixpoint
 from pythomata.alphabets import MapAlphabet

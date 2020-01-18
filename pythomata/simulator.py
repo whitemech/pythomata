@@ -107,8 +107,10 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
         """Check whether the subword is accepted from the current state of the simulator."""
         current_states = self.cur_state  # type: AbstractSet[StateType]
         for symbol in subword:
-            current_states = reduce(set.union,  # type: ignore
-                                    [self.automaton.get_successors(s, symbol) for s in current_states],
-                                    set())
+            current_states = reduce(
+                set.union,  # type: ignore
+                [self.automaton.get_successors(s, symbol) for s in current_states],
+                set(),
+            )
 
         return any(state in self.automaton.final_states for state in current_states)

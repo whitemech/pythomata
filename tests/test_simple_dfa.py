@@ -248,7 +248,6 @@ def test_dfa_from_transitions():
 
 
 class TestIsComplete:
-
     def test_is_complete_when_dfa_is_complete(self):
         """Test that the is_complete method return True if the SimpleDFA is complete."""
         dfa = SimpleDFA({"q"}, MapAlphabet({"a"}), "q", set(), {"q": {"a": "q"}})
@@ -267,7 +266,6 @@ class TestIsComplete:
 
 
 class TestComplete:
-
     def test_complete_when_dfa_is_already_complete(self):
         """Test that when we try to make complete an already complete SimpleDFA
         then the returned SimpleDFA is equal to the previous one."""
@@ -308,7 +306,6 @@ class TestComplete:
 
 
 class TestMinimize:
-
     def test_minimize(self):
 
         dfa = SimpleDFA(
@@ -339,7 +336,6 @@ class TestMinimize:
 
 
 class TestReachable:
-
     def test_reachable_simple_case(self):
 
         dfa = SimpleDFA(
@@ -377,7 +373,6 @@ class TestReachable:
 
 
 class TestCoReachable:
-
     def test_coreachable_simple_case(self):
 
         dfa = SimpleDFA(
@@ -414,7 +409,6 @@ class TestCoReachable:
 
 
 class TestTrim:
-
     def test_trim_simple_case(self):
         dfa = SimpleDFA(
             {"q0", "q1", "q2", "sink"},
@@ -442,7 +436,6 @@ class TestTrim:
 
 
 class TestAccepts:
-
     def test_accepts(self):
 
         dfa = SimpleDFA(
@@ -463,7 +456,6 @@ class TestAccepts:
 
 
 class TestLevelToAcceptingStates:
-
     def test_level_to_accepting_states(self):
         dfa = SimpleDFA(
             {"q0", "q1", "q2", "q3", "q4", "q5"},
@@ -555,9 +547,11 @@ class TestSimulator:
         for symbol in word:
             previous_states = simulator.cur_state
             current_states = simulator.step(symbol)
-            expected_current_states = reduce(set.union,
-                                             [self.dfa.get_successors(s, symbol) for s in previous_states],
-                                             set())
+            expected_current_states = reduce(
+                set.union,
+                [self.dfa.get_successors(s, symbol) for s in previous_states],
+                set(),
+            )
             assert simulator.cur_state == current_states == expected_current_states
 
     def test_is_true(self):

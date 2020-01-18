@@ -11,7 +11,9 @@ from typing import (
     Tuple,
     Dict,
     Any,
-    Sequence, Set)
+    Sequence,
+    Set,
+)
 
 import graphviz
 
@@ -226,7 +228,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
             next_current_states = reduce(
                 set.union,  # type: ignore
                 map(lambda x: self.get_successors(x, symbol), current_states),
-                set()
+                set(),
             )  # type: Set[StateType]
             for state in current_states:
                 next_current_states.update(self.get_successors(state, symbol))

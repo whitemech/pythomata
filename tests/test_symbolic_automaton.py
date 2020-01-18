@@ -418,9 +418,11 @@ class TestSimulator:
         for symbol in word:
             previous_states = simulator.cur_state
             current_states = simulator.step(symbol)
-            expected_current_states = reduce(set.union,
-                                             [self.dfa.get_successors(s, symbol) for s in previous_states],
-                                             set())
+            expected_current_states = reduce(
+                set.union,
+                [self.dfa.get_successors(s, symbol) for s in previous_states],
+                set(),
+            )
             assert simulator.cur_state == current_states == expected_current_states
 
     def test_is_true(self):
