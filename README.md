@@ -2,11 +2,11 @@
 
 
 [![](https://img.shields.io/pypi/v/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
-[![](https://img.shields.io/travis/logics4ai-sapienza/pythomata.svg)](https://travis-ci.org/logics4ai-sapienza/pythomata)
+[![](https://img.shields.io/travis/whitemech/pythomata.svg)](https://travis-ci.org/whitemech/pythomata)
 [![](https://img.shields.io/pypi/pyversions/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
 [![](https://img.shields.io/badge/docs-mkdocs-9cf)](https://www.mkdocs.org/)
 [![](https://img.shields.io/badge/status-development-orange.svg)](https://img.shields.io/badge/status-development-orange.svg)
-[![](https://coveralls.io/repos/github/logics4ai-sapienza/pythomata/badge.svg?branch=master)](https://coveralls.io/github/logics4ai-sapienza/pythomata?branch=master)
+[![](https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master)](https://coveralls.io/github/whitemech/pythomata?branch=master)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
 [![](https://img.shields.io/badge/mypy-checked-blue)](https://img.shields.io/badge/mypy-checked-blue)
 [![](https://img.shields.io/badge/license-Apache%202-lightgrey)](https://img.shields.io/badge/license-Apache%202-lightgrey)
@@ -15,7 +15,7 @@ Python implementation of automata theory.
 
 
 * Free software: Apache 2.0
-* Documentation: https://logics4ai-sapienza.github.io/pythomata.
+* Documentation: https://whitemech.github.io/pythomata.
 
 ## Install
 
@@ -26,12 +26,12 @@ Python implementation of automata theory.
 
 - or, from source (`master` branch):
 
-      pip install git+https://github.com/logics4ai-sapienza/pythomata.git
+      pip install git+https://github.com/whitemech/pythomata.git
 
 
 - or, clone the repository and install:
 
-      git clone htts://github.com/logics4ai-sapienza/pythomata.git
+      git clone htts://github.com/whitemech/pythomata.git
       cd pythomata
       pip install .
 
@@ -87,7 +87,16 @@ dfa_trimmed = dfa.trim()
 graph = dfa.minimize().trim().to_graphviz()
 ```
 
-The output in .svg format is the following:
+To print the automaton:
+```
+graph.render("path_to_file.svg")
+```
+
+For that you will need to install Graphviz.
+Please look at their [download page](https://graphviz.gitlab.io/download/)
+for detailed instructions depending on your system.
+
+The output looks like the following:
 
 <p align="center">
   <img width="150" height="300" src="./images/my_awesome_automaton.svg" />
@@ -100,7 +109,7 @@ The output in .svg format is the following:
 * Basic DFA and NFA support;
 * Algorithms for DFA minimization and trimming;
 * Algorithm for NFA determinization;
-* Print automata in SVG format.
+* Translate automata into Graphviz objects.
 
 
 ## Tests
