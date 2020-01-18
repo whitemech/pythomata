@@ -17,24 +17,12 @@ Python implementation of automata theory.
 * Free software: Apache 2.0
 * Documentation: https://logics4ai-sapienza.github.io/pythomata.
 
-## Dependencies
-
-### Graphviz
-
-
-For Debian systems, the following commands should work:
-
-    $ wget http://ftp.it.debian.org/debian/pool/main/g/graphviz/graphviz_2.38.0-17_amd64.deb
-    $ sudo dpkg -i graphviz_2.38.0-1~saucy_amd64.deb
-    $ sudo apt-get install -f
-
-Otherwise check the installation guide from the [official site](https://www.graphviz.org/download/).
-
 ## Install
 
 - from [PyPI](https://pypi.org/project/pythomata/):
 
       pip install pythomata
+      pip install pythomata=0.3.0a  # for the pre-release.
 
 - or, from source (`master` branch):
 
@@ -53,7 +41,7 @@ Otherwise check the installation guide from the [official site](https://www.grap
 * Define an automaton:
 
 ```python
-from pythomata.dfa import DFA
+from pythomata import SimpleDFA
 alphabet = {"a", "b", "c"}
 states = {"s1", "s2", "s3"}
 initial_state = "s1"
@@ -71,15 +59,14 @@ transition_function = {
         "c" : "s3"
     }
 }
-dfa = DFA(states, alphabet, initial_state, accepting_states, transition_function)
+dfa = SimpleDFA(states, alphabet, initial_state, accepting_states, transition_function)
 ```
 
 * Test word acceptance:
 
 ```python
 # a word is a list of symbols
-word = [b, b, b, a, b, c]
-
+word = "bbbac"
 dfa.accepts(word)        # True
 
 # without the last symbol c, the final state is not reached
@@ -89,20 +76,22 @@ dfa.accepts(word[:-1])   # False
 * Operations such as minimization and trimming:
 
 ```python
-dfa_minimized = dfa.minimize
+dfa_minimized = dfa.minimize()
 dfa_trimmed = dfa.trim()
 ```
 
-* Print the automata:
+* Translate into a [`graphviz.Digraph`](https://graphviz.readthedocs.io/en/stable/api.html#graphviz.Digraph)
+  instance:
 
 ```python
-filepath = "./my_awesome_automaton"
-dfa.minimize.trim().to_dot(filepath)
+graph = dfa.minimize().trim().to_graphviz()
 ```
 
 The output in .svg format is the following:
 
-![](img/my_awesome_automaton.svg)
+<p align="center">
+  <img width="150" height="300" src="./images/my_awesome_automaton.svg" />
+</p>
 
 
 ## Features
@@ -143,5 +132,5 @@ and then go to [http://localhost:8000](http://localhost:8000)
 
 ## License
 
-Copyright 2018-2019 Marco Favorito
+Copyright 2018-2020 [WhiteMech](https://whitemech.github.io)
 

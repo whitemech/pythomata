@@ -11,9 +11,7 @@ from typing import (
     Tuple,
     Dict,
     Any,
-    Sequence,
-    Set,
-    Union)
+    Sequence)
 
 import graphviz
 
@@ -223,16 +221,13 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :param word: the list of symbols.
         :return: True if the automaton accepts the word, False otherwise.
         """
-        current_states = self.initial_states
+        current_states = self.initial_states  # type: AbstractSet[StateType]
         for symbol in word:
-            next_current_states = reduce(
+            current_states = reduce(
                 set.union,  # type: ignore
                 map(lambda x: self.get_successors(x, symbol), current_states),
                 set(),
-            )  # type: Set[StateType]
-            for state in current_states:
-                next_current_states.update(self.get_successors(state, symbol))
-            current_states = next_current_states
+            )
 
         return any(self.is_accepting(state) for state in current_states)
 
