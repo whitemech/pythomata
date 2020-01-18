@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """This module provides many popular alphabets."""
 import itertools
-from typing import List, Tuple, Iterable, Iterator, Generic
+from typing import List, Tuple, Iterable, Iterator, Generic, Union, Collection, Set
 
 from pythomata.core import Alphabet, SymbolType
+
+AlphabetLike = Union[Alphabet[SymbolType], Collection[SymbolType], Set[SymbolType]]
 
 IndexNotFound = ValueError("No symbol for that index.")
 SymbolNotFound = ValueError("No symbol for that index.")

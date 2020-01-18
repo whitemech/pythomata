@@ -13,7 +13,7 @@ from typing import (
     Any,
     Sequence,
     Set,
-)
+    Union)
 
 import graphviz
 

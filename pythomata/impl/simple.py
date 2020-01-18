@@ -7,7 +7,7 @@ from copy import deepcopy, copy
 from typing import Set, Dict, Tuple, FrozenSet, Iterable, cast, AbstractSet, Generic
 
 from pythomata._internal_utils import greatest_fixpoint, least_fixpoint
-from pythomata.alphabets import MapAlphabet
+from pythomata.alphabets import MapAlphabet, AlphabetLike
 from pythomata.core import (
     StateType,
     SymbolType,
@@ -38,7 +38,7 @@ class SimpleDFA(
     def __init__(
         self,
         states: Set[StateType],
-        alphabet: Alphabet,
+        alphabet: AlphabetLike[SymbolType],
         initial_state: StateType,
         final_states: Set[StateType],
         transition_function: Dict[StateType, Dict[SymbolType, StateType]],
@@ -53,6 +53,7 @@ class SimpleDFA(
         :param transition_function: the transition function
         """
         super().__init__()
+        alphabet = MapAlphabet(alphabet) if not isinstance(alphabet, Alphabet) else alphabet
         self._check_input(
             states, alphabet, initial_state, final_states, transition_function
         )
@@ -528,7 +529,7 @@ class SimpleDFA(
 class EmptyDFA(SimpleDFA):
     """Implementation of an empty DFA."""
 
-    def __init__(self, alphabet: Alphabet):
+    def __init__(self, alphabet: AlphabetLike):
         """Initialize an empty DFA."""
         super().__init__({"0"}, alphabet, "0", set(), {})
 
@@ -547,7 +548,7 @@ class SimpleNFA(
     def __init__(
         self,
         states: Set[StateType],
-        alphabet: Alphabet[SymbolType],
+        alphabet: AlphabetLike[SymbolType],
         initial_state: StateType,
         accepting_states: Set[StateType],
         transition_function: Dict[StateType, Dict[SymbolType, Set[StateType]]],
@@ -562,6 +563,7 @@ class SimpleNFA(
         :param transition_function: the transition function
         """
         super().__init__()
+        alphabet = MapAlphabet(alphabet) if not isinstance(alphabet, Alphabet) else alphabet
         self._check_input(
             states, alphabet, initial_state, accepting_states, transition_function
         )
