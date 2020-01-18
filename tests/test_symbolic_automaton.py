@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+from functools import reduce
+
 import sympy
 from hypothesis import given
 from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
 
 from pythomata import SymbolicAutomaton
-from .strategies import words
+from pythomata.simulator import AutomatonSimulator
+from .strategies import propositional_words
 
 
 class TestSymbolicAutomatonEmptyLanguage:
@@ -218,10 +221,10 @@ class TestDeterminize:
         assert len(self.automaton.get_successors(0, {"x": True})) == 2
         assert len(self.determinized.get_successors(initial_state, {"x": True})) == 1
 
-    @given(words(list("xyz"), min_size=0, max_size=2))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("xyz"), min_size=0, max_size=2))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
+        assert self.automaton.accepts(word) == self.determinized.accepts(word)
 
 
 class TestDeterminize2:
@@ -240,7 +243,12 @@ class TestDeterminize2:
         aut.set_final_state(0, True)
         aut.set_final_state(1, True)
 
-        trfun = {3: {0: A | ~B, 2: B & ~A}, 0: {1: BooleanTrue()}, 2: {2: BooleanTrue()}, 1: {1: BooleanTrue()}}
+        trfun = {
+            3: {0: A | ~B, 2: B & ~A},
+            0: {1: BooleanTrue()},
+            2: {2: BooleanTrue()},
+            1: {1: BooleanTrue()},
+        }
         for s in trfun:
             for d, guard in trfun[s].items():
                 aut.add_transition(s, guard, d)
@@ -248,10 +256,10 @@ class TestDeterminize2:
         cls.automaton = aut
         cls.determinized = aut.determinize()
 
-    @given(words(list("ABC"), min_size=0, max_size=2))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("ABC"), min_size=0, max_size=2))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.determinized.accepts(trace)
+        assert self.automaton.accepts(word) == self.determinized.accepts(word)
 
 
 class TestComplete:
@@ -298,14 +306,13 @@ class TestComplete:
         assert not self.automaton.is_complete()
         assert self.completed.is_complete()
 
-    @given(words(list("xyz"), min_size=0, max_size=2))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("xyz"), min_size=0, max_size=2))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.completed.accepts(trace)
+        assert self.automaton.accepts(word) == self.completed.accepts(word)
 
 
 class TestMinimize:
-
     @classmethod
     def setup_class(cls):
         """Set the tests up."""
@@ -334,10 +341,10 @@ class TestMinimize:
         # the renaming of the states is non deterministic, so we need to compare every substructure.
         assert self.minimized.size == 4
 
-    @given(words(list("abc"), min_size=0, max_size=5))
-    def test_accepts(self, trace):
+    @given(propositional_words(list("abc"), min_size=0, max_size=5))
+    def test_accepts(self, word):
         """Test equivalence of acceptance between the two automata."""
-        assert self.automaton.accepts(trace) == self.minimized.accepts(trace)
+        assert self.automaton.accepts(word) == self.minimized.accepts(word)
 
     def test_minimized_is_complete(self):
         """Test that every minimized DFA is complete."""
@@ -357,3 +364,116 @@ def test_to_graphviz():
     automaton.add_transition(state_0, "x | z", state_2)
 
     automaton.to_graphviz()
+
+
+class TestSimulator:
+    """Test the simulator with a SimpleDFA"""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        cls.dfa = SymbolicAutomaton()
+        automaton = cls.dfa
+        q0 = automaton.create_state()
+        q1 = automaton.create_state()
+        q2 = automaton.create_state()
+
+        automaton.set_initial_state(q0, True)
+        automaton.set_final_state(q2, True)
+
+        automaton.add_transition(q0, "a", q0)
+        automaton.add_transition(q0, "b", q1)
+        automaton.add_transition(q0, "c", q2)
+
+        automaton.add_transition(q1, "a", q0)
+        automaton.add_transition(q1, "b", q1)
+        automaton.add_transition(q1, "c", q2)
+
+        automaton.add_transition(q2, "a", q0)
+        automaton.add_transition(q2, "b", q1)
+        automaton.add_transition(q2, "c", q2)
+
+        # dummy state and transitions to make it non-deterministic
+        q3 = automaton.create_state()
+        automaton.add_transition(q0, "a", q3)
+        automaton.add_transition(q1, "b", q3)
+        automaton.add_transition(q2, "c", q3)
+        automaton.add_transition(q3, "a", q0)
+        automaton.add_transition(q3, "b", q1)
+        automaton.add_transition(q3, "c", q2)
+
+    def test_initialization(self):
+        """Test the initialization of a simulator."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert simulator.automaton == self.dfa
+        assert simulator.cur_state == self.dfa.initial_states
+        assert not simulator.is_started
+
+    @given(propositional_words(list("abcd"), min_size=0, max_size=5))
+    def test_step(self, word):
+        """Test the behaviour of the method 'step'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        for symbol in word:
+            previous_states = simulator.cur_state
+            current_states = simulator.step(symbol)
+            expected_current_states = reduce(
+                set.union,
+                [self.dfa.get_successors(s, symbol) for s in previous_states],
+                set(),
+            )
+            assert simulator.cur_state == current_states == expected_current_states
+
+    def test_is_true(self):
+        """Test the behaviour of the method 'is_true'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert not simulator.is_true()
+        simulator.step({"a": True})
+        assert not simulator.is_true()
+        simulator.step({"b": True})
+        assert not simulator.is_true()
+        simulator.step({"c": True})
+        assert simulator.is_true()
+
+    def test_is_failed(self):
+        """Test the behaviour of the method 'is_failed'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert not simulator.is_failed()
+        simulator.step({"a": True})
+        assert not simulator.is_failed()
+        simulator.step({"b": True})
+        assert not simulator.is_failed()
+        simulator.step({"c": True})
+        assert not simulator.is_failed()
+        simulator.step({"d": True})
+        assert simulator.is_failed()
+
+    @given(propositional_words(list("abcd"), min_size=0, max_size=3))
+    def test_reset(self, word):
+        """Test the behaviour of the method 'reset'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert not simulator.is_started
+        assert simulator.cur_state == self.dfa.initial_states
+
+        for symbol in word:
+            simulator.step(symbol)
+            assert simulator.is_started
+
+        initial_state = simulator.reset()
+        assert not simulator.is_started
+        assert simulator.cur_state == initial_state == self.dfa.initial_states
+
+    @given(propositional_words(list("abcd"), min_size=0, max_size=4))
+    def test_accepts(self, word):
+        """Test the behaviour of the method 'accepts'."""
+        simulator = AutomatonSimulator(self.dfa)
+
+        assert simulator.accepts(word) == self.dfa.accepts(word)
+
+        for index, symbol in enumerate(word):
+            simulator.step(symbol)
+            assert simulator.accepts(word[index:]) == self.dfa.accepts(word)

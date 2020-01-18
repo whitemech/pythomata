@@ -2,7 +2,18 @@
 """The core module."""
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, AbstractSet, Optional, Tuple, Dict, Any
+from functools import reduce
+from typing import (
+    TypeVar,
+    Generic,
+    AbstractSet,
+    Optional,
+    Tuple,
+    Dict,
+    Any,
+    Sequence,
+    Set,
+)
 
 import graphviz
 
@@ -112,9 +123,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :raises ValueError: if the state does not belong to the automaton, or the symbol is not correct.
         """
 
-    def get_transitions_from(
-        self, state: StateType
-    ) -> AbstractSet[TransitionType]:
+    def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
         """
         Get the outgoing transitions from a state.
 
@@ -136,8 +145,8 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         """
         transitions = set()
         for state in self.states:
-            for guard, end_state in self.get_transitions_from(state):
-                transitions.add((state, guard, end_state))
+            for start_state, guard, end_state in self.get_transitions_from(state):
+                transitions.add((start_state, guard, end_state))
         return transitions
 
     def get_state_attribute(self, state: StateType, attr_name: str) -> Optional[Any]:
@@ -150,7 +159,9 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         """
         return self._state_attributes.get(state, {}).get(attr_name, None)
 
-    def set_state_attribute(self, state: StateType, attr_name: str, attr_value: Any) -> None:
+    def set_state_attribute(
+        self, state: StateType, attr_name: str, attr_value: Any
+    ) -> None:
         """
         Set a state attribute.
 
@@ -161,7 +172,9 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         """
         self._state_attributes.get(state, {})[attr_name] = attr_value
 
-    def get_transition_attribute(self, transition: TransitionType, attr_name: str) -> Optional[Any]:
+    def get_transition_attribute(
+        self, transition: TransitionType, attr_name: str
+    ) -> Optional[Any]:
         """
         Get a transition attribute.
 
@@ -169,9 +182,11 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :param attr_name: the attribute name.
         :return: the attribute value.
         """
-        return self._state_attributes.get(transition, {}).get(attr_name, None)
+        return self._transition_attributes.get(transition, {}).get(attr_name, None)
 
-    def set_transition_attribute(self, transition: TransitionType, attr_name: str, attr_value: Any) -> None:
+    def set_transition_attribute(
+        self, transition: TransitionType, attr_name: str, attr_value: Any
+    ) -> None:
         """
         Set a transition attribute.
 
@@ -180,7 +195,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :param attr_value: the attribute value.
         :return: the attribute value.
         """
-        self._state_attributes.get(transition, {})[attr_name] = attr_value
+        self._transition_attributes.get(transition, {})[attr_name] = attr_value
 
     @property
     def size(self) -> int:
@@ -201,7 +216,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         """
         return state in self.final_states
 
-    def accepts(self, word: List[SymbolType]) -> bool:
+    def accepts(self, word: Sequence[SymbolType]) -> bool:
         """
         Check whether the automaton accepts the word.
 
@@ -210,7 +225,11 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         """
         current_states = self.initial_states
         for symbol in word:
-            next_current_states = set()
+            next_current_states = reduce(
+                set.union,  # type: ignore
+                map(lambda x: self.get_successors(x, symbol), current_states),
+                set(),
+            )  # type: Set[StateType]
             for state in current_states:
                 next_current_states.update(self.get_successors(state, symbol))
             current_states = next_current_states
@@ -263,26 +282,26 @@ class Rendering(
         :return: the graphviz.Digraph object.
         :raises ValueError: if it was not possible to compute the graph.
         """
-        g = graphviz.Digraph(format="svg")
-        g.node("fake", style="invisible")
+        graph = graphviz.Digraph(format="svg")
+        graph.node("fake", style="invisible")
         for state in self.states:
             if state in self.initial_states:
                 if state in self.final_states:
-                    g.node(str(state), root="true", shape="doublecircle")
+                    graph.node(str(state), root="true", shape="doublecircle")
                 else:
-                    g.node(str(state), root="true")
+                    graph.node(str(state), root="true")
             elif state in self.final_states:
-                g.node(str(state), shape="doublecircle")
+                graph.node(str(state), shape="doublecircle")
             else:
-                g.node(str(state))
+                graph.node(str(state))
 
         for i in self.initial_states:
-            g.edge("fake", str(i), style="bold")
+            graph.edge("fake", str(i), style="bold")
 
         for (start, guard, end) in self.get_transitions():
-            g.edge(str(start), str(end), label=str(guard))
+            graph.edge(str(start), str(end), label=str(guard))
 
-        return g
+        return graph
 
 
 # not used yet

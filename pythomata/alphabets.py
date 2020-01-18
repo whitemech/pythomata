@@ -197,7 +197,7 @@ class VectorizedAlphabet(Generic[SymbolType], Alphabet[Tuple[SymbolType, ...]]):
         if len(vector) != self.n:
             raise SymbolNotFound
         index_of_vector = 0
-        for position, symbol in enumerate(vector):
+        for _position, symbol in enumerate(vector):
             index = self._alphabet.get_symbol_index(symbol)
             index_of_vector = index_of_vector * self._alphabet.size
             index_of_vector += index

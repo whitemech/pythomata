@@ -4,19 +4,7 @@ import itertools
 import pprint
 import queue
 from copy import deepcopy, copy
-from typing import (
-    Set,
-    Dict,
-    Tuple,
-    FrozenSet,
-    Iterable,
-    cast,
-    Optional,
-    AbstractSet,
-    Generic,
-)
-
-import graphviz
+from typing import Set, Dict, Tuple, FrozenSet, Iterable, cast, AbstractSet, Generic
 
 from pythomata._internal_utils import greatest_fixpoint, least_fixpoint
 from pythomata.alphabets import MapAlphabet
@@ -64,6 +52,7 @@ class SimpleDFA(
         :param final_states: the set of accepting states
         :param transition_function: the transition function
         """
+        super().__init__()
         self._check_input(
             states, alphabet, initial_state, final_states, transition_function
         )
@@ -517,36 +506,7 @@ class SimpleDFA(
             cast(Dict[StateType, Dict[SymbolType, StateType]], new_transition_function),
         )
 
-    def to_graphviz(self, title: Optional[str] = None) -> graphviz.Digraph:
-        """Convert to graphviz.Digraph object."""
-        g = graphviz.Digraph(format="svg")
-        g.node("fake", style="invisible")
-        for state in self.states:
-            if state in self.initial_states:
-                if state in self.final_states:
-                    g.node(str(state), root="true", shape="doublecircle")
-                else:
-                    g.node(str(state), root="true")
-            elif state in self.final_states:
-                g.node(str(state), shape="doublecircle")
-            else:
-                g.node(str(state))
-
-        for i in self.initial_states:
-            g.edge("fake", str(i), style="bold")
-        for start in self.transition_function:
-            for symbol, end in self._transition_function[start].items():
-                g.edge(str(start), str(end), label=str(symbol))
-
-        if title is not None:
-            g.attr(label=title)
-            g.attr(fontsize="20")
-
-        return g
-
-    def get_transitions_from(
-        self, state: StateType
-    ) -> Optional[AbstractSet[TransitionType]]:
+    def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
         """
         Get the outgoing transitions from a state.
 
@@ -558,9 +518,9 @@ class SimpleDFA(
         if state not in self.states:
             raise ValueError("The state does not belong to the automaton.")
 
-        transitions = set()
+        transitions = set()  # type: Set[TransitionType]
         for guard, end in self._transition_function.get(state, {}).items():
-            transitions.add((guard, end))
+            transitions.add((state, guard, end))
 
         return transitions
 
@@ -601,6 +561,7 @@ class SimpleNFA(
         :param accepting_states: the set of accepting states
         :param transition_function: the transition function
         """
+        super().__init__()
         self._check_input(
             states, alphabet, initial_state, accepting_states, transition_function
         )
@@ -687,7 +648,7 @@ class SimpleNFA(
         """Get the successors states."""
         return self._transition_function.get(state, {}).get(symbol, set())
 
-    def determinize(self) -> DFA:
+    def determinize(self) -> FiniteAutomaton:
         """
         Do determinize the NFA.
 
@@ -745,9 +706,7 @@ class SimpleNFA(
             states, alphabet, initial_state, accepting_states, transition_function
         )
 
-    def get_transitions_from(
-        self, state: StateType
-    ) -> Optional[AbstractSet[TransitionType]]:
+    def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
         """
         Get the outgoing transitions from a state.
 
@@ -762,7 +721,7 @@ class SimpleNFA(
         transitions = set()  # type: Set[TransitionType]
         for guard, end_states in self._transition_function.get(state, {}).items():
             for end_state in end_states:
-                transitions.add((guard, end_state))
+                transitions.add((state, guard, end_state))
 
         return transitions
 
