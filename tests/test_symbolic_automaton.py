@@ -356,4 +356,4 @@ def test_to_graphviz():
     automaton.add_transition(state_0, "x | y", state_1)
     automaton.add_transition(state_0, "x | z", state_2)
 
-    automaton.to_graphviz(title="test dfa (initial state final)")
+    automaton.to_graphviz()

@@ -12,22 +12,30 @@ For further details, see:
 """
 import itertools
 import operator
-from typing import Set, Dict, Union, Any, Optional, FrozenSet, Tuple
+from typing import Set, Dict, Union, Any, Optional, FrozenSet, Tuple, AbstractSet
 
-import graphviz
 import sympy
 from sympy import Symbol, simplify, satisfiable, And, Not, Or
 from sympy.logic.boolalg import BooleanFunction, BooleanTrue, BooleanFalse
 from sympy.parsing.sympy_parser import parse_expr
 
 from pythomata._internal_utils import greatest_fixpoint
-from pythomata.core import FiniteAutomaton, SymbolType
+from pythomata.core import (
+    FiniteAutomaton,
+    SymbolType,
+    StateType,
+    TransitionType,
+    Rendering,
+)
 from pythomata.utils import iter_powerset
 
 PropInt = Dict[Union[str, Symbol], bool]
 
 
-class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
+class SymbolicAutomaton(
+    Rendering[int, PropInt, BooleanFunction],
+    FiniteAutomaton[int, PropInt]
+):
     """A symbolic automaton."""
 
     def __init__(self):
@@ -118,7 +126,9 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             except KeyError:
                 pass
 
-    def add_transition(self, state1: int, guard: Union[BooleanFunction, str], state2: int) -> None:
+    def add_transition(
+        self, state1: int, guard: Union[BooleanFunction, str], state2: int
+    ) -> None:
         """
         Add a transition.
 
@@ -152,7 +162,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             return False
         return True
 
-    def complete(self) -> 'SymbolicAutomaton':
+    def complete(self) -> "SymbolicAutomaton":
         """Complete the automaton."""
         states = set(self.states)
         initial_states = self.initial_states
@@ -161,7 +171,11 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         sink_state = None
         for source in states:
             transitions_from_source = self._transition_function.get(source, {})
-            transitions.update(set(map(lambda x: (source, x[1], x[0]), transitions_from_source.items())))
+            transitions.update(
+                set(
+                    map(lambda x: (source, x[1], x[0]), transitions_from_source.items())
+                )
+            )
             guards = transitions_from_source.values()
             guards_negation = simplify(Not(Or(*guards)))
             if satisfiable(guards_negation) is not False:
@@ -171,7 +185,9 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         if sink_state is not None:
             states.add(sink_state)
             transitions.add((sink_state, BooleanTrue(), sink_state))
-        return SymbolicAutomaton._from_transitions(states, initial_states, final_states, transitions)
+        return SymbolicAutomaton._from_transitions(
+            states, initial_states, final_states, transitions
+        )
 
     def is_complete(self) -> bool:
         """
@@ -191,7 +207,7 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
 
         return True
 
-    def determinize(self) -> 'SymbolicAutomaton':
+    def determinize(self) -> "SymbolicAutomaton":
         """Do determinize."""
         if self._deterministic:
             return self
@@ -199,11 +215,14 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         frozen_initial_states = frozenset(self.initial_states)  # type: FrozenSet[int]
         stack = [frozen_initial_states]
         visited = {frozen_initial_states}
-        final_macro_states = {frozen_initial_states} if frozen_initial_states.intersection(
-            self.final_states) != set() else set()  # type: Set[FrozenSet[int]]
+        final_macro_states = (
+            {frozen_initial_states}
+            if frozen_initial_states.intersection(self.final_states) != set()
+            else set()
+        )  # type: Set[FrozenSet[int]]
         moves = set()
 
-        # given an iterable of transitions (i.e. triples (source, guard, destination),
+        # given an iterable of transitions (i.e. triples (source, guard, destination)),
         # get the guard
         def getguard(x):
             return map(operator.itemgetter(1), x)
@@ -215,9 +234,13 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
 
         while len(stack) > 0:
             macro_source = stack.pop()
-            transitions = set([(source, guard, dest)
-                               for source in macro_source
-                               for dest, guard in self._transition_function.get(source, {}).items()])
+            transitions = set(
+                [
+                    (source, guard, dest)
+                    for source in macro_source
+                    for dest, guard in self._transition_function.get(source, {}).items()
+                ]
+            )
             for transitions_subset in map(frozenset, iter_powerset(transitions)):
                 if len(transitions_subset) == 0:
                     continue
@@ -226,7 +249,9 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                 phi_negative = And(*map(Not, getguard(transitions_subset_negated)))
                 phi = phi_positive & phi_negative
                 if sympy.satisfiable(phi) is not False:
-                    macro_dest = frozenset(gettarget(transitions_subset))  # type: FrozenSet[int]
+                    macro_dest = frozenset(
+                        gettarget(transitions_subset)
+                    )  # type: FrozenSet[int]
                     moves.add((macro_source, phi, macro_dest))
                     if macro_dest not in visited:
                         visited.add(macro_dest)
@@ -234,15 +259,25 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                         if macro_dest.intersection(self.final_states) != set():
                             final_macro_states.add(macro_dest)
 
-        return self._from_transitions(visited, {frozen_initial_states}, set(final_macro_states), moves,
-                                      deterministic=True)
+        return self._from_transitions(
+            visited,
+            {frozen_initial_states},
+            set(final_macro_states),
+            moves,
+            deterministic=True,
+        )
 
-    def minimize(self) -> 'SymbolicAutomaton':
+    def minimize(self) -> "SymbolicAutomaton":
         """Minimize."""
         dfa = self.determinize().complete()
         equivalence_relation = set.union(
             {(p, q) for p, q in itertools.product(dfa.final_states, repeat=2)},
-            {(p, q) for p, q in itertools.product(dfa.states.difference(dfa.final_states), repeat=2)}
+            {
+                (p, q)
+                for p, q in itertools.product(
+                dfa.states.difference(dfa.final_states), repeat=2
+            )
+            },
         )
 
         def greatest_fixpoint_condition(el: Tuple[int, int], current_set: Set):
@@ -250,28 +285,40 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
             # unpack the two states
             s_source, t_source = el
             for (s_dest, s_guard) in dfa._transition_function.get(s_source, {}).items():
-                for (t_dest, t_guard) in dfa._transition_function.get(t_source, {}).items():
-                    if t_dest != s_dest \
-                            and (s_dest, t_dest) not in current_set \
-                            and satisfiable(And(s_guard, t_guard)) is not False:
+                for (t_dest, t_guard) in dfa._transition_function.get(
+                    t_source, {}
+                ).items():
+                    if (
+                        t_dest != s_dest
+                        and (s_dest, t_dest) not in current_set
+                        and satisfiable(And(s_guard, t_guard)) is not False
+                    ):
                         return True
 
         # TODO to improve.
-        result = greatest_fixpoint(equivalence_relation, condition=greatest_fixpoint_condition)
+        result = greatest_fixpoint(
+            equivalence_relation, condition=greatest_fixpoint_condition
+        )
         _state2class = {}  # type: Dict[int, Set[int]]
         for a, b in result:
             union = _state2class.get(a, {a}).union(_state2class.get(b, {b}))
             for element in union:
                 _state2class[element] = union
 
-        state2class = {k: frozenset(v) for k, v in _state2class.items()}  # type: Dict[int, FrozenSet[int]]
+        state2class = {
+            k: frozenset(v) for k, v in _state2class.items()
+        }  # type: Dict[int, FrozenSet[int]]
         equivalence_classes = set(map(lambda x: frozenset(x), state2class.values()))
         class2newstate = dict((ec, i) for i, ec in enumerate(equivalence_classes))
 
         new_states = set(class2newstate.values())
-        old_initial_state = next(iter(dfa.initial_states))  # since "dfa" is determinized, there's just one
+        old_initial_state = next(
+            iter(dfa.initial_states)
+        )  # since "dfa" is determinized, there's just one
         initial_states = {class2newstate[state2class[old_initial_state]]}
-        final_states = {class2newstate[state2class[final_state]] for final_state in dfa.final_states}
+        final_states = {
+            class2newstate[state2class[final_state]] for final_state in dfa.final_states
+        }
         transitions = set()
 
         for old_source in dfa._transition_function:
@@ -281,19 +328,18 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
                 transitions.add((new_source, guard, new_dest))
 
         return SymbolicAutomaton._from_transitions(
-            new_states,
-            initial_states,
-            final_states,
-            transitions,
-            deterministic=True
+            new_states, initial_states, final_states, transitions, deterministic=True
         )
 
     @classmethod
-    def _from_transitions(cls, states: Set[Any],
-                          initial_states: Set[Any],
-                          final_states: Set[Any],
-                          transitions: Set[Tuple[Any, SymbolType, Any]],
-                          deterministic: Optional[bool] = None):
+    def _from_transitions(
+        cls,
+        states: Set[Any],
+        initial_states: Set[Any],
+        final_states: Set[Any],
+        transitions: Set[Tuple[Any, SymbolType, Any]],
+        deterministic: Optional[bool] = None,
+    ):
         automaton = SymbolicAutomaton()
         state_to_indices = {}
         indices_to_state = {}
@@ -313,29 +359,22 @@ class SymbolicAutomaton(FiniteAutomaton[int, PropInt]):
         automaton._deterministic = deterministic
         return automaton
 
-    def to_graphviz(self, title: Optional[str] = None) -> graphviz.Digraph:
-        """Convert to graphviz.Digraph object."""
-        g = graphviz.Digraph(format="svg")
-        g.node("fake", style="invisible")
-        for state in self.states:
-            if state in self.initial_states:
-                if state in self.final_states:
-                    g.node(str(state), root="true", shape="doublecircle")
-                else:
-                    g.node(str(state), root="true")
-            elif state in self.final_states:
-                g.node(str(state), shape="doublecircle")
-            else:
-                g.node(str(state))
+    def get_transitions_from(
+        self, state: StateType
+    ) -> Optional[AbstractSet[TransitionType]]:
+        """
+        Get the outgoing transitions from a state.
 
-        for i in self.initial_states:
-            g.edge("fake", str(i), style="bold")
-        for start in self._transition_function:
-            for end, guard in self._transition_function[start].items():
-                g.edge(str(start), str(end), label=str(guard))
+        :param state: the starting state.
+        :return: the set of transitions object associated with that triple.
+                 None if it is not possible to compute such set.
+        :raises ValueError: if the state does not belong to the automaton.
+        """
+        if state not in self.states:
+            raise ValueError("The state does not belong to the automaton.")
 
-        if title is not None:
-            g.attr(label=title)
-            g.attr(fontsize="20")
+        transitions = set()
+        for end, guard in self._transition_function.get(state, {}).items():
+            transitions.add((guard, end))
 
-        return g
+        return transitions

@@ -2,10 +2,14 @@
 """The core module."""
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, Set, Optional
+from typing import List, TypeVar, Generic, AbstractSet, Optional, Tuple, Dict, Any
 
-StateType = TypeVar('StateType')
-SymbolType = TypeVar('SymbolType')
+import graphviz
+
+StateType = TypeVar("StateType")
+SymbolType = TypeVar("SymbolType")
+GuardType = TypeVar("GuardType")
+TransitionType = Tuple[StateType, GuardType, StateType]
 
 
 class Alphabet(Generic[SymbolType], ABC):
@@ -71,9 +75,14 @@ class Alphabet(Generic[SymbolType], ABC):
 class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
     """This is an interface for any finite state automaton (DFAs, NFAs...)."""
 
+    def __init__(self):
+        """Initialize the finite automaton."""
+        self._state_attributes = {}  # type: Dict[StateType, Dict[str, Any]]
+        self._transition_attributes = {}  # type: Dict[TransitionType, Dict[str, Any]]
+
     @property
     @abstractmethod
-    def states(self) -> Set[StateType]:
+    def states(self) -> AbstractSet[StateType]:
         """
         Get the set of states.
 
@@ -82,16 +91,18 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
 
     @property
     @abstractmethod
-    def initial_states(self) -> Set[StateType]:
+    def initial_states(self) -> AbstractSet[StateType]:
         """Get the set of initial states."""
 
     @property
     @abstractmethod
-    def final_states(self) -> Set[StateType]:
+    def final_states(self) -> AbstractSet[StateType]:
         """Get the set of final states."""
 
     @abstractmethod
-    def get_successors(self, state: StateType, symbol: SymbolType) -> Set[StateType]:
+    def get_successors(
+        self, state: StateType, symbol: SymbolType
+    ) -> AbstractSet[StateType]:
         """
         Get the successors of the state in input when reading a symbol.
 
@@ -100,6 +111,76 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :return: the set of successor states.
         :raises ValueError: if the state does not belong to the automaton, or the symbol is not correct.
         """
+
+    def get_transitions_from(
+        self, state: StateType
+    ) -> AbstractSet[TransitionType]:
+        """
+        Get the outgoing transitions from a state.
+
+        A transition is a triple (source_state, guard, destination_state).
+
+        For some implementations, this method might make no sense.
+
+        :param state: the source state.
+        :return: the set of transitions object associated with that triple.
+        :raises ValueError: if the state does not belong to the automaton.
+        """
+        raise NotImplementedError
+
+    def get_transitions(self) -> AbstractSet[TransitionType]:
+        """
+        Get all the transitions.
+
+        :return: the set of transitions.
+        """
+        transitions = set()
+        for state in self.states:
+            for guard, end_state in self.get_transitions_from(state):
+                transitions.add((state, guard, end_state))
+        return transitions
+
+    def get_state_attribute(self, state: StateType, attr_name: str) -> Optional[Any]:
+        """
+        Get a state attribute.
+
+        :param state: the state.
+        :param attr_name: the attribute name.
+        :return: the attribute value.
+        """
+        return self._state_attributes.get(state, {}).get(attr_name, None)
+
+    def set_state_attribute(self, state: StateType, attr_name: str, attr_value: Any) -> None:
+        """
+        Set a state attribute.
+
+        :param state: the state.
+        :param attr_name: the attribute name.
+        :param attr_value: the attribute value.
+        :return: the attribute value.
+        """
+        self._state_attributes.get(state, {})[attr_name] = attr_value
+
+    def get_transition_attribute(self, transition: TransitionType, attr_name: str) -> Optional[Any]:
+        """
+        Get a transition attribute.
+
+        :param transition: the transition.
+        :param attr_name: the attribute name.
+        :return: the attribute value.
+        """
+        return self._state_attributes.get(transition, {}).get(attr_name, None)
+
+    def set_transition_attribute(self, transition: TransitionType, attr_name: str, attr_value: Any) -> None:
+        """
+        Set a transition attribute.
+
+        :param transition: the transition.
+        :param attr_name: the attribute name.
+        :param attr_value: the attribute value.
+        :return: the attribute value.
+        """
+        self._state_attributes.get(transition, {})[attr_name] = attr_value
 
     @property
     def size(self) -> int:
@@ -137,7 +218,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         return any(self.is_accepting(state) for state in current_states)
 
 
-class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType], ABC):
+class DFA(FiniteAutomaton[StateType, SymbolType], Generic[StateType, SymbolType], ABC):
     """An interface for a deterministic finite state automaton."""
 
     @property
@@ -146,7 +227,9 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
         """Get the (unique) initial state."""
 
     @abstractmethod
-    def get_successor(self, state: StateType, symbol: SymbolType) -> Optional[StateType]:
+    def get_successor(
+        self, state: StateType, symbol: SymbolType
+    ) -> Optional[StateType]:
         """
         Get the (unique) successor.
 
@@ -154,14 +237,52 @@ class DFA(Generic[StateType, SymbolType], FiniteAutomaton[StateType, SymbolType]
         """
 
     @property
-    def initial_states(self) -> Set[StateType]:
+    def initial_states(self) -> AbstractSet[StateType]:
         """Get the set of initial states."""
         return {self.initial_state}
 
-    def get_successors(self, state: StateType, symbol: SymbolType) -> Set[StateType]:
+    def get_successors(
+        self, state: StateType, symbol: SymbolType
+    ) -> AbstractSet[StateType]:
         """Get the successors."""
         successor = self.get_successor(state, symbol)
         return {successor} if successor is not None else set()
+
+
+class Rendering(
+    FiniteAutomaton[StateType, SymbolType],
+    Generic[StateType, SymbolType, GuardType],
+    ABC,
+):
+    """The automaton class that implements this interface can use rendering functionalities."""
+
+    def to_graphviz(self) -> graphviz.Digraph:
+        """
+        Convert to graphviz.Digraph object.
+
+        :return: the graphviz.Digraph object.
+        :raises ValueError: if it was not possible to compute the graph.
+        """
+        g = graphviz.Digraph(format="svg")
+        g.node("fake", style="invisible")
+        for state in self.states:
+            if state in self.initial_states:
+                if state in self.final_states:
+                    g.node(str(state), root="true", shape="doublecircle")
+                else:
+                    g.node(str(state), root="true")
+            elif state in self.final_states:
+                g.node(str(state), shape="doublecircle")
+            else:
+                g.node(str(state))
+
+        for i in self.initial_states:
+            g.edge("fake", str(i), style="bold")
+
+        for (start, guard, end) in self.get_transitions():
+            g.edge(str(start), str(end), label=str(guard))
+
+        return g
 
 
 # not used yet

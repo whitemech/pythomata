@@ -57,12 +57,16 @@ class AutomatonSimulator(AbstractSimulator[Set[StateType], SymbolType]):
         """Do a simulation step."""
         next_macro_state = set()  # type: Set[StateType]
         for state in self.cur_state:
-            next_macro_state = next_macro_state.union(self.automaton.get_successors(state, symbol))
+            next_macro_state = next_macro_state.union(
+                self.automaton.get_successors(state, symbol)
+            )
         return next_macro_state
 
     def is_true(self):
         """Check whether the simulator is in an accepting state."""
-        return not self.is_failed() and any(s in self.automaton.final_states for s in self.cur_state)
+        return not self.is_failed() and any(
+            s in self.automaton.final_states for s in self.cur_state
+        )
 
     def is_failed(self) -> bool:
         """Check whether the simulator is in a failed state."""
