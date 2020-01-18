@@ -18,11 +18,14 @@ black = "==19.3b0"
 mkdocs = "*"
 markdown-include = "*"
 coveralls = "*"
-tox-pipenv = "*"
 pytest-cov = "*"
+ipython = "*"
+flake8-bugbear = "*"
+mccabe = "*"
 
 [packages]
 graphviz = "*"
+sympy = "*"
 
 [requires]
 python_version = "3.7"
