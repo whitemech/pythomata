@@ -6,7 +6,7 @@
 [![](https://img.shields.io/pypi/pyversions/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
 [![](https://img.shields.io/badge/docs-mkdocs-9cf)](https://www.mkdocs.org/)
 [![](https://img.shields.io/badge/status-development-orange.svg)](https://img.shields.io/badge/status-development-orange.svg)
-[![](https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master)](https://coveralls.io/github/whitemech/pythomata?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master)](https://coveralls.io/github/whitemech/pythomata?branch=master)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
 [![](https://img.shields.io/badge/mypy-checked-blue)](https://img.shields.io/badge/mypy-checked-blue)
 [![](https://img.shields.io/badge/license-Apache%202-lightgrey)](https://img.shields.io/badge/license-Apache%202-lightgrey)
@@ -89,7 +89,7 @@ graph = dfa.minimize().trim().to_graphviz()
 
 To print the automaton:
 ```
-graph.render("path_to_file.svg")
+graph.render("path_to_file")
 ```
 
 For that you will need to install Graphviz.
@@ -110,6 +110,7 @@ The output looks like the following:
 * Algorithms for DFA minimization and trimming;
 * Algorithm for NFA determinization;
 * Translate automata into Graphviz objects.
+* Support for Symbolic Automata.
 
 
 ## Tests
@@ -120,7 +121,7 @@ To run the tests:
 
 To run only the code style checks:
 
-    tox -e flake8
+    tox -e flake8 -e mypy
 
 ## Docs
 
