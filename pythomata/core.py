@@ -3,15 +3,7 @@
 
 from abc import ABC, abstractmethod
 from functools import reduce
-from typing import (
-    TypeVar,
-    Generic,
-    AbstractSet,
-    Optional,
-    Tuple,
-    Dict,
-    Any,
-    Sequence)
+from typing import TypeVar, Generic, AbstractSet, Optional, Tuple, Dict, Any, Sequence
 
 import graphviz
 
@@ -31,7 +23,7 @@ class Alphabet(Generic[SymbolType], ABC):
 
         :param index: the index.
         :return: the corresponding symbol.
-        :raises ValueError: if there is not any symbol for that index.
+        :raise ValueError: if there is not any symbol for that index.
         """
 
     @abstractmethod
@@ -41,7 +33,7 @@ class Alphabet(Generic[SymbolType], ABC):
 
         :param symbol: the symbol.
         :return: its index.
-        :raises ValueError: if the symbol does not belong to the alphabet.
+        :raise ValueError: if the symbol does not belong to the alphabet.
         """
 
     @property
@@ -81,8 +73,22 @@ class Alphabet(Generic[SymbolType], ABC):
         return isinstance(other, Alphabet) and set(self) == set(other)
 
 
-class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
-    """This is an interface for any finite state automaton (DFAs, NFAs...)."""
+class FiniteAutomaton(Generic[StateType, SymbolType, GuardType], ABC):
+    """
+    This is an interface for any finite state automaton (DFAs, NFAs...).
+
+    The implementer of this interface must decide:
+    - `StateType`, namely the type of state to use (e.g. integers, strings, ...);
+    - `SymbolType`, namely the type of symbol that the automaton can read;
+    - `GuardType`, namely the type of guard (e.g. symbol, propositional formulas, ...).
+
+    A transition is a triple `(source, guard, destination)`, where
+    `source` and `destination` are instances of the `StateType` class,
+    whereas `guard` is an instance of `GuardType`.
+
+    By convention, the automaton must have at least one state, and only one
+    of them is an initial state.
+    """
 
     def __init__(self):
         """Initialize the finite automaton."""
@@ -100,13 +106,21 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
 
     @property
     @abstractmethod
-    def initial_states(self) -> AbstractSet[StateType]:
-        """Get the set of initial states."""
+    def initial_state(self) -> StateType:
+        """
+        Get the initial state.
+
+        :return: the initial state.
+        """
 
     @property
     @abstractmethod
-    def final_states(self) -> AbstractSet[StateType]:
-        """Get the set of final states."""
+    def accepting_states(self) -> AbstractSet[StateType]:
+        """
+        Get the set of accepting states.
+
+        :return: the set of accepting states.
+        """
 
     @abstractmethod
     def get_successors(
@@ -118,7 +132,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :param state: the state from which to compute the successors.
         :param symbol: the symbol of the transition.
         :return: the set of successor states.
-        :raises ValueError: if the state does not belong to the automaton, or the symbol is not correct.
+        :raise ValueError: if the state does not belong to the automaton, or the symbol is not correct.
         """
 
     def get_transitions_from(self, state: StateType) -> AbstractSet[TransitionType]:
@@ -127,11 +141,13 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
 
         A transition is a triple (source_state, guard, destination_state).
 
-        For some implementations, this method might make no sense.
+        For some implementations, this method might make no sense. Hence,
+        the implementation of this method is optional. However, some
+        features that use this method might not work (e.g. the rendering).
 
         :param state: the source state.
         :return: the set of transitions object associated with that triple.
-        :raises ValueError: if the state does not belong to the automaton.
+        :raise ValueError: if the state does not belong to the automaton.
         """
         raise NotImplementedError
 
@@ -210,9 +226,11 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
 
         :param state: the state of the automaton.
         :return: True if the state is accepting, false otherwise.
-        :raises ValueError: if the state does not belong to the automaton.
+        :raise ValueError: if the state does not belong to the automaton.
         """
-        return state in self.final_states
+        if state not in self.states:
+            raise ValueError("The state does not belong to the automaton.")
+        return state in self.accepting_states
 
     def accepts(self, word: Sequence[SymbolType]) -> bool:
         """
@@ -221,7 +239,7 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         :param word: the list of symbols.
         :return: True if the automaton accepts the word, False otherwise.
         """
-        current_states = self.initial_states  # type: AbstractSet[StateType]
+        current_states = {self.initial_state}  # type: AbstractSet[StateType]
         for symbol in word:
             current_states = reduce(
                 set.union,  # type: ignore
@@ -232,13 +250,12 @@ class FiniteAutomaton(Generic[StateType, SymbolType], ABC):
         return any(self.is_accepting(state) for state in current_states)
 
 
-class DFA(FiniteAutomaton[StateType, SymbolType], Generic[StateType, SymbolType], ABC):
+class DFA(
+    FiniteAutomaton[StateType, SymbolType, GuardType],
+    Generic[StateType, SymbolType, GuardType],
+    ABC,
+):
     """An interface for a deterministic finite state automaton."""
-
-    @property
-    @abstractmethod
-    def initial_state(self) -> StateType:
-        """Get the (unique) initial state."""
 
     @abstractmethod
     def get_successor(
@@ -250,11 +267,6 @@ class DFA(FiniteAutomaton[StateType, SymbolType], Generic[StateType, SymbolType]
         If not defined, return None.
         """
 
-    @property
-    def initial_states(self) -> AbstractSet[StateType]:
-        """Get the set of initial states."""
-        return {self.initial_state}
-
     def get_successors(
         self, state: StateType, symbol: SymbolType
     ) -> AbstractSet[StateType]:
@@ -264,7 +276,7 @@ class DFA(FiniteAutomaton[StateType, SymbolType], Generic[StateType, SymbolType]
 
 
 class Rendering(
-    FiniteAutomaton[StateType, SymbolType],
+    FiniteAutomaton[StateType, SymbolType, GuardType],
     Generic[StateType, SymbolType, GuardType],
     ABC,
 ):
@@ -275,23 +287,22 @@ class Rendering(
         Convert to graphviz.Digraph object.
 
         :return: the graphviz.Digraph object.
-        :raises ValueError: if it was not possible to compute the graph.
+        :raise ValueError: if it was not possible to compute the graph.
         """
         graph = graphviz.Digraph(format="svg")
         graph.node("fake", style="invisible")
         for state in self.states:
-            if state in self.initial_states:
-                if state in self.final_states:
+            if state == self.initial_state:
+                if state in self.accepting_states:
                     graph.node(str(state), root="true", shape="doublecircle")
                 else:
                     graph.node(str(state), root="true")
-            elif state in self.final_states:
+            elif state in self.accepting_states:
                 graph.node(str(state), shape="doublecircle")
             else:
                 graph.node(str(state))
 
-        for i in self.initial_states:
-            graph.edge("fake", str(i), style="bold")
+        graph.edge("fake", str(self.initial_state), style="bold")
 
         for (start, guard, end) in self.get_transitions():
             graph.edge(str(start), str(end), label=str(guard))
@@ -299,14 +310,85 @@ class Rendering(
         return graph
 
 
+class MutableAutomaton(
+    Generic[StateType, SymbolType, GuardType],
+    FiniteAutomaton[StateType, SymbolType, GuardType],
+):
+    """This interface refines the FiniteAutomaton interface by adding methods to modify the automaton."""
+
+    @abstractmethod
+    def create_state(self) -> StateType:
+        """
+        Create a state.
+
+        :return: the new created state.
+        """
+
+    @abstractmethod
+    def remove_state(self, state: StateType) -> None:
+        """
+        Remove a state.
+
+        The implementation should also drop all the transitions
+        starting from that state.
+
+        :return: None.
+        :raise ValueError: if the state does not exist.
+        """
+
+    @abstractmethod
+    def add_transition(self, transition: TransitionType) -> None:
+        """
+        Add a transition, i.e. a tuple (source, guard, destination).
+
+        :param transition: the transition to add.
+        :return: None
+        :raise ValueError: if the source state does not exist.
+        :raise ValueError: if the dest state does not exist.
+        """
+
+    @abstractmethod
+    def remove_transition(self, transition: TransitionType) -> None:
+        """
+        Remove a transition.
+
+        :param transition: the transition to remove.
+        :return: None
+        :raise ValueError: if the transition does not exist.
+        """
+
+    @abstractmethod
+    def set_accepting_state(self, state: int, is_accepting: bool) -> None:
+        """
+        Set a state to be accepting.
+
+        :param state: a state of the automaton.
+        :param is_accepting: whether the state is an accepting state or not.
+        :return: None
+        :raise ValueError: if the state does not exist.
+        """
+
+    @abstractmethod
+    def set_initial_state(self, state: int) -> None:
+        """
+        Set a state to be initial.
+
+        This method overwrites the previous initial state.
+
+        :param state: a state of the automaton.
+        :return: None
+        :raise ValueError: if the state does not exist.
+        """
+
+
 # not used yet
 class AutomataOperations(Generic[StateType, SymbolType], ABC):
     """An interface for automata operations."""
 
     @abstractmethod
-    def determinize(self) -> DFA[StateType, SymbolType]:
+    def determinize(self) -> DFA[StateType, SymbolType, GuardType]:
         """Make the automaton deterministic."""
 
     @abstractmethod
-    def minimize(self) -> FiniteAutomaton[StateType, SymbolType]:
+    def minimize(self) -> FiniteAutomaton[StateType, SymbolType, GuardType]:
         """Minimize the automaton."""

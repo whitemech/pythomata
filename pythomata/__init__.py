@@ -12,4 +12,4 @@ from pythomata.__version__ import (
 
 
 from .impl.simple import SimpleDFA
-from .impl.symbolic import SymbolicAutomaton, PropInt
+from .impl.symbolic import SymbolicAutomaton, PropositionalInterpretation
