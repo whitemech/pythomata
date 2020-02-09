@@ -22,7 +22,7 @@ from pythomata.utils import powerset
 
 class SimpleDFA(
     Generic[StateType, SymbolType],
-    DFA[StateType, SymbolType],
+    DFA[StateType, SymbolType, SymbolType],
     Rendering[StateType, SymbolType, SymbolType],
 ):
     """
@@ -40,7 +40,7 @@ class SimpleDFA(
         states: Set[StateType],
         alphabet: AlphabetLike[SymbolType],
         initial_state: StateType,
-        final_states: Set[StateType],
+        accepting_states: Set[StateType],
         transition_function: Dict[StateType, Dict[SymbolType, StateType]],
     ):
         """
@@ -49,19 +49,21 @@ class SimpleDFA(
         :param states: the set of states.
         :param alphabet: the alphabet
         :param initial_state: the initial state
-        :param final_states: the set of accepting states
+        :param accepting_states: the set of accepting states
         :param transition_function: the transition function
         """
         super().__init__()
-        alphabet = MapAlphabet(alphabet) if not isinstance(alphabet, Alphabet) else alphabet
+        alphabet = (
+            MapAlphabet(alphabet) if not isinstance(alphabet, Alphabet) else alphabet
+        )
         self._check_input(
-            states, alphabet, initial_state, final_states, transition_function
+            states, alphabet, initial_state, accepting_states, transition_function
         )
 
         self._states = states
         self._alphabet = alphabet
         self._initial_state = initial_state
-        self._final_states = final_states
+        self._accepting_states = accepting_states
         self._transition_function = transition_function
 
         self._build_indexes()
@@ -74,7 +76,7 @@ class SimpleDFA(
     @property
     def transition_function(self) -> Dict:
         """Get the transition function."""
-        return self._transition_function
+        return dict(self._transition_function)
 
     @property
     def initial_state(self) -> StateType:
@@ -88,12 +90,12 @@ class SimpleDFA(
     @property
     def states(self) -> Set[StateType]:
         """Get the set of states."""
-        return self._states
+        return set(self._states)
 
     @property
-    def final_states(self) -> Set[StateType]:
-        """Get the set of final states."""
-        return self._final_states
+    def accepting_states(self) -> Set[StateType]:
+        """Get the set of accepting states."""
+        return set(self._accepting_states)
 
     @classmethod
     def _check_input(
@@ -145,7 +147,7 @@ class SimpleDFA(
 
         self._idx_initial_state = self._state_to_idx[self._initial_state]
         self._idx_accepting_states = frozenset(
-            self._state_to_idx[s] for s in self.final_states
+            self._state_to_idx[s] for s in self.accepting_states
         )
 
     def __eq__(self, other):
@@ -157,7 +159,7 @@ class SimpleDFA(
             self._states == other.states
             and self._alphabet == other.alphabet
             and self._initial_state == other.initial_state
-            and self.final_states == other.final_states
+            and self._accepting_states == other.accepting_states
             and self._transition_function == other.transition_function
         )
 
@@ -229,7 +231,7 @@ class SimpleDFA(
             self.states.union({sink_state}),
             self.alphabet,
             self.initial_state,
-            self.final_states,
+            self.accepting_states,
             transitions,
         )
 
@@ -349,7 +351,7 @@ class SimpleDFA(
                     ] = self._idx_to_state[next_state]
 
         new_states = set(map(lambda x: self._idx_to_state[x], idx_new_states))
-        new_final_states = new_states.intersection(self._final_states)
+        new_final_states = new_states.intersection(self._accepting_states)
 
         return SimpleDFA(
             new_states,
@@ -365,9 +367,9 @@ class SimpleDFA(
 
         :return: the co-reachable DFA.
         """
-        # least fixpoint
 
         def coreachable_fixpoint_rule(current_set: Set) -> Iterable:
+            # least fixpoint
             result = set()
             for s in range(len(self._states)):
                 for a in self._idx_transition_function.get(s, {}):
@@ -403,7 +405,7 @@ class SimpleDFA(
             new_states,
             self.alphabet,
             self.initial_state,
-            set(self._final_states),
+            set(self._accepting_states),
             new_transition_function,
         )
 
@@ -426,12 +428,12 @@ class SimpleDFA(
         i.e. the number of steps to reach any accepting state.
         level = -1 if the state cannot reach any accepting state
         """
-        res = {accepting_state: 0 for accepting_state in self.final_states}
+        res = {accepting_state: 0 for accepting_state in self.accepting_states}
         level = 0
 
         # least fixpoint
         z_current = set()  # type: Set[StateType]
-        z_next = set(self.final_states)
+        z_next = set(self.accepting_states)
 
         while z_current != z_next:
             level += 1
@@ -541,7 +543,7 @@ class EmptyDFA(SimpleDFA):
 class SimpleNFA(
     Generic[StateType, SymbolType],
     Rendering[StateType, SymbolType, SymbolType],
-    FiniteAutomaton[StateType, SymbolType],
+    FiniteAutomaton[StateType, SymbolType, SymbolType],
 ):
     """This class implements a NFA."""
 
@@ -563,7 +565,9 @@ class SimpleNFA(
         :param transition_function: the transition function
         """
         super().__init__()
-        alphabet = MapAlphabet(alphabet) if not isinstance(alphabet, Alphabet) else alphabet
+        alphabet = (
+            MapAlphabet(alphabet) if not isinstance(alphabet, Alphabet) else alphabet
+        )
         self._check_input(
             states, alphabet, initial_state, accepting_states, transition_function
         )
@@ -632,13 +636,13 @@ class SimpleNFA(
         return set(self._states)
 
     @property
-    def initial_states(self) -> Set[StateType]:
-        """Get the initial states."""
-        return {self._initial_state}
+    def initial_state(self) -> StateType:
+        """Get the initial state."""
+        return self._initial_state
 
     @property
-    def final_states(self) -> Set[StateType]:
-        """Get the final states."""
+    def accepting_states(self) -> Set[StateType]:
+        """Get the accepting states."""
         return set(self._accepting_states)
 
     @property
@@ -650,7 +654,7 @@ class SimpleNFA(
         """Get the successors states."""
         return self._transition_function.get(state, {}).get(symbol, set())
 
-    def determinize(self) -> FiniteAutomaton:
+    def determinize(self) -> SimpleDFA:
         """
         Do determinize the NFA.
 
@@ -734,8 +738,8 @@ class SimpleNFA(
         return (
             self.states == other.states
             and self.alphabet == other.alphabet
-            and self.initial_states == other.initial_states
-            and self.final_states == other.final_states
+            and self.initial_state == other.initial_state
+            and self.accepting_states == other.accepting_states
             and self.transition_function == other.transition_function
         )
 

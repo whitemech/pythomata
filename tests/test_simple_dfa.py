@@ -39,17 +39,13 @@ class TestSimpleDFA:
         """Test the set of states is correct."""
         assert self.dfa.states == {0, 1, 2}
 
-    def test_initial_states(self):
-        """Test initial states."""
-        assert self.dfa.initial_states == {0}
-
     def test_initial_state(self):
-        """Test initial states."""
+        """Test initial state."""
         assert self.dfa.initial_state == 0
 
     def test_final_states(self):
         """Test initial states."""
-        assert self.dfa.final_states == {2}
+        assert self.dfa.accepting_states == {2}
 
     def test_size(self):
         """Test size."""
@@ -536,7 +532,7 @@ class TestSimulator:
         simulator = AutomatonSimulator(self.dfa)
 
         assert simulator.automaton == self.dfa
-        assert simulator.cur_state == self.dfa.initial_states
+        assert simulator.cur_state == {self.dfa.initial_state}
         assert not simulator.is_started
 
     @given(simple_words(list("abcd"), min_size=0, max_size=5))
@@ -586,7 +582,7 @@ class TestSimulator:
         simulator = AutomatonSimulator(self.dfa)
 
         assert not simulator.is_started
-        assert simulator.cur_state == self.dfa.initial_states
+        assert simulator.cur_state == {self.dfa.initial_state}
 
         for symbol in word:
             simulator.step(symbol)
@@ -594,7 +590,7 @@ class TestSimulator:
 
         initial_state = simulator.reset()
         assert not simulator.is_started
-        assert simulator.cur_state == initial_state == self.dfa.initial_states
+        assert simulator.cur_state == initial_state == {self.dfa.initial_state}
 
     @given(simple_words(list("abcd"), min_size=0, max_size=10))
     def test_accepts(self, word):

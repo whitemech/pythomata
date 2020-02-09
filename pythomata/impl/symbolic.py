@@ -20,26 +20,36 @@ from sympy.logic.boolalg import BooleanFunction, BooleanTrue, BooleanFalse
 from sympy.parsing.sympy_parser import parse_expr
 
 from pythomata._internal_utils import greatest_fixpoint
-from pythomata.core import FiniteAutomaton, SymbolType, Rendering
+from pythomata.core import FiniteAutomaton, SymbolType, Rendering, DFA, TransitionType
 from pythomata.utils import iter_powerset
 
-PropInt = Dict[Union[str, Symbol], bool]
+PropositionalInterpretation = Dict[Union[str, Symbol], bool]
 
 
 class SymbolicAutomaton(
-    Rendering[int, PropInt, BooleanFunction], FiniteAutomaton[int, PropInt]
+    Rendering[int, PropositionalInterpretation, BooleanFunction],
+    FiniteAutomaton[int, PropositionalInterpretation, BooleanFunction],
 ):
-    """A symbolic automaton."""
+    """
+    A symbolic non-deterministic finite automaton.
+
+    It can recognize sequences of propositional interpretations. E.g.:
+    >>> word = [{"a": True, "b": False}, {}]
+
+    If a symbol is not present, it is assumed to be false.
+
+    States are represented as integers. The guards are sympy.BooleanFunction instances.
+    """
 
     def __init__(self):
         """Initialize a Symbolic automaton."""
-        self._initial_states = set()
-        self._states = set()
+        super().__init__()
+        self._initial_state = 0
+        self._states = {0}
         self._final_states = set()  # type: Set[int]
-        self._state_counter = 0
+        self._state_counter = 1
 
         self._transition_function = {}  # type: Dict[int, Dict[int, BooleanFunction]]
-        self._deterministic = None  # type: Optional[bool]
 
     @property
     def states(self) -> Set[int]:
@@ -47,24 +57,18 @@ class SymbolicAutomaton(
         return self._states
 
     @property
-    def final_states(self) -> Set[int]:
+    def accepting_states(self) -> Set[int]:
         """Get the final states."""
         return self._final_states
 
     @property
-    def initial_states(self) -> Set[int]:
-        """Get the initial states."""
-        return self._initial_states
+    def initial_state(self) -> int:
+        """Get the initial state."""
+        return self._initial_state
 
-    @property
-    def is_deterministic(self) -> Optional[bool]:
-        """Check if the automaton is deterministic.
-
-        :return True if the automaton is deterministic, False if it is not, and None if we don't know.
-        """
-        return self._deterministic
-
-    def get_successors(self, state: int, symbol: PropInt) -> Set[int]:
+    def get_successors(
+        self, state: int, symbol: PropositionalInterpretation
+    ) -> Set[int]:
         """Get the successor states.."""
         if state not in self.states:
             raise ValueError("State not in set of states.")
@@ -90,48 +94,47 @@ class SymbolicAutomaton(
         """Remove a state."""
         if state not in self.states:
             raise ValueError("State {} not found.".format(state))
+        if state == self.initial_state:
+            raise ValueError("Cannot remove initial state.")
 
         self._transition_function.pop(state, None)
         for s in self._transition_function:
             self._transition_function[s].pop(state, None)
 
-    def set_final_state(self, state: int, is_final: bool) -> None:
+        self._states.remove(state)
+        if state in self.accepting_states:
+            self._final_states.remove(state)
+
+    def set_accepting_state(self, state: int, is_accepting: bool) -> None:
         """Set a state to be final."""
         if state not in self.states:
             raise ValueError("State {} not found.".format(state))
-        if is_final:
-            self.final_states.add(state)
+        if is_accepting:
+            self.accepting_states.add(state)
         else:
             try:
-                self.final_states.remove(state)
+                self.accepting_states.remove(state)
             except KeyError:
                 pass
 
-    def set_initial_state(self, state: int, is_initial: bool) -> None:
+    def set_initial_state(self, state: int) -> None:
         """Set a state to be an initial state."""
         if state not in self.states:
             raise ValueError("State {} not found.".format(state))
-        if is_initial:
-            self.initial_states.add(state)
-        else:
-            try:
-                self.initial_states.remove(state)
-            except KeyError:
-                pass
+        self._initial_state = state
 
     def add_transition(
-        self, state1: int, guard: Union[BooleanFunction, str], state2: int
+        self, transition: Tuple[int, Union[BooleanFunction, str], int]
     ) -> None:
         """
-        Add a transition.
+        Add a transition, i.e. a tuple (source, guard, destination).
 
-        :param state1: the start state of the transition.
-        :param guard: the guard of the transition.
-                      it can be either a sympy.logic.boolalg.BooleanFunction object
-                      or a string that can be parsed with sympy.parsing.sympy_parser.parse_expr.
-        :param state2:
-        :return:
+        :param transition: the transition to add.
+        :return: None
+        :raise ValueError: if the source state does not exist.
+        :raise ValueError: if the dest state does not exist.
         """
+        state1, guard, state2 = transition
         assert state1 in self.states
         assert state2 in self.states
         if isinstance(guard, str):
@@ -142,8 +145,6 @@ class SymbolicAutomaton(
         else:
             # take the OR of the two guards.
             self._transition_function[state1][state2] = simplify(other_guard | guard)
-
-        self._deterministic = None
 
     def _is_valid_symbol(self, symbol: Any) -> bool:
         """Return true if the given symbol is valid, false otherwise."""
@@ -158,8 +159,8 @@ class SymbolicAutomaton(
     def complete(self) -> "SymbolicAutomaton":
         """Complete the automaton."""
         states = set(self.states)
-        initial_states = self.initial_states
-        final_states = self.final_states
+        initial_state = self.initial_state
+        final_states = self.accepting_states
         transitions = set()
         sink_state = None
         for source in states:
@@ -179,7 +180,7 @@ class SymbolicAutomaton(
             states.add(sink_state)
             transitions.add((sink_state, BooleanTrue(), sink_state))
         return SymbolicAutomaton._from_transitions(
-            states, initial_states, final_states, transitions
+            states, initial_state, final_states, transitions
         )
 
     def is_complete(self) -> bool:
@@ -200,17 +201,14 @@ class SymbolicAutomaton(
 
         return True
 
-    def determinize(self) -> "SymbolicAutomaton":
+    def determinize(self) -> "SymbolicDFA":
         """Do determinize."""
-        if self._deterministic:
-            return self
-
-        frozen_initial_states = frozenset(self.initial_states)  # type: FrozenSet[int]
-        stack = [frozen_initial_states]
-        visited = {frozen_initial_states}
-        final_macro_states = (
-            {frozen_initial_states}
-            if frozen_initial_states.intersection(self.final_states) != set()
+        macro_initial_state = frozenset([self._initial_state])  # type: FrozenSet[int]
+        stack = [macro_initial_state]
+        visited = {macro_initial_state}
+        macro_accepting_states = (
+            {macro_initial_state}
+            if macro_initial_state.intersection(self.accepting_states) != set()
             else set()
         )  # type: Set[FrozenSet[int]]
         moves = set()
@@ -249,26 +247,22 @@ class SymbolicAutomaton(
                     if macro_dest not in visited:
                         visited.add(macro_dest)
                         stack.append(macro_dest)
-                        if macro_dest.intersection(self.final_states) != set():
-                            final_macro_states.add(macro_dest)
+                        if macro_dest.intersection(self.accepting_states) != set():
+                            macro_accepting_states.add(macro_dest)
 
         return self._from_transitions(
-            visited,
-            {frozen_initial_states},
-            set(final_macro_states),
-            moves,
-            deterministic=True,
+            visited, macro_initial_state, set(macro_accepting_states), moves
         )
 
-    def minimize(self) -> "SymbolicAutomaton":
-        """Minimize."""
+    def minimize(self) -> "SymbolicDFA":
+        """Minimize the NFA."""
         dfa = self.determinize().complete()
         equivalence_relation = set.union(
-            {(p, q) for p, q in itertools.product(dfa.final_states, repeat=2)},
+            {(p, q) for p, q in itertools.product(dfa.accepting_states, repeat=2)},
             {
                 (p, q)
                 for p, q in itertools.product(
-                    dfa.states.difference(dfa.final_states), repeat=2
+                    dfa.states.difference(dfa.accepting_states), repeat=2
                 )
             },
         )
@@ -305,12 +299,11 @@ class SymbolicAutomaton(
         class2newstate = dict((ec, i) for i, ec in enumerate(equivalence_classes))
 
         new_states = set(class2newstate.values())
-        old_initial_state = next(
-            iter(dfa.initial_states)
-        )  # since "dfa" is determinized, there's just one
-        initial_states = {class2newstate[state2class[old_initial_state]]}
+        old_initial_state = dfa.initial_state
+        initial_state = class2newstate[state2class[old_initial_state]]
         final_states = {
-            class2newstate[state2class[final_state]] for final_state in dfa.final_states
+            class2newstate[state2class[final_state]]
+            for final_state in dfa.accepting_states
         }
         transitions = set()
 
@@ -321,35 +314,38 @@ class SymbolicAutomaton(
                 transitions.add((new_source, guard, new_dest))
 
         return SymbolicAutomaton._from_transitions(
-            new_states, initial_states, final_states, transitions, deterministic=True
+            new_states, initial_state, final_states, transitions
         )
 
     @classmethod
     def _from_transitions(
         cls,
         states: Set[Any],
-        initial_states: Set[Any],
+        initial_state: Any,
         final_states: Set[Any],
         transitions: Set[Tuple[Any, SymbolType, Any]],
-        deterministic: Optional[bool] = None,
     ):
-        automaton = SymbolicAutomaton()
+        assert initial_state in states
+        automaton = SymbolicDFA()
         state_to_indices = {}
         indices_to_state = {}
 
+        initial_state_idx = automaton.initial_state
+        state_to_indices[initial_state] = initial_state_idx
+
         for s in states:
+            if s == initial_state:
+                continue
             new_index = automaton.create_state()
-            automaton.set_initial_state(new_index, s in initial_states)
-            automaton.set_final_state(new_index, s in final_states)
+            automaton.set_accepting_state(new_index, s in final_states)
             state_to_indices[s] = new_index
             indices_to_state[new_index] = s
 
         for (source, guard, destination) in transitions:
             source_index = state_to_indices[source]
             dest_index = state_to_indices[destination]
-            automaton.add_transition(source_index, guard, dest_index)
+            automaton.add_transition((source_index, guard, dest_index))
 
-        automaton._deterministic = deterministic
         return automaton
 
     def get_transitions_from(
@@ -371,3 +367,51 @@ class SymbolicAutomaton(
             transitions.add((state, guard, end))
 
         return transitions
+
+
+class SymbolicDFA(SymbolicAutomaton, DFA):
+    """Implement a symbolic Deterministic Finite Automaton."""
+
+    def set_initial_state(self, state: int) -> None:
+        """Set a state to be an initial state."""
+        if state not in self.states:
+            raise ValueError("State {} not found.".format(state))
+        self._initial_state = state
+
+    def add_transition(self, transition: TransitionType) -> None:
+        """
+        Add a transition, i.e. a tuple (source, guard, destination).
+
+        :param transition: the transition to add.
+        :return: None
+        :raise ValueError: if the source state does not exist.
+        :raise ValueError: if the dest state does not exist.
+        """
+        state1, guard, state2 = transition
+        assert state1 in self.states
+        assert state2 in self.states
+        if isinstance(guard, str):
+            guard = simplify(parse_expr(guard))
+        other_guard = self._transition_function.get(state1, {}).get(state2, None)
+        if other_guard is None:
+            super().add_transition((state1, guard, state2))
+        else:
+            outgoing_guards = self._transition_function.get(state1, {}).values()
+            ors = sympy.Or(*outgoing_guards)
+            all_outgoing_guards = sympy.And(ors, guard)
+            if sympy.satisfiable(all_outgoing_guards) is False:
+                super().add_transition((state1, guard, state2))
+            else:
+                raise ValueError("Transition is not deterministic.")
+
+    def get_successor(
+        self, state: int, symbol: PropositionalInterpretation
+    ) -> Optional[int]:
+        """
+        Get the (unique) successor.
+
+        If not defined, return None.
+        """
+        successors = super().get_successors(state, symbol)
+        assert len(successors) < 2, "Transition must be deterministic"
+        return next(iter(successors)) if len(successors) == 1 else None
