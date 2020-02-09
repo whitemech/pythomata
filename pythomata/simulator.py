@@ -52,9 +52,9 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
         """
         self._automaton = automaton
         self._is_started = False  # type: bool
-        self._current_states = (
-            self._automaton.initial_states
-        )  # type: AbstractSet[StateType]
+        self._current_states = {
+            self._automaton.initial_state
+        }  # type: AbstractSet[StateType]
 
     @property
     def automaton(self) -> FiniteAutomaton:
@@ -72,7 +72,7 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
         Get the current states of the simulator.
 
         :return: the index corresponding to the automaton state.
-               | If None, then the simulation is in a failure state.
+               | If empty, then the simulation is in a failure state.
         """
         return self._current_states
 
@@ -87,10 +87,10 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
         self._current_states = next_macro_state
         return next_macro_state
 
-    def is_true(self):
+    def is_true(self) -> bool:
         """Check whether the simulator is in an accepting state."""
         return not self.is_failed() and any(
-            s in self.automaton.final_states for s in self.cur_state
+            s in self.automaton.accepting_states for s in self.cur_state
         )
 
     def is_failed(self) -> bool:
@@ -99,7 +99,7 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
 
     def reset(self) -> AbstractSet[StateType]:
         """Reset the simulator."""
-        self._current_states = self.automaton.initial_states
+        self._current_states = {self.automaton.initial_state}
         self._is_started = False
         return self.cur_state
 
@@ -113,4 +113,4 @@ class AutomatonSimulator(AbstractSimulator[StateType, SymbolType]):
                 set(),
             )
 
-        return any(state in self.automaton.final_states for state in current_states)
+        return any(state in self.automaton.accepting_states for state in current_states)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+"""Test symbolic automaton."""
 from functools import reduce
 
+import pytest
 import sympy
 from hypothesis import given
 from sympy import Symbol
@@ -27,19 +29,19 @@ class TestSymbolicAutomatonEmptyLanguage:
 
     def test_states(self):
         """Test the set of states is correct."""
-        assert self.automaton.states == set()
+        assert self.automaton.states == {0}
 
-    def test_initial_states(self):
-        """Test initial states."""
-        assert self.automaton.initial_states == set()
+    def test_initial_state(self):
+        """Test initial state."""
+        assert self.automaton.initial_state == 0
 
     def test_final_states(self):
         """Test initial states."""
-        assert self.automaton.final_states == set()
+        assert self.automaton.accepting_states == set()
 
     def test_size(self):
         """Test size."""
-        assert self.automaton.size == 0
+        assert self.automaton.size == 1
 
 
 class TestSymbolicAutomatonEmptyStringLanguage:
@@ -49,9 +51,8 @@ class TestSymbolicAutomatonEmptyStringLanguage:
     def setup_class(cls):
         """Set the test up."""
         cls.automaton = SymbolicAutomaton()
-        cls.automaton.create_state()
-        cls.automaton.set_initial_state(0, True)
-        cls.automaton.set_final_state(0, True)
+        cls.automaton.set_initial_state(0)
+        cls.automaton.set_accepting_state(0, True)
 
     def test_accepts(self):
         """Test the accepts work as expected."""
@@ -65,11 +66,11 @@ class TestSymbolicAutomatonEmptyStringLanguage:
 
     def test_initial_states(self):
         """Test initial states."""
-        assert self.automaton.initial_states == {0}
+        assert self.automaton.initial_state == 0
 
     def test_final_states(self):
         """Test initial states."""
-        assert self.automaton.final_states == {0}
+        assert self.automaton.accepting_states == {0}
 
     def test_size(self):
         """Test size."""
@@ -95,13 +96,13 @@ class TestSymbolicAutomatonSingletonLanguage:
     def setup_class(cls):
         """Set the test up."""
         cls.automaton = SymbolicAutomaton()
-        state_0 = cls.automaton.create_state()
+        state_0 = 0
         state_1 = cls.automaton.create_state()
-        cls.automaton.set_initial_state(state_0, True)
-        cls.automaton.set_final_state(state_1, True)
+        cls.automaton.set_initial_state(state_0)
+        cls.automaton.set_accepting_state(state_1, True)
 
         a = Symbol("a")
-        cls.automaton.add_transition(state_0, a, state_1)
+        cls.automaton.add_transition((state_0, a, state_1))
 
     def test_accepts(self):
         """Test the accepts work as expected."""
@@ -120,11 +121,11 @@ class TestSymbolicAutomatonSingletonLanguage:
 
     def test_initial_states(self):
         """Test initial states."""
-        assert self.automaton.initial_states == {0}
+        assert self.automaton.initial_state == 0
 
     def test_final_states(self):
         """Test initial states."""
-        assert self.automaton.final_states == {1}
+        assert self.automaton.accepting_states == {1}
 
     def test_size(self):
         """Test size."""
@@ -142,6 +143,78 @@ class TestSymbolicAutomatonSingletonLanguage:
         assert self.automaton.is_accepting(1)
 
 
+class TestCreateState:
+    """Test 'create_state" method."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        cls.automaton = SymbolicAutomaton()
+
+        assert len(cls.automaton.states) == 1
+        assert cls.automaton.states == {0}
+
+        cls.new_state = cls.automaton.create_state()
+
+    def test_new_state_created(self):
+        """Test create state works as expected."""
+        assert self.automaton.states == {0, 1}
+
+
+class TestRemoveState:
+    """Test 'remove_state" method."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        cls.automaton = SymbolicAutomaton()
+
+        assert len(cls.automaton.states) == 1
+        assert cls.automaton.states == {0}
+
+        cls.new_state = cls.automaton.create_state()
+        assert cls.automaton.states == {0, 1}
+
+    def test_state_removed(self):
+        """Test remove state works as expected."""
+        self.automaton.remove_state(self.new_state)
+        assert self.automaton.states == {0}
+
+
+class TestRemoveNonExistingState:
+    """Test 'remove_state" with a non-existing state."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        cls.automaton = SymbolicAutomaton()
+
+        assert len(cls.automaton.states) == 1
+        assert cls.automaton.states == {0}
+
+    def test_removing_initial_state_raises_exception(self):
+        """Test remove state raises ValueError when try to remove initial state."""
+        with pytest.raises(ValueError, match="State 42 not found."):
+            self.automaton.remove_state(42)
+
+
+class TestRemoveInitialState:
+    """Test 'remove_state" with the initial state in input."""
+
+    @classmethod
+    def setup_class(cls):
+        """Set the test up."""
+        cls.automaton = SymbolicAutomaton()
+
+        assert len(cls.automaton.states) == 1
+        assert cls.automaton.states == {0}
+
+    def test_removing_initial_state_raises_exception(self):
+        """Test remove state raises ValueError when try to remove initial state."""
+        with pytest.raises(ValueError, match="Cannot remove initial state."):
+            self.automaton.remove_state(0)
+
+
 class TestSymbolicAutomatonUniversalLanguage:
     """Test the symbolic automaton recognizes the universal language."""
 
@@ -149,22 +222,15 @@ class TestSymbolicAutomatonUniversalLanguage:
     def setup_class(cls):
         """Set the test up."""
         cls.automaton = SymbolicAutomaton()
-        state_0 = cls.automaton.create_state()
-        cls.automaton.set_initial_state(state_0, True)
-        cls.automaton.set_final_state(state_0, True)
-        cls.automaton.add_transition(state_0, BooleanTrue(), state_0)
+        state_0 = 0
+        cls.automaton.set_initial_state(state_0)
+        cls.automaton.set_accepting_state(state_0, True)
+        cls.automaton.add_transition((state_0, BooleanTrue(), state_0))
 
-    def test_accepts(self):
+    @given(propositional_words(["a", "b"]))
+    def test_accepts(self, word):
         """Test the accepts work as expected."""
-        assert self.automaton.accepts([])
-
-        assert self.automaton.accepts([{}])
-        assert self.automaton.accepts([{"a": True}])
-        assert self.automaton.accepts([{"a": True, "b": False}])
-
-        assert self.automaton.accepts([{}, {}])
-        assert self.automaton.accepts([{"a": True}, {"b": False}])
-        assert self.automaton.accepts([{}] * 200)
+        assert self.automaton.accepts(word)
 
     def test_states(self):
         """Test the set of states is correct."""
@@ -172,11 +238,11 @@ class TestSymbolicAutomatonUniversalLanguage:
 
     def test_initial_states(self):
         """Test initial states."""
-        assert self.automaton.initial_states == {0}
+        assert self.automaton.initial_state == 0
 
     def test_final_states(self):
         """Test initial states."""
-        assert self.automaton.final_states == {0}
+        assert self.automaton.accepting_states == {0}
 
     def test_size(self):
         """Test size."""
@@ -199,13 +265,13 @@ class TestDeterminize:
     def setup_class(cls):
         """Set the tests up."""
         cls.automaton = SymbolicAutomaton()
-        state_0 = cls.automaton.create_state()
+        state_0 = 0
         state_1 = cls.automaton.create_state()
         state_2 = cls.automaton.create_state()
-        cls.automaton.set_initial_state(state_0, True)
-        cls.automaton.set_final_state(state_1, True)
-        cls.automaton.add_transition(state_0, "x | y", state_1)
-        cls.automaton.add_transition(state_0, "x | z", state_2)
+        cls.automaton.set_initial_state(state_0)
+        cls.automaton.set_accepting_state(state_1, True)
+        cls.automaton.add_transition((state_0, "x | y", state_1))
+        cls.automaton.add_transition((state_0, "x | z", state_2))
 
         cls.determinized = cls.automaton.determinize()
 
@@ -216,8 +282,7 @@ class TestDeterminize:
     def test_get_successors(self):
         """Test get successors of determinized automaton."""
         # we cannot assert the actual result since the state name is not deterministic.
-        assert len(self.determinized.initial_states) == 1
-        initial_state = next(iter(self.determinized.initial_states))
+        initial_state = self.automaton.initial_state
         assert len(self.automaton.get_successors(0, {"x": True})) == 2
         assert len(self.determinized.get_successors(initial_state, {"x": True})) == 1
 
@@ -238,10 +303,9 @@ class TestDeterminize2:
         aut.create_state()
         aut.create_state()
         aut.create_state()
-        aut.create_state()
-        aut.set_initial_state(3, True)
-        aut.set_final_state(0, True)
-        aut.set_final_state(1, True)
+        aut.set_initial_state(3)
+        aut.set_accepting_state(0, True)
+        aut.set_accepting_state(1, True)
 
         trfun = {
             3: {0: A | ~B, 2: B & ~A},
@@ -251,7 +315,7 @@ class TestDeterminize2:
         }
         for s in trfun:
             for d, guard in trfun[s].items():
-                aut.add_transition(s, guard, d)
+                aut.add_transition((s, guard, d))
 
         cls.automaton = aut
         cls.determinized = aut.determinize()
@@ -269,13 +333,13 @@ class TestComplete:
     def setup_class(cls):
         """Set the tests up."""
         cls.automaton = SymbolicAutomaton()
-        state_0 = cls.automaton.create_state()
+        state_0 = 0
         state_1 = cls.automaton.create_state()
         state_2 = cls.automaton.create_state()
-        cls.automaton.set_initial_state(state_0, True)
-        cls.automaton.set_final_state(state_1, True)
-        cls.automaton.add_transition(state_0, "x | y", state_1)
-        cls.automaton.add_transition(state_0, "x | z", state_2)
+        cls.automaton.set_initial_state(state_0)
+        cls.automaton.set_accepting_state(state_1, True)
+        cls.automaton.add_transition((state_0, "x | y", state_1))
+        cls.automaton.add_transition((state_0, "x | z", state_2))
 
         cls.completed = cls.automaton.complete()
 
@@ -285,7 +349,7 @@ class TestComplete:
 
     def test_initial_states(self):
         """Test initial states."""
-        assert self.completed.initial_states == {0}
+        assert self.completed.initial_state == 0
 
     def test_get_successors(self):
         """Test get successors of completed automaton."""
@@ -324,16 +388,16 @@ class TestMinimize:
         q3 = automaton.create_state()
         q4 = automaton.create_state()
 
-        automaton.set_initial_state(q0, True)
-        automaton.set_final_state(q3, True)
-        automaton.set_final_state(q4, True)
+        automaton.set_initial_state(q0)
+        automaton.set_accepting_state(q3, True)
+        automaton.set_accepting_state(q4, True)
 
-        automaton.add_transition(q0, "a", q1)
-        automaton.add_transition(q0, "b", q2)
-        automaton.add_transition(q1, "c", q3)
-        automaton.add_transition(q2, "c", q3)
-        automaton.add_transition(q3, "c", q4)
-        automaton.add_transition(q4, "c", q4)
+        automaton.add_transition((q0, "a", q1))
+        automaton.add_transition((q0, "b", q2))
+        automaton.add_transition((q1, "c", q3))
+        automaton.add_transition((q2, "c", q3))
+        automaton.add_transition((q3, "c", q4))
+        automaton.add_transition((q4, "c", q4))
 
         cls.minimized = automaton.minimize()
 
@@ -358,10 +422,10 @@ def test_to_graphviz():
     state_0 = automaton.create_state()
     state_1 = automaton.create_state()
     state_2 = automaton.create_state()
-    automaton.set_initial_state(state_0, True)
-    automaton.set_final_state(state_1, True)
-    automaton.add_transition(state_0, "x | y", state_1)
-    automaton.add_transition(state_0, "x | z", state_2)
+    automaton.set_initial_state(state_0)
+    automaton.set_accepting_state(state_1, True)
+    automaton.add_transition((state_0, "x | y", state_1))
+    automaton.add_transition((state_0, "x | z", state_2))
 
     automaton.to_graphviz()
 
@@ -378,36 +442,36 @@ class TestSimulator:
         q1 = automaton.create_state()
         q2 = automaton.create_state()
 
-        automaton.set_initial_state(q0, True)
-        automaton.set_final_state(q2, True)
+        automaton.set_initial_state(q0)
+        automaton.set_accepting_state(q2, True)
 
-        automaton.add_transition(q0, "a", q0)
-        automaton.add_transition(q0, "b", q1)
-        automaton.add_transition(q0, "c", q2)
+        automaton.add_transition((q0, "a", q0))
+        automaton.add_transition((q0, "b", q1))
+        automaton.add_transition((q0, "c", q2))
 
-        automaton.add_transition(q1, "a", q0)
-        automaton.add_transition(q1, "b", q1)
-        automaton.add_transition(q1, "c", q2)
+        automaton.add_transition((q1, "a", q0))
+        automaton.add_transition((q1, "b", q1))
+        automaton.add_transition((q1, "c", q2))
 
-        automaton.add_transition(q2, "a", q0)
-        automaton.add_transition(q2, "b", q1)
-        automaton.add_transition(q2, "c", q2)
+        automaton.add_transition((q2, "a", q0))
+        automaton.add_transition((q2, "b", q1))
+        automaton.add_transition((q2, "c", q2))
 
         # dummy state and transitions to make it non-deterministic
         q3 = automaton.create_state()
-        automaton.add_transition(q0, "a", q3)
-        automaton.add_transition(q1, "b", q3)
-        automaton.add_transition(q2, "c", q3)
-        automaton.add_transition(q3, "a", q0)
-        automaton.add_transition(q3, "b", q1)
-        automaton.add_transition(q3, "c", q2)
+        automaton.add_transition((q0, "a", q3))
+        automaton.add_transition((q1, "b", q3))
+        automaton.add_transition((q2, "c", q3))
+        automaton.add_transition((q3, "a", q0))
+        automaton.add_transition((q3, "b", q1))
+        automaton.add_transition((q3, "c", q2))
 
     def test_initialization(self):
         """Test the initialization of a simulator."""
         simulator = AutomatonSimulator(self.dfa)
 
         assert simulator.automaton == self.dfa
-        assert simulator.cur_state == self.dfa.initial_states
+        assert simulator.cur_state == {self.dfa.initial_state}
         assert not simulator.is_started
 
     @given(propositional_words(list("abcd"), min_size=0, max_size=5))
@@ -457,7 +521,7 @@ class TestSimulator:
         simulator = AutomatonSimulator(self.dfa)
 
         assert not simulator.is_started
-        assert simulator.cur_state == self.dfa.initial_states
+        assert simulator.cur_state == {self.dfa.initial_state}
 
         for symbol in word:
             simulator.step(symbol)
@@ -465,7 +529,7 @@ class TestSimulator:
 
         initial_state = simulator.reset()
         assert not simulator.is_started
-        assert simulator.cur_state == initial_state == self.dfa.initial_states
+        assert simulator.cur_state == initial_state == {self.dfa.initial_state}
 
     @given(propositional_words(list("abcd"), min_size=0, max_size=4))
     def test_accepts(self, word):
