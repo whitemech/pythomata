@@ -816,7 +816,10 @@ def _check_nondet_transition_function_is_valid_wrt_states_and_alphabet(
     if len(transition_function) == 0:
         return
 
-    extracted_states, extracted_alphabet = _extract_states_from_nondet_transition_function(
+    (
+        extracted_states,
+        extracted_alphabet,
+    ) = _extract_states_from_nondet_transition_function(
         transition_function
     )  # type: Set[StateType], Alphabet[SymbolType]
     if not all(s in states for s in extracted_states):
@@ -847,7 +850,7 @@ def _extract_states_from_nondet_transition_function(transition_function):
 
 
 def _extract_states_from_transition_function(
-    transition_function: Dict
+    transition_function: Dict,
 ) -> Tuple[Set[StateType], Alphabet]:
     """Extract states from a transition function."""
     states, symbols = set(), set()

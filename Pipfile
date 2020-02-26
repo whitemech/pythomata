@@ -5,27 +5,26 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
+hypothesis-pytest = "*"
 flake8 = "*"
 flake8-docstrings = "*"
+flake8-bugbear = "*"
+coveralls = "*"
+pytest-cov = "*"
+mccabe = "*"
 tox = "*"
 tox-travis = "*"
 coverage = "*"
 twine = "*"
 hypothesis = "*"
-hypothesis-pytest = "*"
 mypy = "*"
 black = "==19.3b0"
 mkdocs = "*"
 markdown-include = "*"
-coveralls = "*"
-pytest-cov = "*"
 ipython = "*"
-flake8-bugbear = "*"
-mccabe = "*"
-
-[packages]
-graphviz = "*"
-sympy = "*"
 
 [requires]
 python_version = "3.7"
+
+[packages]
+safety = "*"
