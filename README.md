@@ -9,7 +9,7 @@
 [![codecov](https://codecov.io/gh/whitemech/pythomata/branch/master/graph/badge.svg)](https://codecov.io/gh/whitemech/pythomata)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
 [![](https://img.shields.io/badge/mypy-checked-blue)](https://img.shields.io/badge/mypy-checked-blue)
-[![](https://img.shields.io/badge/license-Apache%202-lightgrey)](https://img.shields.io/badge/license-Apache%202-lightgrey)
+[![](https://img.shields.io/badge/license-LGPLv3%2B-blue)](./LICENSE)
 
 Python implementation of automata theory.
 
