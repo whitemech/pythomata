@@ -13,8 +13,6 @@
 
 Python implementation of automata theory.
 
-
-* Free software: Apache 2.0
 * Documentation: https://whitemech.github.io/pythomata.
 
 ## Install
