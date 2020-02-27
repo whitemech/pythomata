@@ -6,15 +6,13 @@
 [![](https://img.shields.io/pypi/pyversions/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
 [![](https://img.shields.io/badge/docs-mkdocs-9cf)](https://www.mkdocs.org/)
 [![](https://img.shields.io/badge/status-development-orange.svg)](https://img.shields.io/badge/status-development-orange.svg)
-[![Coverage Status](https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master)](https://coveralls.io/github/whitemech/pythomata?branch=master)
+[![codecov](https://codecov.io/gh/whitemech/pythomata/branch/master/graph/badge.svg)](https://codecov.io/gh/whitemech/pythomata)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
 [![](https://img.shields.io/badge/mypy-checked-blue)](https://img.shields.io/badge/mypy-checked-blue)
-[![](https://img.shields.io/badge/license-Apache%202-lightgrey)](https://img.shields.io/badge/license-Apache%202-lightgrey)
+[![](https://img.shields.io/badge/license-LGPLv3%2B-blue)](./LICENSE)
 
 Python implementation of automata theory.
 
-
-* Free software: Apache 2.0
 * Documentation: https://whitemech.github.io/pythomata.
 
 ## Install
