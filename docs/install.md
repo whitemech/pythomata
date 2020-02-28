@@ -9,5 +9,6 @@ pip install pythomata
 
 For some advanced features like translation to
 DOT format, you have to install Graphviz.
-Please check their [Download page](https://www.graphviz.org/download/)
+Please follow the
+[installation instructions](https://github.com/xflr6/graphviz)
 to know how to install it on your machine.
