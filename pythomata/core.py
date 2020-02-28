@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
 """The core module."""
-
 from abc import ABC, abstractmethod
 from functools import reduce
-from typing import TypeVar, Generic, AbstractSet, Optional, Tuple, Dict, Any, Sequence
+from typing import (
+    TypeVar,
+    Generic,
+    AbstractSet,
+    Optional,
+    Tuple,
+    Dict,
+    Any,
+    Sequence,
+)
 
 import graphviz
 

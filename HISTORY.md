@@ -1,4 +1,4 @@
-# History
+# Release History
 
 ## 0.1.0 (2019-04-13)
 
@@ -17,3 +17,9 @@
 * `DFA` and `NFA` renamed `SimpleDFA` and `SimpleNFA`, respectively.
 * Introduced `SymbolicAutomaton` and `SymbolicDFA`, where the guards
   on transitions are propositoinal formulas.
+
+## 0.3.1 (2020-02-28)
+
+* Improved CI: using GitHub actions instead of Travis.
+* Included many other checks: `safety`, `black`, `liccheck`.
+* Improved documentation.

@@ -6,15 +6,13 @@
 [![](https://img.shields.io/pypi/pyversions/pythomata.svg)](https://pypi.python.org/pypi/pythomata)
 [![](https://img.shields.io/badge/docs-mkdocs-9cf)](https://www.mkdocs.org/)
 [![](https://img.shields.io/badge/status-development-orange.svg)](https://img.shields.io/badge/status-development-orange.svg)
-[![Coverage Status](https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master)](https://coveralls.io/github/whitemech/pythomata?branch=master)
+[![codecov](https://codecov.io/gh/whitemech/pythomata/branch/master/graph/badge.svg)](https://codecov.io/gh/whitemech/pythomata)
 [![](https://img.shields.io/badge/flake8-checked-blueviolet)](https://img.shields.io/badge/flake8-checked-blueviolet)
 [![](https://img.shields.io/badge/mypy-checked-blue)](https://img.shields.io/badge/mypy-checked-blue)
-[![](https://img.shields.io/badge/license-Apache%202-lightgrey)](https://img.shields.io/badge/license-Apache%202-lightgrey)
+[![](https://img.shields.io/badge/license-LGPLv3%2B-blue)](./LICENSE)
 
 Python implementation of automata theory.
 
-
-* Free software: Apache 2.0
 * Documentation: https://whitemech.github.io/pythomata.
 
 ## Install
@@ -22,11 +20,10 @@ Python implementation of automata theory.
 - from [PyPI](https://pypi.org/project/pythomata/):
 
       pip install pythomata
-      pip install pythomata=0.3.0a  # for the pre-release.
 
-- or, from source (`master` branch):
+- or, from source (e.g. `develop` branch):
 
-      pip install git+https://github.com/whitemech/pythomata.git
+      pip install git+https://github.com/whitemech/pythomata.git@develop
 
 
 - or, clone the repository and install:
@@ -141,6 +138,8 @@ and then go to [http://localhost:8000](http://localhost:8000)
 
 
 ## License
+
+Pythomata is released under the GNU Lesser General Public License v3.0 or later (LGPLv3+).
 
 Copyright 2018-2020 [WhiteMech](https://whitemech.github.io)
 
