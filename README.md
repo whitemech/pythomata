@@ -26,20 +26,20 @@ Python implementation of automata theory.
 ## Install
 
 - from [PyPI](https://pypi.org/project/pythomata/):
-
-      pip install pythomata
-
+```
+pip install pythomata
+```
 - or, from source (e.g. `develop` branch):
-
-      pip install git+https://github.com/whitemech/pythomata.git@develop
-
+```
+pip install git+https://github.com/whitemech/pythomata.git@develop
+```
 
 - or, clone the repository and install:
-
-      git clone htts://github.com/whitemech/pythomata.git
-      cd pythomata
-      pip install .
-
+```
+git clone htts://github.com/whitemech/pythomata.git
+cd pythomata
+pip install .
+```
 
 ## How to use
 
@@ -121,26 +121,26 @@ The output looks like the following:
 ## Tests
 
 To run the tests:
-
-    tox
-
+```
+tox
+```
 To run only the code style checks:
-
-    tox -e flake8 -e mypy
-
+```
+tox -e flake8 -e mypy
+```
 ## Docs
 
 To build the docs:
 
-
-    mkdocs build
-
+```
+mkdocs build
+```
 
 To view documentation in a browser
 
-
-    mkdocs serve
-
+```
+mkdocs serve
+```
 
 and then go to [http://localhost:8000](http://localhost:8000)
 
