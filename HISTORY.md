@@ -1,14 +1,10 @@
 # Release History
 
-## 0.1.0 (2019-04-13)
+## 0.3.1 (2020-02-28)
 
-* Basic support for DFAs and NFAs.
-* Algorithms for DFA minimization and trimming.
-* Algorithm for NFA determinization.
-
-## 0.2.0 (2019-09-30)
-
-* Refactoring of the repository
+* Improved CI: using GitHub actions instead of Travis.
+* Included many other checks: `safety`, `black`, `liccheck`.
+* Improved documentation.
 
 ## 0.3.0 (2020-02-09)
 
@@ -18,8 +14,12 @@
 * Introduced `SymbolicAutomaton` and `SymbolicDFA`, where the guards
   on transitions are propositoinal formulas.
 
-## 0.3.1 (2020-02-28)
+## 0.2.0 (2019-09-30)
 
-* Improved CI: using GitHub actions instead of Travis.
-* Included many other checks: `safety`, `black`, `liccheck`.
-* Improved documentation.
+* Refactoring of the repository
+
+## 0.1.0 (2019-04-13)
+
+* Basic support for DFAs and NFAs.
+* Algorithms for DFA minimization and trimming.
+* Algorithm for NFA determinization.

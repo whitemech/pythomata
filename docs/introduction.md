@@ -6,7 +6,8 @@ implementation-agnostic interface for a generic finite automaton,
 some implementations of that interface, and other programming utilities
 for rendering and serialization/deserialization.
 
-The installation instruction are [here](./install.md)
+In the [Install](./install.md) page you
+will find the installation instructions.
 
 Please have a look to the [Quickstart](./quickstart.md)
 guide to get it started.
