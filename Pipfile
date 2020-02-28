@@ -22,9 +22,11 @@ black = "==19.3b0"
 mkdocs = "*"
 markdown-include = "*"
 ipython = "*"
+jupyter = "*"
+safety = "*"
+pymdown-extensions = "*"
 
 [requires]
 python_version = "3.7"
 
 [packages]
-safety = "*"
