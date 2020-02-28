@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Credits - Pythomata</title>
+  <title>Release History - Pythomata</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Credits";
-    var mkdocs_page_input_path = "authors.md";
+    var mkdocs_page_name = "Release History";
+    var mkdocs_page_input_path = "release-history.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -67,22 +67,26 @@
                     <li class="toctree-l1"><a class="reference internal" href="../implement-your-automaton/">Implement your automaton</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../release-history/">Release History</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Release History</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#010-2019-04-13">0.1.0 (2019-04-13)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#020-2019-09-30">0.2.0 (2019-09-30)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#030-2020-02-09">0.3.0 (2020-02-09)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#031-2020-02-28">0.3.1 (2020-02-28)</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../contributing/">How to contribute</a>
                     </li>
                 </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Credits</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#maintainers">Maintainers</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#contributors">Contributors</a>
-    </li>
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../authors/">Credits</a>
                     </li>
                 </ul>
                 <ul>
@@ -110,7 +114,7 @@
     
       
     
-    <li>Credits</li>
+    <li>Release History</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -121,14 +125,31 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="credits">Credits</h1>
-<h2 id="maintainers">Maintainers</h2>
+                <h1 id="release-history">Release History</h1>
+<h2 id="010-2019-04-13">0.1.0 (2019-04-13)</h2>
 <ul>
-<li><a href="https://github.com/marcofavorito">Marco Favorito</a> &lt;<a href="mailto:marco.favorito@gmail.com">marco.favorito@gmail.com</a>&gt;</li>
-<li><a href="https://github.com/francescofuggitti">Francesco Fuggitti</a> &lt;<a href="mailto:francesco.fuggitti@gmail.com">francesco.fuggitti@gmail.com</a>&gt;</li>
+<li>Basic support for DFAs and NFAs.</li>
+<li>Algorithms for DFA minimization and trimming.</li>
+<li>Algorithm for NFA determinization.</li>
 </ul>
-<h2 id="contributors">Contributors</h2>
-<p>None yet. <a href="../contributing/">Why not be the first</a>?</p>
+<h2 id="020-2019-09-30">0.2.0 (2019-09-30)</h2>
+<ul>
+<li>Refactoring of the repository</li>
+</ul>
+<h2 id="030-2020-02-09">0.3.0 (2020-02-09)</h2>
+<ul>
+<li>Main refactoring of the APIs.</li>
+<li>Introduce interfaces for better abstractions: <code>Alphabet</code>, <code>FiniteAutomaton</code> etc.</li>
+<li><code>DFA</code> and <code>NFA</code> renamed <code>SimpleDFA</code> and <code>SimpleNFA</code>, respectively.</li>
+<li>Introduced <code>SymbolicAutomaton</code> and <code>SymbolicDFA</code>, where the guards
+  on transitions are propositoinal formulas.</li>
+</ul>
+<h2 id="031-2020-02-28">0.3.1 (2020-02-28)</h2>
+<ul>
+<li>Improved CI: using GitHub actions instead of Travis.</li>
+<li>Included many other checks: <code>safety</code>, <code>black</code>, <code>liccheck</code>.</li>
+<li>Improved documentation.</li>
+</ul>
               
             </div>
           </div>
@@ -136,10 +157,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../references/" class="btn btn-neutral float-right" title="References">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../contributing/" class="btn btn-neutral float-right" title="How to contribute">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../contributing/" class="btn btn-neutral" title="How to contribute"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../implement-your-automaton/" class="btn btn-neutral" title="Implement your automaton"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -167,10 +188,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../contributing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../implement-your-automaton/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../references/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../contributing/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -5,15 +5,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="None">
+  <meta name="description" content="A Python package for automata theory.">
+  
   
   <link rel="shortcut icon" href="img/favicon.ico">
-  <title>Home - Pythomata</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <title>Pythomata</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,7 +25,7 @@
   
   <script src="js/jquery-2.1.1.min.js" defer></script>
   <script src="js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
@@ -35,6 +36,7 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href="." class="icon icon-home"> Pythomata</a>
         <div role="search">
@@ -45,49 +47,58 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href=".">Home</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#pythomata">Pythomata</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#install">Install</a></li>
-        
-            <li><a class="toctree-l3" href="#how-to-use">How to use</a></li>
-        
-            <li><a class="toctree-l3" href="#features">Features</a></li>
-        
-            <li><a class="toctree-l3" href="#tests">Tests</a></li>
-        
-            <li><a class="toctree-l3" href="#docs">Docs</a></li>
-        
-            <li><a class="toctree-l3" href="#license">License</a></li>
-        
-        </ul>
-    
-
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#install">Install</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-use">How to use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#features">Features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#docs">Docs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#license">License</a>
+    </li>
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="authors/">Credits</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="contributing/">How to contribute</a>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="install/">Install</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="quickstart/">Quickstart</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="implement-your-automaton/">Implement your automaton</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="release-history/">Release History</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="contributing/">How to contribute</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="authors/">Credits</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="references/">References</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -112,6 +123,7 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
@@ -123,25 +135,23 @@
 <a href="https://pypi.python.org/pypi/pythomata"><img alt="" src="https://img.shields.io/pypi/pyversions/pythomata.svg" /></a>
 <a href="https://www.mkdocs.org/"><img alt="" src="https://img.shields.io/badge/docs-mkdocs-9cf" /></a>
 <a href="https://img.shields.io/badge/status-development-orange.svg"><img alt="" src="https://img.shields.io/badge/status-development-orange.svg" /></a>
-<a href="https://coveralls.io/github/whitemech/pythomata?branch=master"><img alt="" src="https://coveralls.io/repos/github/whitemech/pythomata/badge.svg?branch=master" /></a>
+<a href="https://codecov.io/gh/whitemech/pythomata"><img alt="codecov" src="https://codecov.io/gh/whitemech/pythomata/branch/master/graph/badge.svg" /></a>
 <a href="https://img.shields.io/badge/flake8-checked-blueviolet"><img alt="" src="https://img.shields.io/badge/flake8-checked-blueviolet" /></a>
 <a href="https://img.shields.io/badge/mypy-checked-blue"><img alt="" src="https://img.shields.io/badge/mypy-checked-blue" /></a>
-<a href="https://img.shields.io/badge/license-Apache%202-lightgrey"><img alt="" src="https://img.shields.io/badge/license-Apache%202-lightgrey" /></a></p>
+<a href="./LICENSE"><img alt="" src="https://img.shields.io/badge/license-LGPLv3%2B-blue" /></a></p>
 <p>Python implementation of automata theory.</p>
 <ul>
-<li>Free software: Apache 2.0</li>
 <li>Documentation: https://whitemech.github.io/pythomata.</li>
 </ul>
 <h2 id="install">Install</h2>
 <ul>
 <li>
 <p>from <a href="https://pypi.org/project/pythomata/">PyPI</a>:</p>
-<p>pip install pythomata
-  pip install pythomata=0.3.0a  # for the pre-release.</p>
+<p>pip install pythomata</p>
 </li>
 <li>
-<p>or, from source (<code>master</code> branch):</p>
-<p>pip install git+https://github.com/whitemech/pythomata.git</p>
+<p>or, from source (e.g. <code>develop</code> branch):</p>
+<p>pip install git+https://github.com/whitemech/pythomata.git@develop</p>
 </li>
 <li>
 <p>or, clone the repository and install:</p>
@@ -201,7 +211,7 @@ dfa_trimmed = dfa.trim()
 </code></pre>
 
 <p>To print the automaton:</p>
-<pre><code>graph.render(&quot;path_to_file.svg&quot;)
+<pre><code>graph.render(&quot;path_to_file&quot;)
 </code></pre>
 
 <p>For that you will need to install Graphviz.
@@ -218,13 +228,14 @@ for detailed instructions depending on your system.</p>
 <li>Algorithms for DFA minimization and trimming;</li>
 <li>Algorithm for NFA determinization;</li>
 <li>Translate automata into Graphviz objects.</li>
+<li>Support for Symbolic Automata.</li>
 </ul>
 <h2 id="tests">Tests</h2>
 <p>To run the tests:</p>
 <pre><code>tox
 </code></pre>
 <p>To run only the code style checks:</p>
-<pre><code>tox -e flake8
+<pre><code>tox -e flake8 -e mypy
 </code></pre>
 <h2 id="docs">Docs</h2>
 <p>To build the docs:</p>
@@ -235,6 +246,7 @@ for detailed instructions depending on your system.</p>
 </code></pre>
 <p>and then go to <a href="http://localhost:8000">http://localhost:8000</a></p>
 <h2 id="license">License</h2>
+<p>Pythomata is released under the GNU Lesser General Public License v3.0 or later (LGPLv3+).</p>
 <p>Copyright 2018-2020 <a href="https://whitemech.github.io">WhiteMech</a></p>
               
             </div>
@@ -243,7 +255,7 @@ for detailed instructions depending on your system.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="authors/" class="btn btn-neutral float-right" title="Credits">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="introduction/" class="btn btn-neutral float-right" title="Introduction">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -254,9 +266,11 @@ for detailed instructions depending on your system.</p>
   <div role="contentinfo">
     <!-- Copyright etc -->
     
+      <p>Copyright &copy; 2018 - 2020 WhiteMech</p>
+    
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -266,23 +280,29 @@ for detailed instructions depending on your system.</p>
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
       
-        <span style="margin-left: 15px"><a href="authors/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="introduction/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
     <script>var base_url = '.';</script>
     <script src="js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
       <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 1.0.4
-Build Date UTC : 2020-01-18 20:06:59
+MkDocs version : 1.1
+Build Date UTC : 2020-02-28 16:17:17
 -->

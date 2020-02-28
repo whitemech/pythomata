@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Quickstart - Pythomata</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Quickstart";
+    var mkdocs_page_input_path = "quickstart.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pythomata</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../install/">Install</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Quickstart</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#formal-definition-of-an-automaton">Formal definition of an automaton</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example-even-number-of-0s-and-1s">Example: even number of 0's and 1's</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-pythomata">Using Pythomata</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rendering">Rendering</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../implement-your-automaton/">Implement your automaton</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../release-history/">Release History</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../contributing/">How to contribute</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../authors/">Credits</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pythomata</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Quickstart</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="quickstart">Quickstart</h1>
+<p>This guide will show you some
+examples of use of the package.</p>
+<h2 id="formal-definition-of-an-automaton">Formal definition of an automaton</h2>
+<p>Formally, a (deterministic finite) automaton <span><span class="MathJax_Preview">\mathcal{A}</span><script type="math/tex">\mathcal{A}</script></span>
+(DFA, see Chapter 2 of [1]) is defined as:</p>
+<div>
+<div class="MathJax_Preview">\mathcal{A} = \langle Q, \Sigma, q_0, F, \delta\rangle</div>
+<script type="math/tex; mode=display">\mathcal{A} = \langle Q, \Sigma, q_0, F, \delta\rangle</script>
+</div>
+<p>Where:</p>
+<ul>
+<li><span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> is the (non-empty) finite set of states;</li>
+<li><span><span class="MathJax_Preview">\Sigma</span><script type="math/tex">\Sigma</script></span> is the set of symbols;</li>
+<li><span><span class="MathJax_Preview">q_0 \in Q</span><script type="math/tex">q_0 \in Q</script></span> is the initial state:</li>
+<li><span><span class="MathJax_Preview">F \subseteq Q</span><script type="math/tex">F \subseteq Q</script></span> is the set of accepting states;</li>
+<li><span><span class="MathJax_Preview">\delta: Q \times \Sigma \to Q</span><script type="math/tex">\delta: Q \times \Sigma \to Q</script></span> is the transition function.</li>
+</ul>
+<h2 id="example-even-number-of-0s-and-1s">Example: even number of 0's and 1's</h2>
+<p>Let's design a (deterministic) finite
+ automaton that consider the following language:</p>
+<blockquote>
+<p><em>All the binary strings such that</em>
+<em>they have an even number of 0's and 1's.</em></p>
+</blockquote>
+<p>An automaton that accepts that language is the following:</p>
+<p align="center">
+  <img width="300" height="300" src="../../images/even01.svg" />
+</p>
+
+<p>in particular:</p>
+<ul>
+<li>the set of states <span><span class="MathJax_Preview">q = \{q_0, q_1, q_2, q_3\}</span><script type="math/tex">q = \{q_0, q_1, q_2, q_3\}</script></span></li>
+<li>the alphabet <span><span class="MathJax_Preview">\sigma = \{0, 1\}</span><script type="math/tex">\sigma = \{0, 1\}</script></span></li>
+<li>the initial state <span><span class="MathJax_Preview">q_0</span><script type="math/tex">q_0</script></span></li>
+<li>the set of accepting states <span><span class="MathJax_Preview">f = \{q_0\}</span><script type="math/tex">f = \{q_0\}</script></span></li>
+<li>the transition <span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> defined as follows:<ul>
+<li>for <span><span class="MathJax_Preview">q_0</span><script type="math/tex">q_0</script></span>: <span><span class="MathJax_Preview">\delta(q_0, 0) = q_2</span><script type="math/tex">\delta(q_0, 0) = q_2</script></span> and <span><span class="MathJax_Preview">\delta(q_0, 1) = q_1</span><script type="math/tex">\delta(q_0, 1) = q_1</script></span></li>
+<li>for <span><span class="MathJax_Preview">q_1</span><script type="math/tex">q_1</script></span>: <span><span class="MathJax_Preview">\delta(q_1, 0) = q_3</span><script type="math/tex">\delta(q_1, 0) = q_3</script></span> and <span><span class="MathJax_Preview">\delta(q_1, 1) = q_0</span><script type="math/tex">\delta(q_1, 1) = q_0</script></span></li>
+<li>for <span><span class="MathJax_Preview">q_2</span><script type="math/tex">q_2</script></span>: <span><span class="MathJax_Preview">\delta(q_2, 0) = q_0</span><script type="math/tex">\delta(q_2, 0) = q_0</script></span> and <span><span class="MathJax_Preview">\delta(q_2, 1) = q_3</span><script type="math/tex">\delta(q_2, 1) = q_3</script></span></li>
+<li>for <span><span class="MathJax_Preview">q_3</span><script type="math/tex">q_3</script></span>: <span><span class="MathJax_Preview">\delta(q_3, 0) = q_2</span><script type="math/tex">\delta(q_3, 0) = q_2</script></span> and <span><span class="MathJax_Preview">\delta(q_3, 1) = q_1</span><script type="math/tex">\delta(q_3, 1) = q_1</script></span></li>
+</ul>
+</li>
+</ul>
+<h2 id="using-pythomata">Using Pythomata</h2>
+<p>The definition in Pythomata is straightforward, since there's
+a one-to-one mapping to code.</p>
+<p>the set of states <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>:</p>
+<pre><code class="python">states = {&quot;q0&quot;, &quot;q1&quot;, &quot;q2&quot;, &quot;q3&quot;}
+</code></pre>
+
+<p>the alphabet <span><span class="MathJax_Preview">\sigma</span><script type="math/tex">\sigma</script></span> (i.e. a set of symbols):</p>
+<pre><code class="python">alphabet = {&quot;0&quot;, &quot;1&quot;}
+</code></pre>
+
+<p>the initial state <span><span class="MathJax_Preview">q_0</span><script type="math/tex">q_0</script></span>:</p>
+<pre><code class="python">initial_state = &quot;q0&quot;
+</code></pre>
+
+<p>the set of accepting states <span><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span>:</p>
+<pre><code class="python">accepting_states = {&quot;q0&quot;}
+</code></pre>
+
+<p>the transition function <span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> is defined as a nested dictionary:</p>
+<pre><code class="python">transition_function = {
+    &quot;q0&quot;: {
+        &quot;0&quot;: &quot;q2&quot;,
+        &quot;1&quot;: &quot;q1&quot;,
+    },
+    &quot;q1&quot;: {
+        &quot;0&quot;: &quot;q3&quot;,
+        &quot;1&quot;: &quot;q0&quot;,
+    },
+    &quot;q2&quot;: {
+        &quot;0&quot;: &quot;q0&quot;,
+        &quot;1&quot;: &quot;q3&quot;,
+    },
+    &quot;q3&quot;: {
+        &quot;0&quot;: &quot;q1&quot;,
+        &quot;1&quot;: &quot;q2&quot;,
+    }
+}
+</code></pre>
+
+<p>Now we can instantiate a <code>SimpleDFA</code> object:</p>
+<pre><code class="python">automaton = SimpleDFA(
+    states=states,
+    alphabet=alphabet,
+    initial_state=initial_state,
+    accepting_states=accepting_states,
+    transition_function=transition_function,
+)
+
+</code></pre>
+
+<p>We can inspect the structure of the automaton:</p>
+<pre><code class="python">automaton.states
+# {&quot;q0&quot;, &quot;q1&quot;, &quot;q2&quot;, &quot;q3&quot;}
+automaton.initial_state
+# &quot;q0&quot;
+automaton.accepting_states
+# {'q0'}
+automaton.get_transitions()
+&quot;&quot;&quot;
+{('q0', '0', 'q2'),
+ ('q0', '1', 'q1'),
+ ('q1', '0', 'q3'),
+ ('q1', '1', 'q0'),
+ ('q2', '0', 'q0'),
+ ('q2', '1', 'q3'),
+ ('q3', '0', 'q1'),
+ ('q3', '1', 'q2')}
+&quot;&quot;&quot;
+</code></pre>
+
+<p>The attribute <code>automaton.alphabet</code> is an instance of
+the <code>Alphabet</code> class.</p>
+<pre><code class="python">automaton.alphabet.size
+# 2
+list(automaton.alphabet)
+# ['0', '1']
+</code></pre>
+
+<p>Now we can check word membership with the <code>accepts</code> method:</p>
+<pre><code class="python">automaton.accepts(&quot;&quot;)         # True
+automaton.accepts(&quot;0&quot;)        # False - only one '0'
+automaton.accepts(&quot;1&quot;)        # False - only one '1'
+automaton.accepts(&quot;00&quot;)       # True
+automaton.accepts(&quot;11&quot;)       # True
+automaton.accepts(&quot;01&quot; * 42)  # True
+</code></pre>
+
+<h3 id="rendering">Rendering</h3>
+<p>Pythomata lets you render the automata by using
+the <code>graphviz</code> package. Please check
+the <a href="https://github.com/xflr6/graphviz#installation">installation section</a>
+to know what you need to install.</p>
+<p>Assuming you executed the previous code:</p>
+<pre><code class="python">digraph = automaton.to_graphviz()
+# Now `digraph` is a `graphviz.dot.Digraph` object.
+digraph.render(&quot;my-even-01-automaton&quot;)
+</code></pre>
+
+<p>Check your current working directory, you should find
+a file called <code>my-even-01-automaton.svg</code>:</p>
+<p align="center">
+  <img width="150" height="300" src="../../images/my-even-01-automaton.svg" />
+</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../implement-your-automaton/" class="btn btn-neutral float-right" title="Implement your automaton">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../install/" class="btn btn-neutral" title="Install"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; 2018 - 2020 WhiteMech</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../implement-your-automaton/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
