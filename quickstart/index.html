@@ -154,7 +154,7 @@ examples of use of the package.</p>
 </blockquote>
 <p>An automaton that accepts that language is the following:</p>
 <p align="center">
-  <img width="300" height="300" src="../../images/even01.svg" />
+  <img width="300" height="300" src="../images/even01.svg" />
 </p>
 
 <p>in particular:</p>
@@ -162,7 +162,7 @@ examples of use of the package.</p>
 <li>the set of states <span><span class="MathJax_Preview">q = \{q_0, q_1, q_2, q_3\}</span><script type="math/tex">q = \{q_0, q_1, q_2, q_3\}</script></span></li>
 <li>the alphabet <span><span class="MathJax_Preview">\sigma = \{0, 1\}</span><script type="math/tex">\sigma = \{0, 1\}</script></span></li>
 <li>the initial state <span><span class="MathJax_Preview">q_0</span><script type="math/tex">q_0</script></span></li>
-<li>the set of accepting states <span><span class="MathJax_Preview">f = \{q_0\}</span><script type="math/tex">f = \{q_0\}</script></span></li>
+<li>the set of accepting states <span><span class="MathJax_Preview">F = \{q_0\}</span><script type="math/tex">F = \{q_0\}</script></span></li>
 <li>the transition <span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> defined as follows:<ul>
 <li>for <span><span class="MathJax_Preview">q_0</span><script type="math/tex">q_0</script></span>: <span><span class="MathJax_Preview">\delta(q_0, 0) = q_2</span><script type="math/tex">\delta(q_0, 0) = q_2</script></span> and <span><span class="MathJax_Preview">\delta(q_0, 1) = q_1</span><script type="math/tex">\delta(q_0, 1) = q_1</script></span></li>
 <li>for <span><span class="MathJax_Preview">q_1</span><script type="math/tex">q_1</script></span>: <span><span class="MathJax_Preview">\delta(q_1, 0) = q_3</span><script type="math/tex">\delta(q_1, 0) = q_3</script></span> and <span><span class="MathJax_Preview">\delta(q_1, 1) = q_0</span><script type="math/tex">\delta(q_1, 1) = q_0</script></span></li>
@@ -174,7 +174,7 @@ examples of use of the package.</p>
 <h2 id="using-pythomata">Using Pythomata</h2>
 <p>The definition in Pythomata is straightforward, since there's
 a one-to-one mapping to code.</p>
-<p>the set of states <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>:</p>
+<p>the set of states <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span>:</p>
 <pre><code class="python">states = {&quot;q0&quot;, &quot;q1&quot;, &quot;q2&quot;, &quot;q3&quot;}
 </code></pre>
 
@@ -186,7 +186,7 @@ a one-to-one mapping to code.</p>
 <pre><code class="python">initial_state = &quot;q0&quot;
 </code></pre>
 
-<p>the set of accepting states <span><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span>:</p>
+<p>the set of accepting states <span><span class="MathJax_Preview">F</span><script type="math/tex">F</script></span>:</p>
 <pre><code class="python">accepting_states = {&quot;q0&quot;}
 </code></pre>
 
@@ -273,7 +273,7 @@ digraph.render(&quot;my-even-01-automaton&quot;)
 <p>Check your current working directory, you should find
 a file called <code>my-even-01-automaton.svg</code>:</p>
 <p align="center">
-  <img width="150" height="300" src="../../images/my-even-01-automaton.svg" />
+  <img width="150" height="300" src="../images/my-even-01-automaton.svg" />
 </p>
               
             </div>

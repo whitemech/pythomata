@@ -50,6 +50,8 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#links">Links</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#install">Install</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#how-to-use">How to use</a>
@@ -140,26 +142,36 @@
 <a href="https://img.shields.io/badge/mypy-checked-blue"><img alt="" src="https://img.shields.io/badge/mypy-checked-blue" /></a>
 <a href="./LICENSE"><img alt="" src="https://img.shields.io/badge/license-LGPLv3%2B-blue" /></a></p>
 <p>Python implementation of automata theory.</p>
+<h2 id="links">Links</h2>
 <ul>
-<li>Documentation: https://whitemech.github.io/pythomata.</li>
+<li>GitHub: <a href="https://github.com/whitemech/pythomata">https://github.com/whitemech/pythomata</a></li>
+<li>PyPI: <a href="https://pypi.org/project/pythomata/">https://pypi.org/project/pythomata/</a></li>
+<li>Documentation: <a href="https://whitemech.github.io/pythomata">https://whitemech.github.io/pythomata</a></li>
+<li>Changelog: <a href="https://whitemech.github.io/pythomata/release-history/">https://whitemech.github.io/pythomata/release-history/</a></li>
+<li>Issue Tracker:<a href="https://github.com/whitemech/pythomata/issues">https://github.com/whitemech/pythomata/issues</a></li>
+<li>Download: <a href="https://pypi.org/project/pythomata/#files">https://pypi.org/project/pythomata/#files</a></li>
 </ul>
 <h2 id="install">Install</h2>
 <ul>
-<li>
-<p>from <a href="https://pypi.org/project/pythomata/">PyPI</a>:</p>
-<p>pip install pythomata</p>
-</li>
-<li>
-<p>or, from source (e.g. <code>develop</code> branch):</p>
-<p>pip install git+https://github.com/whitemech/pythomata.git@develop</p>
-</li>
-<li>
-<p>or, clone the repository and install:</p>
-<p>git clone htts://github.com/whitemech/pythomata.git
-  cd pythomata
-  pip install .</p>
-</li>
+<li>from <a href="https://pypi.org/project/pythomata/">PyPI</a>:</li>
 </ul>
+<pre><code>pip install pythomata
+</code></pre>
+
+<ul>
+<li>or, from source (e.g. <code>develop</code> branch):</li>
+</ul>
+<pre><code>pip install git+https://github.com/whitemech/pythomata.git@develop
+</code></pre>
+
+<ul>
+<li>or, clone the repository and install:</li>
+</ul>
+<pre><code>git clone htts://github.com/whitemech/pythomata.git
+cd pythomata
+pip install .
+</code></pre>
+
 <h2 id="how-to-use">How to use</h2>
 <ul>
 <li>Define an automaton:</li>
@@ -234,16 +246,20 @@ for detailed instructions depending on your system.</p>
 <p>To run the tests:</p>
 <pre><code>tox
 </code></pre>
+
 <p>To run only the code style checks:</p>
 <pre><code>tox -e flake8 -e mypy
 </code></pre>
+
 <h2 id="docs">Docs</h2>
 <p>To build the docs:</p>
 <pre><code>mkdocs build
 </code></pre>
+
 <p>To view documentation in a browser</p>
 <pre><code>mkdocs serve
 </code></pre>
+
 <p>and then go to <a href="http://localhost:8000">http://localhost:8000</a></p>
 <h2 id="license">License</h2>
 <p>Pythomata is released under the GNU Lesser General Public License v3.0 or later (LGPLv3+).</p>
@@ -304,5 +320,5 @@ for detailed instructions depending on your system.</p>
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-02-28 16:17:17
+Build Date UTC : 2020-02-28 16:38:37
 -->
