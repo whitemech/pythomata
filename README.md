@@ -20,11 +20,10 @@ Python implementation of automata theory.
 - from [PyPI](https://pypi.org/project/pythomata/):
 
       pip install pythomata
-      pip install pythomata=0.3.0a  # for the pre-release.
 
-- or, from source (`master` branch):
+- or, from source (e.g. `develop` branch):
 
-      pip install git+https://github.com/whitemech/pythomata.git
+      pip install git+https://github.com/whitemech/pythomata.git@develop
 
 
 - or, clone the repository and install:
@@ -139,6 +138,8 @@ and then go to [http://localhost:8000](http://localhost:8000)
 
 
 ## License
+
+Pythomata is released under the GNU Lesser General Public License v3.0 or later (LGPLv3+).
 
 Copyright 2018-2020 [WhiteMech](https://whitemech.github.io)
 

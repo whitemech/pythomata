@@ -1,10 +1,23 @@
 site_name: Pythomata
+site_description: A Python package for automata theory.
+copyright: 'Copyright &copy; 2018 - 2020 WhiteMech'
+
 nav:
-    - Home: index.md
-    - Credits: authors.md
-    - How to contribute: contributing.md
+- Home: index.md
+- Introduction: introduction.md
+- Install: install.md
+- Quickstart: quickstart.md
+- Implement your automaton: implement-your-automaton.md
+- Release History: release-history.md
+- How to contribute: contributing.md
+- Credits: authors.md
+- References: references.md
 
 theme: readthedocs
 markdown_extensions:
     - markdown_include.include:
         base_path: docs
+    - pymdownx.arithmatex
+
+extra_javascript:
+  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
