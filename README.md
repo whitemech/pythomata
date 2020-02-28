@@ -13,7 +13,15 @@
 
 Python implementation of automata theory.
 
-* Documentation: https://whitemech.github.io/pythomata.
+## Links
+
+- GitHub: https://github.com/whitemech/pythomata
+- PyPI: https://pypi.org/project/pythomata/
+- Documentation: https://whitemech.github.io/pythomata
+- Changelog: https://whitemech.github.io/pythomata/release-history/
+- Issue Tracker: https://github.com/whitemech/pythomata/issues
+- Download: https://pypi.org/project/pythomata/#files
+
 
 ## Install
 

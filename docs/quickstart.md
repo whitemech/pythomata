@@ -30,7 +30,7 @@ Let's design a (deterministic) finite
 An automaton that accepts that language is the following:
 
 <p align="center">
-  <img width="300" height="300" src="../../images/even01.svg" />
+  <img width="300" height="300" src="../images/even01.svg" />
 </p>
 
 in particular:
@@ -38,7 +38,7 @@ in particular:
 - the set of states $q = \{q_0, q_1, q_2, q_3\}$
 - the alphabet $\sigma = \{0, 1\}$
 - the initial state $q_0$
-- the set of accepting states $f = \{q_0\}$
+- the set of accepting states $F = \{q_0\}$
 - the transition $\delta$ defined as follows:
     - for $q_0$: $\delta(q_0, 0) = q_2$ and $\delta(q_0, 1) = q_1$
     - for $q_1$: $\delta(q_1, 0) = q_3$ and $\delta(q_1, 1) = q_0$
@@ -50,7 +50,7 @@ in particular:
 The definition in Pythomata is straightforward, since there's
 a one-to-one mapping to code.
 
-the set of states $q$:
+the set of states $Q$:
 
 ```python
 states = {"q0", "q1", "q2", "q3"}
@@ -68,7 +68,7 @@ the initial state $q_0$:
 initial_state = "q0"
 ```
 
-the set of accepting states $f$:
+the set of accepting states $F$:
 
 ```python
 accepting_states = {"q0"}
@@ -173,5 +173,5 @@ Check your current working directory, you should find
 a file called `my-even-01-automaton.svg`:
 
 <p align="center">
-  <img width="150" height="300" src="../../images/my-even-01-automaton.svg" />
+  <img width="150" height="300" src="../images/my-even-01-automaton.svg" />
 </p>
