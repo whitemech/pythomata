@@ -335,6 +335,7 @@ class SymbolicAutomaton(
 
         for s in states:
             if s == initial_state:
+                automaton.set_accepting_state(initial_state_idx, s in final_states)
                 continue
             new_index = automaton.create_state()
             automaton.set_accepting_state(new_index, s in final_states)

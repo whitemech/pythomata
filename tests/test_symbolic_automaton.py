@@ -292,8 +292,8 @@ class TestDeterminize:
         assert self.automaton.accepts(word) == self.determinized.accepts(word)
 
 
-class TestDeterminize2:
-    """Test determinize."""
+class TestDeterminizeWhenInitialStateIsAccepting:
+    """Test determinize when the initial state is accepting."""
 
     @classmethod
     def setup_class(cls):
@@ -306,6 +306,7 @@ class TestDeterminize2:
         aut.set_initial_state(3)
         aut.set_accepting_state(0, True)
         aut.set_accepting_state(1, True)
+        aut.set_accepting_state(3, True)
 
         trfun = {
             3: {0: A | ~B, 2: B & ~A},
