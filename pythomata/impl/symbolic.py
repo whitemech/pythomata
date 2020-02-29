@@ -305,16 +305,27 @@ class SymbolicAutomaton(
             class2newstate[state2class[final_state]]
             for final_state in dfa.accepting_states
         }
-        transitions = set()
 
+        # normalize transitions
+        from_edge_to_guard = {}  # type: Dict[Tuple[int, int], BooleanFunction]
         for old_source in dfa._transition_function:
             for old_dest, guard in dfa._transition_function[old_source].items():
                 new_source = class2newstate[state2class[old_source]]
                 new_dest = class2newstate[state2class[old_dest]]
-                transitions.add((new_source, guard, new_dest))
+
+                edge = (new_source, new_dest)
+                if edge in from_edge_to_guard:
+                    old_guard = from_edge_to_guard[edge]
+                    new_guard = (guard | old_guard).simplify()
+                else:
+                    new_guard = guard
+                from_edge_to_guard[(new_source, new_dest)] = new_guard
 
         return SymbolicAutomaton._from_transitions(
-            new_states, initial_state, final_states, transitions
+            new_states,
+            initial_state,
+            final_states,
+            {(u, guard, v) for ((u, v), guard) in from_edge_to_guard.items()},
         )
 
     @classmethod

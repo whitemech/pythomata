@@ -9,6 +9,7 @@ from sympy import Symbol
 from sympy.logic.boolalg import BooleanTrue
 
 from pythomata import SymbolicAutomaton
+from pythomata.impl.symbolic import SymbolicDFA
 from pythomata.simulator import AutomatonSimulator
 from .strategies import propositional_words
 
@@ -405,6 +406,42 @@ class TestMinimize:
     def test_states(self):
         # the renaming of the states is non deterministic, so we need to compare every substructure.
         assert self.minimized.size == 4
+
+    @given(propositional_words(list("abc"), min_size=0, max_size=5))
+    def test_accepts(self, word):
+        """Test equivalence of acceptance between the two automata."""
+        assert self.automaton.accepts(word) == self.minimized.accepts(word)
+
+    def test_minimized_is_complete(self):
+        """Test that every minimized DFA is complete."""
+        assert self.minimized.is_complete()
+
+
+class TestMinimizeWhenNoAcceptingState:
+    @classmethod
+    def setup_class(cls):
+        """Set the tests up."""
+        cls.automaton = SymbolicDFA()
+        automaton = cls.automaton
+        q0 = automaton.create_state()
+        q1 = automaton.create_state()
+        q2 = automaton.create_state()
+        q3 = automaton.create_state()
+        q4 = automaton.create_state()
+
+        automaton.set_initial_state(q0)
+        automaton.add_transition((q0, "a", q1))
+        automaton.add_transition((q0, "b", q2))
+        automaton.add_transition((q1, "c", q3))
+        automaton.add_transition((q2, "c", q3))
+        automaton.add_transition((q3, "c", q4))
+        automaton.add_transition((q4, "c", q4))
+
+        cls.minimized = automaton.minimize()
+
+    def test_states(self):
+        # the renaming of the states is non deterministic, so we need to compare every substructure.
+        assert self.minimized.size == 1
 
     @given(propositional_words(list("abc"), min_size=0, max_size=5))
     def test_accepts(self, word):
