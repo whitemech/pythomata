@@ -3,11 +3,14 @@ include CONTRIBUTING.md
 include HISTORY.md
 include LICENSE
 include README.md
+include Pipfile
+include mkdocs.yml
+include pyproject.toml
 
 recursive-include tests *
-recursive-include pythomata *
+recursive-include docs *
+recursive-include images *
+recursive-include scripts *
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
-
-recursive-include docs *.md *.jpg *.png *.gif
