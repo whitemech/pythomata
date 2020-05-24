@@ -36,7 +36,7 @@ pip install git+https://github.com/whitemech/pythomata.git@develop
 
 - or, clone the repository and install:
 ```
-git clone htts://github.com/whitemech/pythomata.git
+git clone https://github.com/whitemech/pythomata.git
 cd pythomata
 pip install .
 ```
