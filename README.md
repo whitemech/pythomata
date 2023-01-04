@@ -57,8 +57,9 @@ transition_function = {
         "a" : "s2"
     },
     "s2": {
-        "a" : "s3",
-        "b" : "s1"
+        "a" : "s2",
+        "b" : "s1",
+        "c" : "s3",
     },
     "s3":{
         "c" : "s3"
@@ -93,7 +94,7 @@ graph = dfa.minimize().trim().to_graphviz()
 ```
 
 To print the automaton:
-```
+```python
 graph.render("path_to_file")
 ```
 
